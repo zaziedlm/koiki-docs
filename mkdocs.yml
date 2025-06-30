@@ -1,0 +1,8 @@
+site_name: KOIKI-FW v0.5.0
+theme:
+  name: material
+
+nav:
+  - 概要: index.md
+  - KOIKI-FW 機能設計・構成ガイド: design_kkfw_0.5.0.md
+
