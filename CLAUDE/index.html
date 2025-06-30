@@ -1,0 +1,1121 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>CLAUDE.md - KOIKI-FW v0.5.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#claudemd" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="KOIKI-FW v0.5.0" class="md-header__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KOIKI-FW v0.5.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLAUDE.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="KOIKI-FW v0.5.0" class="md-nav__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KOIKI-FW v0.5.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概要
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_kkfw_0.5.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KOIKI-FW 機能設計・構成ガイド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#security-update-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Update History
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Update History">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2025-06-21-critical-security-vulnerabilities-fixed-comprehensive-dependency-modernization" class="md-nav__link">
+    <span class="md-ellipsis">
+      2025-06-21: Critical Security Vulnerabilities Fixed + Comprehensive Dependency Modernization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poetry-2x-migration-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poetry 2.x Migration Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-commands-poetry-2x-optimized" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Commands (Poetry 2.x Optimized)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Commands (Poetry 2.x Optimized)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-quality-enterprise-dependency-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Quality &amp; Enterprise Dependency Management
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#framework-architecture-libkoiki" class="md-nav__link">
+    <span class="md-ellipsis">
+      Framework Architecture (libkoiki)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-layer-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application Layer (app/)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Technologies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dependency-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency Injection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repository-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Repository Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event System
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redis-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Redis Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker Development
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poetry-2x-pep-621-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poetry 2.x &amp; PEP 621 Features
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enterprise-security-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enterprise Security Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enterprise Security Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#security-first-dependency-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security-First Dependency Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-audit-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Audit Integration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poetry-2x-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poetry 2.x Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Poetry 2.x Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Issues and Solutions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enterprise-security-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enterprise Security Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-313-specific-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python 3.13 Specific Troubleshooting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Notes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Configuration Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="claudemd">CLAUDE.md</h1>
+<p>This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.</p>
+<h2 id="security-update-history">Security Update History</h2>
+<h3 id="2025-06-21-critical-security-vulnerabilities-fixed-comprehensive-dependency-modernization">2025-06-21: Critical Security Vulnerabilities Fixed + Comprehensive Dependency Modernization</h3>
+<p><strong>Security Priority Update</strong>: All known vulnerabilities resolved + Complete dependency stack modernization</p>
+<p><strong>Fixed Vulnerabilities:</strong>
+- <strong>fastapi</strong>: 0.104.1 → 0.115.13 (Fixed: PYSEC-2024-38)
+- <strong>python-jose</strong>: 3.3.0 → 3.5.0 (Fixed: PYSEC-2024-232, PYSEC-2024-233)
+- <strong>starlette</strong>: 0.27.0 → 0.46.2 (Fixed: GHSA-f96h-pmfr-66vw)</p>
+<p><strong>Python 3.13 Compatibility:</strong>
+- <strong>asyncpg</strong>: 0.29.0 → 0.30.0 (Python 3.13 compilation support)
+- <strong>pydantic</strong>: 2.9.2 → 2.11.7 (Enterprise requirement: pydantic &gt;=2.7.0)</p>
+<p><strong>Phase 1 Updates (Low Risk):</strong>
+- <strong>email-validator</strong>: 2.1.2 → 2.2.0 (Validation improvements)
+- <strong>pytest-cov</strong>: 6.1.1 → 6.2.1 (Test coverage enhancements)</p>
+<p><strong>Phase 2 Updates (Medium Risk):</strong>
+- <strong>httpx</strong>: 0.25.2 → 0.28.1 (HTTP client improvements)
+- <strong>structlog</strong>: 23.2.0 → 25.4.0 (Structured logging enhancements)
+- <strong>alembic</strong>: 1.12.1 → 1.16.2 (Database migration improvements)
+- <strong>anyio</strong>: 3.7.1 → 4.9.0 (Async I/O performance)
+- <strong>limits</strong>: 5.3.0 → 5.4.0 (Rate limiting improvements)</p>
+<p><strong>Phase 3 Updates (High Risk):</strong>
+- <strong>uvicorn</strong>: 0.24.0 → 0.34.3 (ASGI server major performance improvements)
+- <strong>pytest</strong>: 7.4.4 → 8.4.1 (Test framework major upgrade)
+- <strong>pytest-asyncio</strong>: 0.23.8 → 1.0.0 (Async testing major upgrade)
+- <strong>redis</strong>: 5.0.8 → 6.2.0 (Redis client major upgrade)
+- <strong>prometheus-fastapi-instrumentator</strong>: 5.7.1 → 7.1.0 (Monitoring enhancements)</p>
+<p><strong>Container Deployment Verification:</strong>
+- ✅ <strong>Build</strong>: 51 packages successfully installed
+- ✅ <strong>Performance</strong>: Response time 0.055-0.080s (excellent)
+- ✅ <strong>API Tests</strong>: Full CRUD operations, authentication, security headers
+- ✅ <strong>Database</strong>: PostgreSQL connection, Alembic migrations functional</p>
+<p><strong>Security Audit Result:</strong> ✅ No known vulnerabilities found</p>
+<p><strong>Security Tools Configuration:</strong>
+- ✅ <strong>pip-audit</strong>: 2.9.0 (OSV database vulnerability scanning)
+- ✅ <strong>bandit</strong>: 1.8.5 (Static security analysis)
+- ❌ <strong>safety</strong>: Excluded (pydantic &lt;2.0 dependency conflict)</p>
+<p><strong>Enterprise Security Strategy:</strong>
+- Priority: Security fixes over version stability during development phase
+- Approach: Proactive updates when impact scope and dependency count allow
+- Philosophy: Leverage development period for comprehensive modernization
+- Result: Production-ready modernized dependency stack with zero known vulnerabilities</p>
+<h2 id="poetry-2x-migration-summary">Poetry 2.x Migration Summary</h2>
+<p>This project has been fully optimized for Poetry 2.x with PEP 621 compliance, providing:
+- <strong>Enhanced Performance</strong>: Parallel dependency installation with optimized caching
+- <strong>Modern Standards</strong>: Full PEP 621 compliance for improved tool interoperability<br />
+- <strong>Organized Dependencies</strong>: Clear separation of main, dev, and test dependencies
+- <strong>Optimized Workflows</strong>: Streamlined CI/CD with Poetry 2.x features
+- <strong>Future-Proof Architecture</strong>: Ready for Python packaging ecosystem evolution</p>
+<h2 id="development-commands-poetry-2x-optimized">Development Commands (Poetry 2.x Optimized)</h2>
+<h3 id="environment-setup">Environment Setup</h3>
+<pre><code class="language-bash"># Poetry 2.x: Initial performance configuration
+poetry config installer.parallel true
+poetry config installer.max-workers 10
+poetry config virtualenvs.create true
+poetry config virtualenvs.in-project true
+
+# Poetry 2.x: Dependency verification and installation
+poetry check --lock
+poetry install
+
+# Poetry 2.x: Use dependency groups for targeted installation
+poetry install --with dev          # Install with development dependencies
+poetry install --with test         # Install with test dependencies  
+poetry install --with dev,test      # Install with multiple groups
+poetry install --only=main         # Install only production dependencies
+poetry install --only=dev          # Install only development dependencies
+
+# For export functionality (if needed)
+poetry self add poetry-plugin-export
+
+# Run with Docker Compose (recommended for development)
+docker-compose up --build
+
+# Run locally (requires PostgreSQL setup)
+poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+# Activate environment
+poetry shell
+</code></pre>
+<h3 id="testing">Testing</h3>
+<pre><code class="language-bash"># Poetry 2.x: Install test dependencies first
+poetry install --with test
+
+# Run all tests
+poetry run pytest
+
+# Run specific test files
+poetry run pytest tests/unit/test_hello.py
+poetry run pytest tests/integration/app/api/test_todos_api.py
+
+# Run tests with coverage
+poetry run pytest --cov=app --cov=libkoiki --cov-report=term-missing --cov-report=html tests/
+
+# Poetry 2.x: Run tests for specific dependency groups
+poetry install --only=test
+poetry run pytest
+</code></pre>
+<h3 id="database-management">Database Management</h3>
+<pre><code class="language-bash"># Create new migration
+alembic revision --autogenerate -m &quot;description&quot;
+
+# Apply migrations
+alembic upgrade head
+
+# Check migration status
+alembic current
+</code></pre>
+<h3 id="code-quality-enterprise-dependency-management">Code Quality &amp; Enterprise Dependency Management</h3>
+<pre><code class="language-bash"># Poetry 2.x with PEP 621 compliance for enterprise dependency management
+# Project follows strict enterprise versioning: minor version locks for stability
+
+# Poetry 2.x: Comprehensive dependency verification
+poetry check --lock                 # Verify lock file consistency
+poetry lock                        # Update lock file if needed
+
+# Poetry 2.x: Dependency synchronization and management
+poetry sync                        # Sync environment with lock file
+poetry install --sync              # Alternative sync method
+
+# Install specific dependency groups (Poetry 2.x feature)
+poetry install --only=main         # Production dependencies only
+poetry install --only=dev          # Development dependencies only
+poetry install --only=test         # Test dependencies only
+poetry install --only=security     # Security audit tools
+poetry install --with dev,test,security  # Multiple groups
+
+# Enterprise Security Auditing (Python 3.13 Compatible)
+# Note: safety excluded due to pydantic &lt;2.0 dependency conflict
+poetry install --with security     # Install security tools
+poetry run pip-audit               # OSV database vulnerability scan (pydantic independent)
+poetry run pip-audit --format=json --output=security-audit.json  # JSON report
+poetry run bandit -r . --severity-level medium  # Static security analysis
+poetry run bandit -r . -f json -o security-bandit.json  # JSON report
+
+# Environment and dependency information
+poetry env info                     # Environment details
+poetry show --tree                  # Dependency tree
+poetry show --tree --only=main     # Production dependency tree
+poetry show --outdated             # Check for updates
+poetry config --list               # Current Poetry configuration
+
+# Cache management (Poetry 2.x optimization)
+poetry cache clear --all pypi       # Clear package cache
+poetry cache list                   # List cached packages
+</code></pre>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>This is KOIKI-FW v0.5.0, an enterprise-grade FastAPI application framework optimized for Poetry 2.x and PEP 621 compliance with the following key characteristics:</p>
+<h3 id="project-structure">Project Structure</h3>
+<ul>
+<li><strong>Root <code>/</code></strong>: Main application entry point and Docker configuration</li>
+<li><strong><code>app/</code></strong>: Application-specific code (endpoints, models, schemas, services, repositories)</li>
+<li><strong><code>libkoiki/</code></strong>: Reusable framework library containing core functionality</li>
+<li><strong><code>alembic/</code></strong>: Database migrations</li>
+<li><strong><code>tests/</code></strong>: Unit and integration tests</li>
+<li><strong><code>docs/</code></strong>: Project documentation</li>
+</ul>
+<h3 id="framework-architecture-libkoiki">Framework Architecture (libkoiki)</h3>
+<p>The libkoiki library provides enterprise-ready components:</p>
+<ul>
+<li><strong><code>core/</code></strong>: Configuration, logging, security, middleware, error handling</li>
+<li><strong><code>api/v1/</code></strong>: API endpoints (auth, users, todos) and routing</li>
+<li><strong><code>db/</code></strong>: Database session management and base models</li>
+<li><strong><code>models/</code></strong>: SQLAlchemy ORM models (User, Todo, Role, Permission)</li>
+<li><strong><code>repositories/</code></strong>: Data access layer following repository pattern</li>
+<li><strong><code>services/</code></strong>: Business logic layer</li>
+<li><strong><code>schemas/</code></strong>: Pydantic models for API serialization</li>
+<li><strong><code>events/</code></strong>: Event publishing and handling system</li>
+<li><strong><code>tasks/</code></strong>: Celery task definitions (commented out in current version)</li>
+<li><strong><code>utils/</code></strong>: Utility functions</li>
+</ul>
+<h3 id="application-layer-app">Application Layer (<code>app/</code>)</h3>
+<p>Application-specific implementations that extend the framework:
+- Uses libkoiki as a local development dependency (Poetry 2.x: <code>libkoiki = {path = "libkoiki", develop = true}</code>)
+- Follows PEP 621 standard in pyproject.toml for metadata and dependencies
+- Follows the same layered architecture pattern</p>
+<h3 id="key-technologies">Key Technologies</h3>
+<ul>
+<li><strong>FastAPI</strong>: Web framework with automatic OpenAPI documentation</li>
+<li><strong>SQLAlchemy 2.0</strong>: Async ORM with PostgreSQL</li>
+<li><strong>Alembic</strong>: Database migrations</li>
+<li><strong>Pydantic</strong>: Data validation and serialization</li>
+<li><strong>structlog</strong>: Structured logging</li>
+<li><strong>JWT</strong>: Authentication via python-jose</li>
+<li><strong>slowapi</strong>: Rate limiting</li>
+<li><strong>Redis</strong>: Optional for event publishing and enhanced rate limiting</li>
+<li><strong>Docker</strong>: Containerization with multi-stage builds</li>
+</ul>
+<h3 id="configuration-system">Configuration System</h3>
+<p>Settings are managed through <code>libkoiki.core.config.Settings</code> using pydantic-settings:
+- Environment variables override defaults
+- Separate configurations for development/testing/production
+- Database URL, Redis settings, CORS origins, rate limiting, etc.
+- Poetry 2.x: Dependencies managed via PEP 621 [project] section
+- Development dependencies organized in Poetry 2.x dependency groups</p>
+<h3 id="development-patterns">Development Patterns</h3>
+<h4 id="dependency-injection">Dependency Injection</h4>
+<p>The framework uses FastAPI's dependency injection system extensively:
+- Database sessions injected via <code>get_db()</code>
+- Authentication via <code>get_current_user()</code>
+- Rate limiting via slowapi decorators</p>
+<h4 id="repository-pattern">Repository Pattern</h4>
+<p>Data access follows repository pattern:
+- Base repository in <code>libkoiki.repositories.base</code>
+- Specific repositories extend base functionality
+- Services layer calls repositories, not models directly</p>
+<h4 id="event-system">Event System</h4>
+<p>Async event handling system (Redis-based, currently disabled):
+- Event publishers in services
+- Event handlers for cross-cutting concerns
+- Supports distributed event processing</p>
+<h3 id="redis-integration">Redis Integration</h3>
+<p>Redis support is optional and gracefully degrades:
+- If Redis unavailable, uses in-memory alternatives
+- Event system becomes no-op
+- Rate limiting falls back to fixed-window strategy</p>
+<h3 id="security-features">Security Features</h3>
+<ul>
+<li>JWT-based authentication with role-based access control (RBAC)</li>
+<li>Security headers middleware</li>
+<li>Rate limiting per endpoint</li>
+<li>Audit logging middleware</li>
+<li>Password hashing with bcrypt</li>
+</ul>
+<h3 id="api-documentation">API Documentation</h3>
+<ul>
+<li>Swagger UI: http://localhost:8000/docs</li>
+<li>ReDoc: http://localhost:8000/redoc</li>
+<li>OpenAPI spec: http://localhost:8000/openapi.json</li>
+</ul>
+<h2 id="development-notes">Development Notes</h2>
+<h3 id="database">Database</h3>
+<ul>
+<li>Uses PostgreSQL exclusively (no SQLite support)</li>
+<li>Async SQLAlchemy 2.0 with asyncpg driver</li>
+<li>Connection pooling configured in settings</li>
+<li>All schema changes via Alembic migrations</li>
+</ul>
+<h3 id="testing-strategy">Testing Strategy</h3>
+<ul>
+<li>Separate unit and integration test directories</li>
+<li>Test configuration in <code>pytest.ini_options</code> (pyproject.toml)</li>
+<li>Coverage tracking for <code>app</code> and <code>libkoiki</code> modules</li>
+<li>Test database setup via conftest.py</li>
+</ul>
+<h3 id="docker-development">Docker Development</h3>
+<ul>
+<li>Multi-stage Dockerfile optimized for Poetry 2.x with parallel installation</li>
+<li>Poetry 2.x performance optimizations: parallel workers, cache management</li>
+<li>Non-root user (appuser) for security</li>
+<li>Health checks configured</li>
+<li>Volume mounts for live reload during development</li>
+<li>Optimized layer caching for Poetry dependencies</li>
+</ul>
+<h3 id="poetry-2x-pep-621-features">Poetry 2.x &amp; PEP 621 Features</h3>
+<ul>
+<li><strong>PEP 621 Compliance</strong>: Project metadata and dependencies in standardized <code>[project]</code> section</li>
+<li><strong>Dependency Groups</strong>: Organized development, test, and production dependencies</li>
+<li><strong>Performance Optimization</strong>: Parallel installation with configurable worker count</li>
+<li><strong>Modern Build System</strong>: poetry-core&gt;=1.5.0 for enhanced Poetry 2.x features</li>
+<li><strong>Standardized Dependencies</strong>: Semantic versioning ranges instead of wildcards</li>
+<li><strong>Tool Interoperability</strong>: PEP 621 compliance enables easy migration between build tools</li>
+</ul>
+<h3 id="environment-configuration">Environment Configuration</h3>
+<ul>
+<li><code>.env</code> file for local settings (not committed)</li>
+<li>Settings cascade: environment variables → .env → defaults</li>
+<li>Separate configurations per environment (APP_ENV setting)</li>
+<li>Poetry 2.x: Optimized virtualenv and cache configuration</li>
+</ul>
+<h2 id="enterprise-security-strategy">Enterprise Security Strategy</h2>
+<h3 id="security-first-dependency-management">Security-First Dependency Management</h3>
+<p><strong>Core Principles:</strong>
+1. <strong>Security Over Stability</strong>: During development phase, prioritize security fixes over version stability
+2. <strong>Proactive Updates</strong>: Leverage development periods for comprehensive security modernization
+3. <strong>Impact-Based Decisions</strong>: Update scope determined by impact analysis and dependency count
+4. <strong>Compatibility Priority</strong>: Maintain enterprise requirements (e.g., pydantic &gt;=2.7.0)</p>
+<p><strong>Vulnerability Response Framework:</strong></p>
+<pre><code class="language-bash"># 1. Immediate Assessment
+poetry run pip-audit --format=json --output=vuln-assessment.json
+poetry run pip-audit  # Human-readable summary
+
+# 2. Impact Analysis
+poetry show --tree | grep -E &quot;(vulnerable_package|dependency_chain)&quot;
+poetry show vulnerable_package  # Check version and dependents
+
+# 3. Security-Priority Update Process
+# Update to security-fixed version (not just minimum required)
+poetry add &quot;fastapi&gt;=0.115.13,&lt;0.116.0&quot;  # Latest stable with security fixes
+poetry add &quot;python-jose&gt;=3.4.0,&lt;3.6.0&quot;   # Beyond minimum fix version
+
+# 4. Verification
+poetry lock
+poetry install
+poetry run pip-audit  # Confirm no vulnerabilities
+
+# 5. Compatibility Testing
+poetry run pytest  # Ensure functionality maintained
+</code></pre>
+<p><strong>Development Phase Security Strategy:</strong>
+- <strong>Proactive Approach</strong>: Update during development when changes are easier to implement
+- <strong>Comprehensive Scope</strong>: Address not just immediate fixes but also modernization opportunities
+- <strong>Enterprise Requirements</strong>: Maintain compatibility with enterprise-grade dependencies
+- <strong>Testing Priority</strong>: Ensure all updates maintain system functionality</p>
+<p><strong>Tool Selection Rationale:</strong>
+- <strong>pip-audit</strong>: Primary tool (pydantic-independent, OSV database)
+- <strong>bandit</strong>: Static analysis (pydantic-independent)
+- <strong>safety</strong>: Excluded due to pydantic &lt;2.0 dependency conflict
+- <strong>Alternative</strong>: Use pip-audit which provides equivalent vulnerability detection</p>
+<h3 id="security-audit-integration">Security Audit Integration</h3>
+<p><strong>Daily Security Monitoring:</strong></p>
+<pre><code class="language-bash"># Automated security check script
+#!/bin/bash
+echo &quot;=== Daily Security Audit ===&quot;
+poetry run pip-audit --format=json --output=&quot;audit-$(date +%Y%m%d).json&quot;
+poetry run pip-audit
+poetry run bandit -r . --severity-level medium
+poetry show --outdated | grep -E &quot;(critical|security)&quot;
+</code></pre>
+<p><strong>Pre-Deployment Security Gate:</strong></p>
+<pre><code class="language-bash"># Security gate for deployment pipeline
+poetry install --with security
+poetry run pip-audit || exit 1  # Block deployment on vulnerabilities
+poetry run bandit -r . --severity-level high || exit 1  # Block on high-severity issues
+</code></pre>
+<h2 id="poetry-2x-troubleshooting">Poetry 2.x Troubleshooting</h2>
+<h3 id="common-issues-and-solutions">Common Issues and Solutions</h3>
+<pre><code class="language-bash"># If dependency installation fails
+poetry cache clear --all pypi
+poetry install --no-cache
+
+# If lock file is out of sync
+poetry check --lock
+poetry lock
+poetry install
+
+# If local libkoiki package fails to install
+cd libkoiki
+poetry build
+cd ..
+poetry install
+
+# Check Poetry and environment status
+poetry --version
+poetry env info
+poetry config --list
+
+# Reset Poetry environment if needed
+poetry env remove python
+poetry install
+</code></pre>
+<h3 id="enterprise-security-issues">Enterprise Security Issues</h3>
+<pre><code class="language-bash"># Python 3.13 + pydantic &gt;=2.7.0 Compatible Security Audit
+poetry install --with security
+poetry run pip-audit --format=json --output=audit-issues.json
+poetry run pip-audit  # Human-readable output
+
+# Emergency security update process (Enterprise-grade)
+poetry add &quot;package_name&gt;=fixed.version,&lt;next.major.0&quot;  # Security fix with stability
+poetry lock  # Update lock file
+poetry install
+poetry run pip-audit  # Verify no vulnerabilities remain
+
+# Check for specific CVE
+poetry run pip-audit | grep -i &quot;CVE-XXXX-XXXX&quot;
+poetry show package_name  # Check installed version
+
+# Python 3.13 Compatibility Issues Resolution
+# If asyncpg compilation fails
+poetry add &quot;asyncpg&gt;=0.30.0,&lt;0.31.0&quot;  # Python 3.13 compatible version
+poetry lock
+poetry install
+
+# If pydantic dependency conflicts occur
+poetry add &quot;pydantic&gt;=2.9.0,&lt;2.12.0&quot;  # Enterprise compatible range
+poetry add &quot;pydantic-settings&gt;=2.9.1,&lt;2.12.0&quot;  # Matching pydantic-settings
+
+# Generate comprehensive security compliance report
+poetry run pip-audit --format=json --output=compliance-report.json
+poetry run bandit -r . -f json -o security-static-analysis.json
+echo &quot;Security audit complete. Reports: compliance-report.json, security-static-analysis.json&quot;
+
+# Tool compatibility verification
+poetry run python -c &quot;import asyncpg, pydantic, fastapi; print('✅ Core dependencies compatible')&quot;
+poetry run pip-audit --version
+poetry run bandit --version
+</code></pre>
+<h3 id="python-313-specific-troubleshooting">Python 3.13 Specific Troubleshooting</h3>
+<pre><code class="language-bash"># Python 3.13 Compatibility Verification
+python --version  # Ensure Python 3.13.x
+
+# If C extension compilation fails (common with Python 3.13)
+poetry config installer.parallel false  # Disable parallel for troubleshooting
+poetry cache clear --all pypi
+poetry install --no-cache
+
+# asyncpg Python 3.13 Fix
+poetry add &quot;asyncpg&gt;=0.30.0,&lt;0.31.0&quot;
+poetry lock
+poetry install
+
+# pydantic 2.x Enterprise Requirements
+poetry add &quot;pydantic&gt;=2.9.0,&lt;2.12.0&quot;  # Latest stable compatible with enterprise tools
+poetry run python -c &quot;import pydantic; print(f'pydantic {pydantic.__version__} ready')&quot;
+
+# Security tools compatibility check
+poetry install --with security
+poetry run pip-audit --version  # Should show 2.9.0+
+poetry run bandit --version     # Should show 1.8.5+
+
+# If wheel building fails
+pip install --upgrade pip setuptools wheel
+poetry install --no-cache
+</code></pre>
+<h3 id="migration-notes">Migration Notes</h3>
+<ul>
+<li><strong>From Poetry 1.x</strong>: All configurations have been updated to Poetry 2.x standards</li>
+<li><strong>PEP 621 Adoption</strong>: Dependencies are now managed in <code>[project]</code> section</li>
+<li><strong>Dependency Groups</strong>: Use <code>--with</code> and <code>--only</code> flags for targeted installations</li>
+<li><strong>Performance</strong>: Parallel installation is enabled by default in CI/CD and Docker</li>
+</ul>
+<h3 id="key-configuration-files">Key Configuration Files</h3>
+<ul>
+<li><strong><code>pyproject.toml</code></strong>: PEP 621 compliant project configuration with Poetry 2.x features</li>
+<li><strong><code>libkoiki/pyproject.toml</code></strong>: Framework library configuration optimized for Poetry 2.x</li>
+<li><strong><code>.github/workflows/ci.yml</code></strong>: CI/CD pipeline with Poetry 2.x optimizations</li>
+<li><strong><code>Dockerfile</code></strong>: Container build optimized for Poetry 2.x parallel installation</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

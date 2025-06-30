@@ -1,0 +1,640 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>KOIKI-FW コンテナ配備コマンド一覧 - KOIKI-FW v0.5.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#koiki-fw" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="KOIKI-FW v0.5.0" class="md-header__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KOIKI-FW v0.5.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              KOIKI-FW コンテナ配備コマンド一覧
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="KOIKI-FW v0.5.0" class="md-nav__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KOIKI-FW v0.5.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概要
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_kkfw_0.5.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KOIKI-FW 機能設計・構成ガイド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 初回環境構築時
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 日常の開発作業
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. アプリケーションコード修正後
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. データモデル変更時（マイグレーション作成）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. マイグレーション関連操作
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 環境のクリーンアップ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. トラブルシューティング
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 本番環境デプロイ準備
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-2025-06-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. セキュリティ監査とテスト (2025-06-21 追加)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      アプリケーションへのアクセス
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      技術的な説明
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="技術的な説明">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#docker-entrypointsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      docker-entrypoint.shの機能
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poetry-2x" class="md-nav__link">
+    <span class="md-ellipsis">
+      最新のPoetry 2.x対応状況
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="最新のPoetry 2.x対応状況">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      依存性管理の改善点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      主要な更新内容
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="koiki-fw">KOIKI-FW コンテナ配備コマンド一覧</h1>
+<p>このドキュメントでは、KOIKIフレームワークのDockerコンテナによる各種配備シナリオと必要なコマンドを説明します。<a href="docker-entrypoint.sh"><code>docker-entrypoint.sh</code></a>の自動実行機能を考慮した最適な手順を示しています。</p>
+<p><strong>更新</strong>: Poetry 2.x移行とセキュリティ修正完了（2025-06-21）</p>
+<h2 id="1">1. 初回環境構築時</h2>
+<pre><code class="language-bash"># 環境変数ファイルの準備
+cp .env.example .env
+# 必要に応じて.envファイルを編集
+
+# コンテナのビルドと起動
+docker-compose up --build -d
+# この過程で以下が自動的に実行されます:
+# - データベース接続の確認（最大30回リトライ）
+# - alembic/versionsディレクトリの確認と作成
+# - 初期マイグレーション実行（または必要に応じて自動生成）
+
+# アプリケーション起動ログの確認
+docker-compose logs -f app
+</code></pre>
+<h2 id="2">2. 日常の開発作業</h2>
+<pre><code class="language-bash"># コンテナ起動（既にビルド済みの場合）
+docker-compose up -d
+# entrypoint.shによりマイグレーションが自動実行されます
+
+# コンテナ停止
+docker-compose down
+
+# ログ確認
+docker-compose logs -f app
+</code></pre>
+<h2 id="3">3. アプリケーションコード修正後</h2>
+<pre><code class="language-bash"># ソースコードの変更のみの場合
+# （多くのコードはボリュームマウントされているため変更が即時反映）
+# 特別な操作は必要ありません
+
+# 依存関係やDockerfile変更時は再ビルドが必要
+docker-compose down
+docker-compose build --no-cache
+docker-compose up -d
+</code></pre>
+<h2 id="4">4. データモデル変更時（マイグレーション作成）</h2>
+<pre><code class="language-bash"># 1. モデルコードを変更
+
+# 2. 新しいマイグレーションの作成
+docker-compose exec app alembic revision --autogenerate -m &quot;変更内容を説明&quot;
+
+# 3. コンテナ再起動でマイグレーションが自動適用
+docker-compose restart app
+
+# 4. マイグレーション適用確認
+docker-compose logs -f app
+</code></pre>
+<h2 id="5">5. マイグレーション関連操作</h2>
+<pre><code class="language-bash"># 現在のマイグレーション状態確認
+docker-compose exec app alembic current
+
+# マイグレーション履歴の確認
+docker-compose exec app alembic history
+
+# 特定バージョンへのロールバック（必要時のみ）
+docker-compose exec app alembic downgrade &lt;revision_id&gt;
+</code></pre>
+<h2 id="6">6. 環境のクリーンアップ</h2>
+<pre><code class="language-bash"># コンテナと関連リソースの停止・削除（データは保持）
+docker-compose down
+
+# データも含めた完全クリーンアップ
+docker-compose down -v
+
+# 全ての環境を初期状態から再構築
+docker-compose up --build -d
+</code></pre>
+<h2 id="7">7. トラブルシューティング</h2>
+<pre><code class="language-bash"># コンテナの状態確認
+docker-compose ps
+
+# entrypoint.shを含む詳細ログの確認
+docker-compose logs -f app
+
+# データベース接続確認
+docker-compose exec db psql -U koiki_user -d koiki_todo_db
+
+# コンテナ内シェルアクセス
+docker-compose exec app bash
+
+# 強制的な再ビルド
+docker-compose build --no-cache
+docker-compose up -d --force-recreate
+</code></pre>
+<h2 id="8">8. 本番環境デプロイ準備</h2>
+<pre><code class="language-bash"># 本番用.envファイルの準備
+cp .env.example .env.production
+# 本番環境用の設定に編集
+
+# 本番環境用イメージのビルド
+docker-compose -f docker-compose.production.yml build
+
+# イメージのプッシュ（レジストリがある場合）
+docker-compose -f docker-compose.production.yml push
+</code></pre>
+<h2 id="9-2025-06-21">9. セキュリティ監査とテスト (2025-06-21 追加)</h2>
+<pre><code class="language-bash"># セキュリティ監査の実行
+docker-compose exec app pip-audit
+
+# 静的セキュリティ解析
+docker-compose exec app bandit -r app/ libkoiki/
+
+# 包括的APIテスト（開発環境）
+curl -s http://localhost:8000/ | jq .
+curl -s http://localhost:8000/health | jq .
+curl -s http://localhost:8000/api/v1/health | jq .
+
+# ユーザー登録テスト
+curl -X POST http://localhost:8000/api/v1/auth/register \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;username&quot;: &quot;testuser&quot;, &quot;email&quot;: &quot;test@example.com&quot;, &quot;password&quot;: &quot;testpass123&quot;}' | jq .
+
+# 認証トークン取得テスト
+curl -X POST http://localhost:8000/api/v1/auth/login \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;username&quot;: &quot;testuser&quot;, &quot;password&quot;: &quot;testpass123&quot;}' | jq .
+</code></pre>
+<h2 id="_1">アプリケーションへのアクセス</h2>
+<p>コンテナ起動後、以下のURLでアプリケーションにアクセスできます：</p>
+<ul>
+<li>API ドキュメント (Swagger UI): <a href="http://localhost:8000/docs">http://localhost:8000/docs</a></li>
+<li>API ドキュメント (ReDoc): <a href="http://localhost:8000/redoc">http://localhost:8000/redoc</a></li>
+<li>ルートエンドポイント: <a href="http://localhost:8000/">http://localhost:8000/</a></li>
+</ul>
+<h2 id="_2">技術的な説明</h2>
+<h3 id="docker-entrypointsh">docker-entrypoint.shの機能</h3>
+<p>コンテナ起動時には<a href="docker-entrypoint.sh"><code>docker-entrypoint.sh</code></a>スクリプトが実行され、以下の処理が自動的に行われます：</p>
+<ol>
+<li><strong>データベース接続確認</strong>：</li>
+<li>DATABASE_URL環境変数から接続情報を解析</li>
+<li>
+<p>最大30回のリトライでデータベースへの接続を確認</p>
+</li>
+<li>
+<p><strong>マイグレーション準備</strong>：</p>
+</li>
+<li>
+<p><code>alembic/versions</code>ディレクトリの存在確認と作成</p>
+</li>
+<li>
+<p><strong>マイグレーション実行</strong>：</p>
+</li>
+<li><code>alembic upgrade head</code>でマイグレーションを実行</li>
+<li>マイグレーションファイルが存在しない場合は初期マイグレーションを自動生成</li>
+</ol>
+<p>この自動化により、開発者はデータベースセットアップの多くの手順を意識する必要がなくなり、アプリケーション開発に集中できます。</p>
+<h2 id="poetry-2x">最新のPoetry 2.x対応状況</h2>
+<h3 id="_3">依存性管理の改善点</h3>
+<ul>
+<li><strong>Poetry 2.1.0</strong>: 最新のPoetry 2.xシステムを採用</li>
+<li><strong>PEP 621準拠</strong>: <code>pyproject.toml</code>が標準的な設定構造に移行</li>
+<li><strong>セキュリティ強化</strong>: 全脆弱性（PYSEC-2024-38, PYSEC-2024-232/233, GHSA-f96h-pmfr-66vw）を修正</li>
+<li><strong>Python 3.13対応</strong>: 完全な互換性を確保</li>
+</ul>
+<h3 id="_4">主要な更新内容</h3>
+<pre><code class="language-toml"># 主要パッケージのバージョン更新例
+fastapi = &quot;&gt;=0.115.13,&lt;0.116.0&quot;     # セキュリティ修正版
+pydantic = &quot;&gt;=2.11.7,&lt;2.12.0&quot;       # 検証機能強化版
+uvicorn = &quot;&gt;=0.34.3,&lt;0.35.0&quot;        # パフォーマンス大幅改善
+pytest = &quot;&gt;=8.4.1,&lt;8.5.0&quot;          # テストフレームワーク最新版
+</code></pre>
+<p>詳細な更新履歴と企業向け実装戦略については、<a href="../ENTERPRISE_DEPENDENCY_STRATEGY/">ENTERPRISE_DEPENDENCY_STRATEGY.md</a>を参照してください。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

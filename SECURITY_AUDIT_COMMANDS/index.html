@@ -1,0 +1,634 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>企業向けセキュリティ監査コマンド - KOIKI-FW v0.5.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="KOIKI-FW v0.5.0" class="md-header__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KOIKI-FW v0.5.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              企業向けセキュリティ監査コマンド
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="KOIKI-FW v0.5.0" class="md-nav__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KOIKI-FW v0.5.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概要
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_kkfw_0.5.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KOIKI-FW 機能設計・構成ガイド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      依存性脆弱性スキャン
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="依存性脆弱性スキャン">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 基本的なセキュリティチェック
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 継続的セキュリティ監視
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 緊急セキュリティアップデート
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      本番環境デプロイ前チェックリスト
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本番環境デプロイ前チェックリスト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      セキュリティ検証プロセス
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      月次セキュリティレビュー
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      エンタープライズ監査統合
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="エンタープライズ監査統合">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI/CD パイプライン統合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">企業向けセキュリティ監査コマンド</h1>
+<h2 id="_2">依存性脆弱性スキャン</h2>
+<h3 id="1">1. 基本的なセキュリティチェック</h3>
+<pre><code class="language-bash"># セキュリティツールのインストール
+poetry install --with security
+
+# Safety - 既知の脆弱性データベースチェック
+poetry run safety check
+
+# pip-audit - OSV データベース監査
+poetry run pip-audit
+
+# Bandit - Pythonコードの静的セキュリティ解析
+poetry run bandit -r . -f json -o security-report.json
+poetry run bandit -r . --severity-level medium
+</code></pre>
+<h3 id="2">2. 継続的セキュリティ監視</h3>
+<pre><code class="language-bash"># 日次セキュリティチェック
+#!/bin/bash
+echo &quot;=== Daily Security Audit ===&quot;
+echo &quot;Date: $(date)&quot;
+echo &quot;&quot;
+
+echo &quot;1. Dependency Vulnerability Scan (Safety):&quot;
+poetry run safety check --json &gt; safety-report-$(date +%Y%m%d).json
+poetry run safety check
+
+echo &quot;&quot;
+echo &quot;2. OSV Database Audit (pip-audit):&quot;
+poetry run pip-audit --format=json --output=audit-report-$(date +%Y%m%d).json
+poetry run pip-audit
+
+echo &quot;&quot;
+echo &quot;3. Static Code Security Analysis (Bandit):&quot;
+poetry run bandit -r . -f json -o bandit-report-$(date +%Y%m%d).json
+poetry run bandit -r . --severity-level low
+
+echo &quot;&quot;
+echo &quot;4. Outdated Dependencies Check:&quot;
+poetry show --outdated
+
+echo &quot;=== Security Audit Complete ===&quot;
+</code></pre>
+<h3 id="3">3. 緊急セキュリティアップデート</h3>
+<pre><code class="language-bash"># 緊急CVE対応プロセス
+echo &quot;=== Emergency Security Update Process ===&quot;
+
+# 1. 現在のバージョン確認
+poetry show | grep -E &quot;(fastapi|uvicorn|sqlalchemy|pydantic)&quot;
+
+# 2. 脆弱性影響確認
+poetry run safety check --json | jq '.vulnerabilities[]'
+
+# 3. 特定パッケージの緊急更新
+poetry add &quot;fastapi&gt;=0.104.2,&lt;0.105.0&quot;  # 例: セキュリティ修正版
+poetry add &quot;pydantic&gt;=2.5.1,&lt;2.6.0&quot;     # 例: セキュリティ修正版
+
+# 4. 依存性整合性確認
+poetry check --lock
+poetry lock
+poetry install
+
+# 5. セキュリティ再検証
+poetry run safety check
+poetry run pip-audit
+
+# 6. テスト実行
+poetry run pytest tests/
+
+echo &quot;=== Emergency Update Complete ===&quot;
+</code></pre>
+<h2 id="_3">本番環境デプロイ前チェックリスト</h2>
+<h3 id="_4">セキュリティ検証プロセス</h3>
+<pre><code class="language-bash">#!/bin/bash
+# pre-deploy-security-check.sh
+
+set -e
+
+echo &quot;🔒 Pre-deployment Security Verification&quot;
+echo &quot;=======================================&quot;
+
+# 1. 依存性脆弱性スキャン
+echo &quot;1. Vulnerability Scanning...&quot;
+poetry run safety check --json &gt; pre-deploy-safety.json
+if ! poetry run safety check; then
+    echo &quot;❌ Vulnerability found! Deployment blocked.&quot;
+    exit 1
+fi
+
+# 2. 依存性監査
+echo &quot;2. Dependency Audit...&quot;
+poetry run pip-audit --format=json --output=pre-deploy-audit.json
+if ! poetry run pip-audit; then
+    echo &quot;❌ Audit failed! Deployment blocked.&quot;
+    exit 1
+fi
+
+# 3. コードセキュリティ解析
+echo &quot;3. Static Security Analysis...&quot;
+poetry run bandit -r . -f json -o pre-deploy-bandit.json
+if ! poetry run bandit -r . --severity-level medium; then
+    echo &quot;⚠️  Security issues found. Review required.&quot;
+    # 注意: 中レベル以上のセキュリティ問題がある場合は要レビュー
+fi
+
+# 4. 設定ファイル検証
+echo &quot;4. Configuration Security Check...&quot;
+if grep -r &quot;password\|secret\|key&quot; . --exclude-dir=.git --exclude-dir=.venv --exclude=&quot;*.md&quot;; then
+    echo &quot;⚠️  Potential secrets in code. Manual review required.&quot;
+fi
+
+# 5. Dockerセキュリティ
+echo &quot;5. Container Security Baseline...&quot;
+docker run --rm -v &quot;$(pwd)&quot;:/app hadolint/hadolint hadolint /app/Dockerfile
+
+echo &quot;✅ Security verification complete!&quot;
+echo &quot;📄 Reports generated:&quot;
+echo &quot;   - pre-deploy-safety.json&quot;
+echo &quot;   - pre-deploy-audit.json&quot; 
+echo &quot;   - pre-deploy-bandit.json&quot;
+</code></pre>
+<h2 id="_5">月次セキュリティレビュー</h2>
+<pre><code class="language-bash">#!/bin/bash
+# monthly-security-review.sh
+
+echo &quot;📅 Monthly Security Review - $(date +%Y-%m)&quot;
+echo &quot;============================================&quot;
+
+# 1. 全依存性の最新状況確認
+echo &quot;1. Dependency Status Review:&quot;
+poetry show --outdated &gt; monthly-outdated-$(date +%Y%m).txt
+poetry show --tree &gt; monthly-deps-tree-$(date +%Y%m).txt
+
+# 2. 累積脆弱性レポート
+echo &quot;2. Cumulative Vulnerability Report:&quot;
+poetry run safety check --json &gt; monthly-safety-$(date +%Y%m).json
+
+# 3. セキュリティ設定レビュー
+echo &quot;3. Security Configuration Review:&quot;
+echo &quot;   - Environment variables check&quot;
+echo &quot;   - CORS settings verification&quot;
+echo &quot;   - Rate limiting configuration&quot;
+echo &quot;   - Authentication mechanisms&quot;
+
+# 4. Docker セキュリティベースライン
+echo &quot;4. Container Security Assessment:&quot;
+docker scout cves local://koiki-pyfw-app &gt; monthly-docker-cves-$(date +%Y%m).txt
+
+# 5. 推奨アクション生成
+echo &quot;5. Recommended Actions:&quot;
+echo &quot;   See generated reports for specific recommendations&quot;
+
+echo &quot;📊 Monthly review complete. Reports saved with timestamp.&quot;
+</code></pre>
+<h2 id="_6">エンタープライズ監査統合</h2>
+<h3 id="cicd">CI/CD パイプライン統合</h3>
+<pre><code class="language-yaml"># .github/workflows/security-audit.yml
+name: Security Audit
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 毎日午前2時
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11.7'
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 - --version 2.1.0
+        echo &quot;$HOME/.local/bin&quot; &gt;&gt; $GITHUB_PATH
+
+    - name: Install dependencies
+      run: |
+        poetry install --with security
+
+    - name: Run Safety Check
+      run: |
+        poetry run safety check --json --output safety-report.json
+        poetry run safety check
+
+    - name: Run pip-audit
+      run: |
+        poetry run pip-audit --format=json --output audit-report.json
+
+    - name: Run Bandit
+      run: |
+        poetry run bandit -r . -f json -o bandit-report.json
+        poetry run bandit -r . --severity-level medium
+
+    - name: Upload Security Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-reports
+        path: |
+          safety-report.json
+          audit-report.json
+          bandit-report.json
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
