@@ -1,8 +1,11 @@
-site_name: KOIKI-FW v0.5.0
+site_name: KOIKI-FW v0.6.0
 theme:
   name: material
 
 nav:
   - 概要: index.md
-  - KOIKI-FW 機能設計・構成ガイド: design_kkfw_0.5.0.md
+  - KOIKI-FW 機能設計・構成ガイド: design_kkfw_0.6.0.md
+  - アプリデプロイ手順: README-deploy.md
+  - セキュリティ監査コマンド: SECURITY_AUDIT_COMMANDS.md
+  - 認証系APIテストガイド: 認証系APIテストガイド.md
 

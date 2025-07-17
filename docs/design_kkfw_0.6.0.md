@@ -1,9 +1,9 @@
-# KOIKI-FW v0.5.0
+# KOIKI-FW v0.6.0
 
 ---
 
-本ドキュメントは、エンタープライズ向けFastAPIベースのWebアプリケーション開発フレームワーク「KOIKI-FW」のバージョン 0.5.0 に対応した機能設計・構成ガイドです。
-このバージョンでは、v0.3.1の基本構成を維持しながら、重要なセキュリティ脆弱性の修正とエンタープライズ向け依存性管理戦略、包括的な依存関係のモダナイゼーションが実施されました。
+本ドキュメントは、エンタープライズ向けFastAPIベースのWebアプリケーション開発フレームワーク「KOIKI-FW」のバージョンである v0.6.0 に対応した機能設計・構成ガイドです。
+このバージョンでは、v0.5.0の基本構成とセキュリティ修正を継承しながら、認証系APIの充実とセキュリティ監査APIの強化、包括的なドキュメント整備が実施されました。
 
 ---
 
@@ -48,8 +48,8 @@
     - [10.2 app/routers/todo_router.py](#102-approuterstodo_routerpy)
     - [10.3 app/services/todo_service.py](#103-appservicestodo_servicepy)
     - [10.4 app/repositories/todo_repository.py](#104-apprepositoriestodo_repositorypy)
-    - [10.5 app/models/todo_model.py](#105-appmodelstodo_modelpy)
-    - [10.6 app/schemas/todo_schema.py](#106-appschemastodo_schemapy)
+    - [10.5 libkoiki/models/todo.py](#105-libkoikimodelstodopy)
+    - [10.6 libkoiki/schemas/todo.py](#106-libkoikischemastodopy)
     - [10.7 app/api/dependencies.py (アプリケーション固有の依存性)](#107-appapidependenciespy-アプリケーション固有の依存性)
     - [10.8 データベースマイグレーション (Alembic)](#108-データベースマイグレーション-alembic)
     - [10.9 起動方法](#109-起動方法)
@@ -103,7 +103,13 @@ KOIKI-FW は、FastAPI による堅牢かつ拡張可能な Web アプリケー�
 - 非同期処理やJWT認証など、**実務要件に即した機能モジュールの標準搭載**
 - 将来的な DDD（ドメイン駆動設計）導入を視野に入れた、拡張可能な構造
 
-KOIKI-FW v0.5.0 では、フレームワーク機能を `libkoiki/` に明確に分離し、開発者が `/app` 以下にアプリケーション本体を実装できる構成を維持しながら、エンタープライズ向け依存性管理戦略を導入し、包括的なセキュリティアップデートを実施しました。
+KOIKI-FW v0.6.0 では、v0.5.0 の堅牢なセキュリティ基盤を継承しながら、**認証系APIの充実**と**セキュリティ監査APIの強化**を重点的に実施しました。JWT認証、リフレッシュトークン、パスワードリセット、ログイン試行制限など、エンタープライズ環境で求められる包括的な認証システムを標準提供し、実務に即した認証・認可機能を実現しています。
+
+KOIKI-FW は以下を目的としたフレームワークです：
+
+- **高い拡張性**を持つ FastAPI ベースのアプリ基盤
+- **業務アプリに求められる非同期処理、認証、権限、DB操作の統合**
+- **DDD（ドメイン駆動設計）への段階的な移行が可能な構造**
 
 ---
 
@@ -137,7 +143,7 @@ KOIKI-FW v0.5.0 では、フレームワーク機能を `libkoiki/` に明確に
     *   データ永続化層（データベース）へのアクセスを抽象化。
     *   SQLAlchemy を使用した CRUD 操作やカスタムクエリの実装。
     *   サービス層から利用される。
--   **モデルレイヤー** (`app/models/`, `libkoiki/models/`, `app/schemas/`, `libkoiki/schemas/`):
+-   **モデルレイヤー** (`libkoiki/models/`, `libkoiki/schemas/`, `app/models/`, `app/schemas/`):
     *   `models/`: SQLAlchemy を用いたデータベーステーブル定義 (ORM モデル)。
     *   `schemas/`: Pydantic を用いた API のリクエスト/レスポンスデータ構造定義、およびバリデーションルール。
 -   **コア・インフラストラクチャレイヤー** (`libkoiki/core/`, `libkoiki/db/`, `libkoiki/tasks/`):
@@ -185,8 +191,10 @@ KOIKI-FW v0.5.0 では、フレームワーク機能を `libkoiki/` に明確に
 [Message Broker (e.g., Redis, for Celery and optionally Events)]
 
 Associated Data Structures:
-- DB Models (SQLAlchemy in app/models/, libkoiki/models/) - Used by Repository Layer
-- Data Schemas (Pydantic in app/schemas/, libkoiki/schemas/) - Used by API and Service Layers
+- DB Models (SQLAlchemy in libkoiki/models/, app/models/) - Used by Repository Layer
+- Data Schemas (Pydantic in libkoiki/schemas/, app/schemas/) - Used by API and Service Layers
+
+Note: In v0.6.0, most models and schemas are implemented in libkoiki/ for framework-level functionality, with app/ available for application-specific extensions.
 ```
 
 -   **依存の方向**: 矢印は依存の方向を示します。例えば、APIレイヤーはサービスレイヤーに依存しますが、サービスレイヤーはAPIレイヤーを知りません。
@@ -208,16 +216,16 @@ Associated Data Structures:
 │   ├── __init__.py
 │   ├── api/                 # アプリケーション固有のDIなど
 │   │   └── dependencies.py
-│   ├── models/              # アプリケーション固有のDBモデル
-│   │   └── todo_model.py
+│   ├── models/              # アプリケーション固有のDBモデル (拡張用)
+│   │   └── __init__.py
 │   ├── repositories/        # アプリケーション固有のリポジトリ
-│   │   └── todo_repository.py
+│   │   └── __init__.py
 │   ├── routers/             # アプリケーション固有のAPIルーター
-│   │   └── todo_router.py
-│   ├── schemas/             # アプリケーション固有のPydanticスキーマ
-│   │   └── todo_schema.py
+│   │   └── __init__.py
+│   ├── schemas/             # アプリケーション固有のPydanticスキーマ (拡張用)
+│   │   └── __init__.py
 │   ├── services/            # アプリケーション固有のサービス
-│   │   └── todo_service.py
+│   │   └── __init__.py
 │   └── main.py              # アプリケーションのエントリポイント
 ├── libkoiki/                # フレームワークコアライブラリ
 │   ├── __init__.py
@@ -227,7 +235,13 @@ Associated Data Structures:
 │   │       ├── __init__.py
 │   │       └── endpoints/   # エンドポイント実装
 │   │           ├── __init__.py
-│   │           └── auth.py  # 認証エンドポイント
+│   │           ├── auth.py           # 認証エンドポイント (統合)
+│   │           ├── auth_basic.py     # 🆕 v0.6.0: 基本認証
+│   │           ├── auth_password.py  # 🆕 v0.6.0: パスワード関連
+│   │           ├── auth_token.py     # 🆕 v0.6.0: トークン関連
+│   │           ├── security_monitor.py # 🆕 v0.6.0: セキュリティ監視
+│   │           ├── todos.py          # 🆕 v0.6.0: ToDoエンドポイント
+│   │           └── users.py          # ユーザーエンドポイント
 │   ├── core/                # コアユーティリティ
 │   │   ├── config.py        # 設定管理
 │   │   ├── dependencies.py  # 共通DI
@@ -242,27 +256,44 @@ Associated Data Structures:
 │   ├── db/                  # データベース関連
 │   │   ├── base.py          # SQLAlchemy Base と共通モデル
 │   │   └── session.py       # DBセッション管理
-│   ├── models/              # 共通DBモデル (User, Role, Permissionなど)
+│   ├── models/              # 共通DBモデル (User, Role, Permission, 認証関連など)
 │   │   ├── __init__.py
 │   │   ├── associations.py
+│   │   ├── login_attempt.py    # 🆕 v0.6.0: ログイン試行履歴
+│   │   ├── password_reset.py   # 🆕 v0.6.0: パスワードリセット
 │   │   ├── permission.py
+│   │   ├── refresh_token.py    # 🆕 v0.6.0: リフレッシュトークン
 │   │   ├── role.py
+│   │   ├── todo.py             # 🆕 v0.6.0: ToDoモデル
 │   │   └── user.py
 │   ├── repositories/        # 共通リポジトリ (BaseRepository, UserRepositoryなど)
 │   │   ├── __init__.py
 │   │   ├── base.py
+│   │   ├── login_attempt_repository.py    # 🆕 v0.6.0: ログイン試行リポジトリ
+│   │   ├── password_reset_repository.py   # 🆕 v0.6.0: パスワードリセットリポジトリ
+│   │   ├── refresh_token_repository.py    # 🆕 v0.6.0: リフレッシュトークンリポジトリ
+│   │   ├── todo_repository.py             # 🆕 v0.6.0: ToDoリポジトリ
 │   │   └── user_repository.py
-│   ├── schemas/             # 共通Pydanticスキーマ (User, Tokenなど)
+│   ├── schemas/             # 共通Pydanticスキーマ (User, Token, 認証関連など)
 │   │   ├── __init__.py
+│   │   ├── auth.py             # 🆕 v0.6.0: 認証系スキーマ
+│   │   ├── permission.py
+│   │   ├── refresh_token.py    # 🆕 v0.6.0: リフレッシュトークン
+│   │   ├── role.py
+│   │   ├── todo.py             # 🆕 v0.6.0: ToDoスキーマ
 │   │   ├── token.py
 │   │   └── user.py
-│   ├── services/            # 共通サービス (UserServiceなど)
+│   ├── services/            # 共通サービス (UserService, 認証関連など)
 │   │   ├── __init__.py
+│   │   ├── auth_service.py            # 🆕 v0.6.0: 認証サービス
+│   │   ├── login_security_service.py  # 🆕 v0.6.0: ログインセキュリティサービス
+│   │   ├── password_reset_service.py  # 🆕 v0.6.0: パスワードリセットサービス
+│   │   ├── todo_service.py            # 🆕 v0.6.0: ToDoサービス
 │   │   └── user_service.py
 │   ├── tasks/               # Celeryタスク関連
 │   │   ├── __init__.py
 │   │   ├── celery_app.py
-│   │   └── example_task.py
+│   │   └── email.py            # 🆕 v0.6.0: メール送信タスク
 │   └── pyproject.toml       # libkoikiのパッケージ情報
 ├── alembic/                 # DBマイグレーションスクリプト
 ├── tests/                   # テストコード (unit, integration)
@@ -280,21 +311,25 @@ Associated Data Structures:
 
 - `libkoiki/core/`: 設定、ロギング、エラーハンドリング、ミドルウェア、トランザクション管理、認証など。
 - `libkoiki/db/`: SQLAlchemyのベース設定、DBセッション管理。
-- `libkoiki/models/`: 汎用的な User, Role, Permission などのDBモデル。
-- `libkoiki/schemas/`: User, Token などの汎用的なPydanticスキーマ。
-- `libkoiki/repositories/`: `BaseRepository` や `UserRepository` などの汎用リポジトリ。
-- `libkoiki/services/`: `UserService` などの汎用サービス。
-- `libkoiki/api/v1/endpoints/`: 認証などの共通エンドポイント実装。
-- `libkoiki/tasks/`: Celeryの基本設定や共通タスク。
+- `libkoiki/models/`: 汎用的な User, Role, Permission, Todo, 認証関連 などのDBモデル。
+- `libkoiki/schemas/`: User, Token, Todo, 認証関連 などの汎用的なPydanticスキーマ。
+- `libkoiki/repositories/`: `BaseRepository` や `UserRepository`, 認証関連リポジトリ などの汎用リポジトリ。
+- `libkoiki/services/`: `UserService`, `AuthService`, `TodoService` などの汎用サービス。
+- `libkoiki/api/v1/endpoints/`: 認証（基本・パスワード・トークン）、Todo、ユーザー、セキュリティ監視などの共通エンドポイント実装。
+- `libkoiki/tasks/`: Celeryの基本設定やメール送信などの共通タスク。
 
 ### 3.2 app (アプリケーション固有)
-`app/` は、特定のビジネスドメインに特化したコードを配置します。例えば、ToDo管理アプリケーションであれば、ToDoに関するモデル、スキーマ、リポジトリ、サービス、ルーターなどを実装します。
+`app/` は、特定のビジネスドメインに特化したコードを配置します。v0.6.0では、基本的な機能（Todo、認証、ユーザー管理など）は`libkoiki/`で実装されており、`app/`は拡張やカスタマイズ用の構造を提供します。
 
 - `app/main.py`: FastAPIアプリケーションインスタンスの生成、`libkoiki`の機能の組み込み、`app/`固有ルーターの登録など。
 - `app/routers/`: アプリケーション固有のAPIエンドポイント定義。
 - `app/services/`: アプリケーション固有のビジネスロジック。
 - `app/repositories/`: アプリケーション固有のデータアクセスロジック。
-- `app/models/`, `app/schemas/`: アプリケーション固有のデータ構造定義。
+- `app/models/`, `app/schemas/`: アプリケーション固有のデータ構造定義（現在v0.6.0では主に`libkoiki/`内で定義されているが、拡張用に構造を提供）。
+
+**v0.6.0での実装状況:** 
+- Todo機能、認証機能、ユーザー管理機能は`libkoiki/`内で完全に実装されている
+- `app/`は将来的なビジネス固有の拡張やカスタマイズのための基盤を提供
 
 この構成により、`libkoiki` を pip install 可能なフレームワークとして外部提供しながら、
 `app/` 側では個別のユースケースやドメインに特化した開発を進めることができます。
@@ -317,99 +352,91 @@ Associated Data Structures:
 **`libkoiki/core/config.py` の実装例:**
 ```python
 # libkoiki/core/config.py
-import os
-from pydantic import BaseSettings, PostgresDsn, AnyHttpUrl, validator
-from typing import Optional, Dict, Any, List, Union
-from functools import lru_cache
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import AnyHttpUrl, Field, PostgresDsn, validator
+from typing import List, Optional, Union, Dict, Any
 
 class Settings(BaseSettings):
     # --- App ---
-    APP_NAME: str = "KOIKI-FW"
-    APP_ENV: str = "development" # 例: development, staging, production
-    DEBUG: bool = False
-    SECRET_KEY: str # ★本番では必ず環境変数で設定★
+    APP_NAME: str = "KOIKI Framework"
+    APP_ENV: str = "development"  # development, testing, production
+    DEBUG: bool = True
+    SERVER_NAME: str = "KOIKI Framework"
+    SERVER_HOST: AnyHttpUrl = Field(default="http://localhost:8000")
     API_PREFIX: str = "/api/v1"
 
     # --- JWT ---
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 # 1 day
+    JWT_SECRET: str = "jwt_secret_development_only"
     JWT_ALGORITHM: str = "HS256"
-    JWT_SECRET: str # JWT署名に使用する鍵。SECRET_KEYと同じ値を使うことが多い
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
-    # --- Database ---
-    POSTGRES_USER: str = "user"
-    POSTGRES_PASSWORD: str = "password"
-    POSTGRES_HOST: str = "localhost"
-    POSTGRES_PORT: str = "5432"
-    POSTGRES_DB: str = "koiki_db"
-    DATABASE_URL: Optional[PostgresDsn] = None
+    PROJECT_NAME: str = "KOIKI Framework"
+    POSTGRES_SERVER: str = "localhost"
+    POSTGRES_USER: str = "postgres"
+    POSTGRES_PASSWORD: str = "postgres"
+    POSTGRES_DB: str = "app"
+    POSTGRES_PORT: int = 5432
+    DATABASE_URL: Optional[str] = None
+    
+    # データベース接続プール設定
+    DB_POOL_SIZE: int = 5
+    DB_MAX_OVERFLOW: int = 10
     DB_ECHO: bool = False
-    DB_POOL_SIZE: int = 10
-    DB_MAX_OVERFLOW: int = 20
-
-    @validator("DATABASE_URL", pre=True)
-    def assemble_db_url(cls, v: Optional[str], values: Dict[str, Any]) -> str:
-        if isinstance(v, str):
-            return v
-        return str(PostgresDsn.build(
-            scheme="postgresql+asyncpg", # 非同期ドライバ
-            user=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_HOST"),
-            port=values.get("POSTGRES_PORT"),
-            path=f"/{values.get('POSTGRES_DB') or ''}",
-        ))
 
     # --- Redis ---
+    REDIS_ENABLED: bool = False
     REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379
-    REDIS_PASSWORD: Optional[str] = None
-    REDIS_DB: int = 0
     REDIS_URL: Optional[str] = None
 
-    @validator("REDIS_URL", pre=True)
-    def assemble_redis_url(cls, v: Optional[str], values: Dict[str, Any]) -> str:
-        if isinstance(v, str): return v
-        password_part = f":{values.get('REDIS_PASSWORD')}@" if values.get('REDIS_PASSWORD') else ""
-        return f"redis://{password_part}{values.get('REDIS_HOST')}:{values.get('REDIS_PORT')}/{values.get('REDIS_DB')}"
+    # --- レートリミット設定 ---
+    RATE_LIMIT_ENABLED: bool = True
+    RATE_LIMIT_DEFAULT: str = "10/minute"
+    RATE_LIMIT_STRATEGY: str = "fixed-window"
+    RATE_LIMIT_PER_SECOND: int = 10
 
-    # --- Celery ---
-    CELERY_BROKER_URL: Optional[str] = None
-    CELERY_RESULT_BACKEND: Optional[str] = None
+    # --- ログ設定 ---
+    LOG_LEVEL: str = "INFO"
+    LOG_FORMAT: str = "json"  # "json" または "console"
 
     # --- CORS ---
-    BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8080"]
+    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
-    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
-        elif isinstance(v, list):
+        elif isinstance(v, (list, str)):
             return v
         raise ValueError(v)
 
-    # --- Rate Limiting (slowapi) ---
-    RATE_LIMIT_ENABLED: bool = True
-    RATE_LIMIT_DEFAULT: str = "100/minute"
-    RATE_LIMIT_STRATEGY: str = "fixed-window"
+    @validator("DATABASE_URL", pre=True)
+    def assemble_db_url(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+        if isinstance(v, str):
+            return v
+        # PostgreSQLのURLを構築
+        user = values.get("POSTGRES_USER")
+        password = values.get("POSTGRES_PASSWORD")
+        host = values.get("POSTGRES_SERVER")
+        port = values.get("POSTGRES_PORT", 5432)
+        db = values.get("POSTGRES_DB", "")
+        return f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
 
-    # --- Logging ---
-    LOG_LEVEL: str = "INFO"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=True,
+    )
 
-    class Config:
-        env_file = os.getenv("ENV_FILE", ".env") # 環境変数 `ENV_FILE` で .env ファイルを指定可能
-        env_file_encoding = 'utf-8'
-        case_sensitive = True
-        # .env ファイルが見つからなくてもエラーにしない
-        # 必須項目は Settings クラスのフィールド定義で型ヒントのみ（デフォルト値なし）にすることで対応
-        # 例: SECRET_KEY: str (デフォルト値なし) -> 環境変数または.envにないと起動時エラー
-        # env_ignore_missing = True # Python-dotenv v1.0.0+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Redis URL がない場合は構築する
+        if not self.REDIS_URL and self.REDIS_HOST:
+            self.REDIS_URL = f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
-@lru_cache() # 設定オブジェクトをキャッシュして再利用
-def get_settings() -> Settings:
-    return Settings()
-
-# グローバルインスタンスの作成
-settings = get_settings()
+# グローバル設定オブジェクト
+settings = Settings()
 ```
 
 **環境設定の優先順位:**
@@ -424,32 +451,78 @@ settings = get_settings()
 
 FastAPI の `Depends` を活用し、コンポーネント間の依存関係を解決します。これにより、コードの再利用性やテスト容易性が向上します。
 
-**`libkoiki/core/dependencies.py` の実装例:**
+**`libkoiki/api/dependencies.py` の実装例:**
 ```python
-# libkoiki/core/dependencies.py
-from typing import Annotated
-from fastapi import Depends
+# libkoiki/api/dependencies.py
+from typing import Optional, Annotated, AsyncGenerator
+from fastapi import Depends, HTTPException, status, Request
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
+from redis.asyncio import Redis
 
-# session.pyから実装済みのget_db関数をインポート
-from libkoiki.db.session import get_db
-from libkoiki.services.user_service import UserService
+from libkoiki.db.session import get_db as get_db_session
 from libkoiki.repositories.user_repository import UserRepository
+from libkoiki.repositories.todo_repository import TodoRepository
+from libkoiki.repositories.refresh_token_repository import RefreshTokenRepository
+from libkoiki.repositories.password_reset_repository import PasswordResetRepository
+from libkoiki.repositories.login_attempt_repository import LoginAttemptRepository
+from libkoiki.services.user_service import UserService
+from libkoiki.services.todo_service import TodoService
+from libkoiki.services.auth_service import AuthService
+from libkoiki.services.password_reset_service import PasswordResetService
+from libkoiki.services.login_security_service import LoginSecurityService
+from libkoiki.events.publisher import EventPublisher
+from libkoiki.core.security import get_user_from_token as get_current_user_from_token
+from libkoiki.models.user import UserModel
+from libkoiki.core.config import settings
+from libkoiki.core.logging import get_logger
 
-# データベースセッションの依存性はsession.pyから直接インポート
-DBSessionDep = Annotated[AsyncSession, Depends(get_db)]
+logger = get_logger(__name__)
 
-# UserService の依存性
-async def get_user_service(db: AsyncSession = Depends(get_db)) -> UserService:
-    """
-    UserService インスタンスを提供
-    """
+# --- 基本的な依存性 ---
+DBSessionDep = Annotated[AsyncSession, Depends(get_db_session)]
+
+# --- Redis クライアント ---
+async def get_redis_client(request: Request) -> Redis:
+    """アプリケーション状態からRedisクライアントを取得"""
+    if not hasattr(request.app.state, 'redis') or not request.app.state.redis:
+        logger.error("Redis client requested but not available in app state.")
+        raise HTTPException(status_code=503, detail="Redis connection not available")
+    return request.app.state.redis
+
+RedisClientDep = Annotated[Redis, Depends(get_redis_client)]
+
+# --- サービス依存性 ---
+async def get_user_service(db: DBSessionDep) -> UserService:
     repository = UserRepository()
     repository.set_session(db)
     return UserService(repository)
 
+async def get_auth_service(db: DBSessionDep) -> AuthService:
+    refresh_token_repo = RefreshTokenRepository()
+    refresh_token_repo.set_session(db)
+    return AuthService(refresh_token_repo)
+
+async def get_login_security_service(db: DBSessionDep) -> LoginSecurityService:
+    login_attempt_repo = LoginAttemptRepository()
+    login_attempt_repo.set_session(db)
+    return LoginSecurityService(login_attempt_repo)
+
 # 依存性注入用のタイプエイリアス
 UserServiceDep = Annotated[UserService, Depends(get_user_service)]
+AuthServiceDep = Annotated[AuthService, Depends(get_auth_service)]
+LoginSecurityServiceDep = Annotated[LoginSecurityService, Depends(get_login_security_service)]
+
+# --- 認証済みユーザー依存性 ---
+async def get_current_user(db: DBSessionDep, token: str = Depends(oauth2_scheme)) -> UserModel:
+    return await get_current_user_from_token(token=token, db=db)
+
+async def get_current_active_user(current_user: UserModel = Depends(get_current_user)) -> UserModel:
+    if not current_user.is_active:
+        raise HTTPException(status_code=400, detail="Inactive user")
+    return current_user
+
+ActiveUserDep = Annotated[UserModel, Depends(get_current_active_user)]
 
 # 認証関連の依存性はsecurity.pyで定義されています
 ```
@@ -567,26 +640,156 @@ Base = declarative_base(cls=CustomBase)
 **`libkoiki/models/user.py` (UserModel例):**
 ```python
 # libkoiki/models/user.py
-from sqlalchemy import Column, String, Boolean, Integer, ForeignKey
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 from libkoiki.db.base import Base
-# from libkoiki.models.associations import user_roles # 多対多関連テーブル
+
+# user_roles テーブルの関連付け（多対多）
+user_roles = Table(
+    "user_roles",
+    Base.metadata,
+    Column("user_id", Integer, ForeignKey("users.id"), primary_key=True),
+    Column("role_id", Integer, ForeignKey("roles.id"), primary_key=True),
+)
 
 class UserModel(Base):
-    # __tablename__ = "users" # CustomBaseで自動設定されるので不要な場合もある
+    __tablename__ = "users"
 
-    email = Column(String, unique=True, index=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
-    full_name = Column(String, index=True, nullable=True)
+    username = Column(String(50), unique=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    full_name = Column(String, index=True)
     is_active = Column(Boolean, default=True)
     is_superuser = Column(Boolean, default=False)
 
-    # roles = relationship("RoleModel", secondary=user_roles, back_populates="users")
-    # todos = relationship("TodoModel", back_populates="owner") # アプリケーション固有モデルとの関連
+    # リレーション
+    todos = relationship("TodoModel", back_populates="owner", cascade="all, delete-orphan")
+    roles = relationship("RoleModel", secondary=user_roles, back_populates="users")
+    
+    # v0.6.0で追加された認証関連リレーション
+    refresh_tokens = relationship("RefreshTokenModel", back_populates="user", cascade="all, delete-orphan")
+    password_reset_tokens = relationship("PasswordResetModel", back_populates="user", cascade="all, delete-orphan")
+    login_attempts = relationship("LoginAttemptModel", back_populates="user", cascade="all, delete-orphan")
 ```
+
+**🆕 v0.6.0で追加された認証関連モデル:**
+
+**`libkoiki/models/refresh_token.py` (リフレッシュトークン):**
+```python
+# libkoiki/models/refresh_token.py
+from datetime import datetime, timedelta, timezone
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import relationship
+from libkoiki.db.base import Base
+
+class RefreshTokenModel(Base):
+    """リフレッシュトークンモデル"""
+    __tablename__ = "refresh_tokens"
+
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    token_hash = Column(String(255), nullable=False, unique=True, index=True)
+    expires_at = Column(DateTime(timezone=True), nullable=False, index=True)
+    is_revoked = Column(Boolean, default=False, nullable=False, index=True)
+    device_info = Column(Text, nullable=True)  # JSON文字列として保存
+    last_used_at = Column(DateTime(timezone=True), nullable=True)
+    
+    # リレーション
+    user = relationship("UserModel", back_populates="refresh_tokens")
+
+    @property
+    def is_expired(self) -> bool:
+        """トークンが期限切れかどうかを判定"""
+        return datetime.now(timezone.utc) > self.expires_at
+
+    @property
+    def is_valid(self) -> bool:
+        """トークンが有効かどうかを判定"""
+        return not self.is_revoked and not self.is_expired
+
+    def revoke(self):
+        """トークンを無効化"""
+        self.is_revoked = True
+
+    def update_last_used(self):
+        """最終使用時刻を更新"""
+        self.last_used_at = datetime.now(timezone.utc)
+```
+
+**`libkoiki/models/login_attempt.py` (ログイン試行記録):**
+```python
+# libkoiki/models/login_attempt.py
+from datetime import datetime, timedelta, timezone
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from libkoiki.db.base import Base
+
+class LoginAttemptModel(Base):
+    """ログイン試行履歴モデル"""
+    __tablename__ = "login_attempts"
+
+    email = Column(String(255), nullable=False, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
+    ip_address = Column(String(45), nullable=False, index=True)  # IPv6対応
+    user_agent = Column(Text, nullable=True)
+    is_successful = Column(Boolean, nullable=False, index=True)
+    failure_reason = Column(String(100), nullable=True)  # 失敗理由
+    attempted_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
+    
+    # リレーション
+    user = relationship("UserModel", back_populates="login_attempts")
+
+    @classmethod
+    def get_lockout_window_start(cls, minutes: int = 15) -> datetime:
+        """アカウントロックアウトの時間枠開始時刻を取得"""
+        return datetime.now(timezone.utc) - timedelta(minutes=minutes)
+
+    def is_within_window(self, minutes: int = 15) -> bool:
+        """指定した時間枠内の試行かどうかを確認"""
+        window_start = self.get_lockout_window_start(minutes)
+        return self.attempted_at >= window_start
+```
+
+**`libkoiki/models/password_reset.py` (パスワードリセット):**
+```python
+# libkoiki/models/password_reset.py
+from datetime import datetime, timedelta
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import relationship
+from libkoiki.db.base import Base
+
+class PasswordResetModel(Base):
+    """パスワードリセットトークンモデル"""
+    __tablename__ = "password_reset_tokens"
+
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    token_hash = Column(String(255), nullable=False, unique=True, index=True)
+    expires_at = Column(DateTime(timezone=True), nullable=False, index=True)
+    is_used = Column(Boolean, default=False, nullable=False, index=True)
+    used_at = Column(DateTime(timezone=True), nullable=True)
+    ip_address = Column(String(45), nullable=True)  # IPv6対応
+    user_agent = Column(Text, nullable=True)
+
+    # リレーション
+    user = relationship("UserModel", back_populates="password_reset_tokens")
+
+    @classmethod
+    def create_token_expiry(cls, hours: int = 1) -> datetime:
+        """トークンの有効期限を設定（デフォルト1時間）"""
+        return datetime.utcnow() + timedelta(hours=hours)
+
+    def is_expired(self) -> bool:
+        """トークンが期限切れかどうかを確認"""
+        return datetime.utcnow() > self.expires_at
+
+    def is_valid(self) -> bool:
+        """トークンが有効かどうかを確認"""
+        return not self.is_used and not self.is_expired()
+```
+
 (RoleModel, PermissionModel, associations.py なども同様に `libkoiki/models/` に定義)
 
-アプリケーション固有のモデル (例: `TodoModel`) は `app/models/` に配置します (詳細は [10. アプリケーション実装例と起動方法 (app/)](#10-アプリケーション実装例と起動方法-app) を参照)。
+**注意:** 現在のv0.6.0では、`TodoModel`を含むすべてのモデルは`libkoiki/models/`内で定義されています。アプリケーション固有の拡張が必要な場合は`app/models/`に配置することも可能です。
 
 ### 5.2 APIスキーマ (Pydantic)
 
@@ -630,32 +833,63 @@ class UserResponse(UserBase):
     # roles: List[RoleResponseSimple] = [] # RBACを有効にする場合
 
     class Config:
-        orm_mode = True # SQLAlchemyモデルからPydanticモデルへの変換を許可
+        from_attributes = True # SQLAlchemyモデルからPydanticモデルへの変換を許可
 ```
 
 **`libkoiki/schemas/token.py` (認証トークンスキーマ):**
 ```python
 # libkoiki/schemas/token.py
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
-from datetime import datetime
 
 class Token(BaseModel):
-    """
-    OAuth2形式のトークンレスポンス
-    """
-    access_token: str
-    token_type: str
+    """アクセストークンとトークンタイプ"""
+    access_token: str = Field(..., description="JWT access token")
+    token_type: str = Field("bearer", description="Token type (always 'bearer')")
+
+class TokenWithRefresh(BaseModel):
+    """🆕 v0.6.0: アクセストークンとリフレッシュトークンのペア"""
+    access_token: str = Field(..., description="JWT access token")
+    refresh_token: str = Field(..., description="JWT refresh token")
+    token_type: str = Field("bearer", description="Token type (always 'bearer')")
+    expires_in: int = Field(..., description="Access token expiration time in seconds")
 
 class TokenPayload(BaseModel):
-    """
-    JWTトークンのペイロード
-    """
-    sub: Optional[str] = None  # user_id (文字列型で保存)
-    exp: Optional[int] = None  # UNIX timestamp
+    """JWTトークンのペイロード (内容)"""
+    sub: Optional[str] = Field(None, description="Subject of the token (usually user ID)")
+    exp: Optional[int] = Field(None, description="Expiration time (Unix timestamp)")
 ```
 
-アプリケーション固有のスキーマ (例: `TodoSchema`) は `app/schemas/` に配置します。
+**🆕 v0.6.0で追加された認証関連スキーマ:**
+
+**`libkoiki/schemas/auth.py` (認証スキーマ):**
+```python
+# libkoiki/schemas/auth.py
+from pydantic import BaseModel, Field
+from typing import Optional
+
+class PasswordChangeRequest(BaseModel):
+    """パスワード変更リクエスト"""
+    current_password: str = Field(..., description="Current password")
+    new_password: str = Field(..., min_length=8, max_length=100, description="New password (min 8 chars)")
+
+class PasswordResetRequest(BaseModel):
+    """パスワードリセット要求"""
+    email: str = Field(..., description="Email address for password reset")
+
+class PasswordResetConfirm(BaseModel):
+    """パスワードリセット確認"""
+    token: str = Field(..., description="Password reset token")
+    new_password: str = Field(..., min_length=8, max_length=100, description="New password (min 8 chars)")
+
+class AuthResponse(BaseModel):
+    """認証系API共通レスポンス"""
+    message: str = Field(..., description="Response message")
+    user: Optional[dict] = Field(None, description="User information (if applicable)")
+    data: Optional[dict] = Field(None, description="Additional response data")
+```
+
+**注意:** 現在のv0.6.0では、`TodoSchema`を含むすべてのスキーマは`libkoiki/schemas/`内で定義されています。アプリケーション固有の拡張が必要な場合は`app/schemas/`に配置することも可能です。
 
 ---
 
@@ -994,40 +1228,42 @@ from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 import structlog
+import secrets
+import hashlib
 
 from libkoiki.core.config import settings
 from libkoiki.schemas.token import TokenPayload
 from libkoiki.repositories.user_repository import UserRepository
-from libkoiki.db.session import get_db
 from libkoiki.models.user import UserModel
 from libkoiki.models.role import RoleModel
 from libkoiki.models.permission import PermissionModel
 
 logger = structlog.get_logger(__name__)
 
-# パスワードハッシュ化のためのコンテキスト
+# --- パスワードハッシュ化 ---
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# OAuth2のパスワードフロー設定
+# --- OAuth2 スキーマ ---
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_PREFIX}/auth/login")
 
+# --- トークン生成 ---
 def create_access_token(subject: Union[str, Any], expires_delta: Optional[timedelta] = None) -> str:
     """
-    ユーザーIDなどをsubject引数に指定してJWTアクセストークンを生成します。
-    
+    新しいアクセストークンを生成します。
+
     Args:
-        subject: 通常はユーザーID
-        expires_delta: オプションの有効期限。指定がない場合はデフォルト値を使用
-    
+        subject: トークンの主体 (通常はユーザーID)。
+        expires_delta: トークンの有効期間。None の場合は設定値を使用。
+
     Returns:
-        エンコードされたJWTトークン
+        生成されたJWTトークン文字列。
     """
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     
-    to_encode = {"exp": expire.timestamp(), "sub": str(subject)}
+    to_encode = {"exp": expire, "sub": str(subject)}  # subject は文字列に変換
     encoded_jwt = jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
     logger.debug("Access token created", subject=subject, expires_at=expire.isoformat())
     return encoded_jwt
@@ -1135,106 +1371,239 @@ SuperUserDep = Annotated[UserModel, Depends(get_current_active_superuser)]
 ```
 
 ### 8.2 認証APIエンドポイント
-ユーザー認証とトークン発行を行う `/auth/login` エンドポイント。
+v0.6.0では、認証APIが機能別に分割されています：
 
-**`libkoiki/api/v1/endpoints/auth.py` の実装例:**
+**`libkoiki/api/v1/endpoints/auth.py` - 統合ルーター:**
 ```python
 # libkoiki/api/v1/endpoints/auth.py
-from fastapi import APIRouter, Depends, HTTPException, status, Request
-from fastapi.security import OAuth2PasswordRequestForm
-from typing import Annotated
-from datetime import timedelta
-import structlog
+"""
+認証系APIの統合ルーター
 
-from libkoiki.schemas.token import Token
-from libkoiki.schemas.user import UserCreate, UserResponse
-from libkoiki.core.dependencies import get_db
-from libkoiki.services.user_service import UserService
-from libkoiki.core.security import create_access_token
-from libkoiki.core.exceptions import AuthenticationException, ValidationException
-from libkoiki.core.rate_limiter import limiter  # 直接limiterを使用
-from libkoiki.core.config import settings
-from libkoiki.core.dependencies import UserServiceDep
+機能別に分割されたエンドポイントを統合します：
+- auth_basic: ログイン、登録、ログアウト、現在ユーザー取得
+- auth_password: パスワード変更、パスワードリセット
+- auth_token: トークンリフレッシュ、全トークン無効化
+"""
+from fastapi import APIRouter
 
-logger = structlog.get_logger(__name__)
+from . import auth_basic, auth_password, auth_token
 
 router = APIRouter()
 
-# ログインエンドポイント（レートリミット付き）
-@router.post("/login", response_model=Token)
-@limiter.limit("10/minute")  # limiterを使用したレートリミット
+# 基本認証機能
+router.include_router(auth_basic.router, tags=["Authentication - Basic"])
+
+# パスワード管理機能  
+router.include_router(auth_password.router, tags=["Authentication - Password"])
+
+# トークン管理機能
+router.include_router(auth_token.router, tags=["Authentication - Token"])
+```
+
+**`libkoiki/api/v1/endpoints/auth_basic.py` - 基本認証機能:**
+```python
+# libkoiki/api/v1/endpoints/auth_basic.py
+from typing import Annotated
+import structlog
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.security import OAuth2PasswordRequestForm
+
+from libkoiki.api.dependencies import (
+    ActiveUserDep,
+    AuthServiceDep,
+    DBSessionDep,
+    LoginSecurityServiceDep,
+    UserServiceDep,
+)
+from libkoiki.core.auth_decorators import handle_auth_errors
+from libkoiki.core.rate_limiter import limiter
+from libkoiki.core.security import extract_device_info
+from libkoiki.schemas.token import TokenWithRefresh
+from libkoiki.schemas.user import UserCreate, UserResponse
+
+logger = structlog.get_logger(__name__)
+router = APIRouter()
+
+@router.post("/login", response_model=TokenWithRefresh)
+@limiter.limit("10/minute")
+@handle_auth_errors("login")
 async def login_for_access_token(
-    request: Request,  # レートリミット用のリクエスト情報
+    request: Request,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    db: Annotated[AsyncSession, Depends(get_db)],
-    user_service: UserServiceDep,  # サービスを注入
-):
+    user_service: UserServiceDep,
+    auth_service: AuthServiceDep,
+    login_security_service: LoginSecurityServiceDep,
+    db: DBSessionDep,
+) -> TokenWithRefresh:
     """
-    OAuth2互換のトークン取得エンドポイント。
-    ユーザー認証を行い、アクセストークンを発行します。
-    
-    Args:
-        form_data: ユーザー名(メールアドレス)とパスワード
-        db: DBセッション
-        user_service: UserService
-        
-    Returns:
-        Token: アクセストークンとトークンタイプ
-        
-    Raises:
-        HTTPException: 認証失敗時またはユーザーが非アクティブな場合
+    OAuth2互換のトークンエンドポイント。
+    メールアドレスとパスワードで認証し、アクセストークンとリフレッシュトークンを返します。
+
+    - **username**: ユーザーのメールアドレス
+    - **password**: ユーザーのパスワード
     """
-    user = await user_service.authenticate_user(
-        email=form_data.username, password=form_data.password, db=db
+    email = form_data.username
+    ip_address = request.client.host if request.client else "unknown"
+    device_info = extract_device_info(request)
+
+    # ログイン試行制限チェック
+    can_attempt = await login_security_service.can_attempt_login(
+        email=email, ip_address=ip_address, db=db
     )
+    if not can_attempt:
+        logger.warning("Login blocked due to too many attempts", email=email, ip_address=ip_address)
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Too many login attempts. Please try again later."
+        )
+
+    # ユーザー認証
+    user = await user_service.authenticate_user(
+        email=email, password=form_data.password, db=db
+    )
+    
     if not user:
-        logger.warning("Login failed: invalid credentials", username=form_data.username)
+        # 失敗を記録
+        await login_security_service.record_failed_attempt(
+            email=email, ip_address=ip_address, db=db
+        )
+        logger.warning("Login failed: invalid credentials", email=email, ip_address=ip_address)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    
     if not user.is_active:
-        logger.warning("Login attempt with inactive account", username=form_data.username, user_id=user.id)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user")
-
-    # カスタム有効期限の設定例 (オプション)
-    # access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    # access_token = create_access_token(subject=user.id, expires_delta=access_token_expires)
-    
-    # デフォルト有効期限でトークン作成
-    access_token = create_access_token(subject=user.id)
-    logger.info("User logged in successfully", user_id=user.id, email=user.email)
-    
-    return {"access_token": access_token, "token_type": "bearer"}
-
-# ユーザー登録エンドポイント（オプション）
-@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-@limiter.limit("5/minute")  # 登録は低めのレート制限
-async def register_user(
-    request: Request,
-    user_in: UserCreate,
-    db: Annotated[AsyncSession, Depends(get_db)],
-    user_service: UserServiceDep,
-):
-    """
-    新規ユーザーを登録します。
-    """
-    try:
-        user = await user_service.create_user(user_in=user_in, db=db)
-        logger.info("New user registered", user_id=user.id, email=user.email)
-        return user
-    except ValidationException as e:
-        logger.warning("User registration failed", error=str(e), email=user_in.email)
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
+        await login_security_service.record_failed_attempt(
+            email=email, ip_address=ip_address, db=db
         )
+        logger.warning("Login attempt with inactive account", email=email, user_id=user.id)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="Inactive user"
+        )
+
+    # トークンペア生成
+    tokens = await auth_service.create_tokens_for_user(
+        user=user, device_info=device_info, db=db
+    )
+    
+    # 成功を記録
+    await login_security_service.record_successful_attempt(
+        email=email, ip_address=ip_address, user_id=user.id, db=db
+    )
+    
+    logger.info("User logged in successfully", user_id=user.id, email=user.email)
+    return tokens
 ```
 
 ### 8.3 ロールベースアクセス制御 (RBAC)
 ユーザーにロールを割り当て、ロールに権限を紐付けることでアクセス制御を行います。
 詳細は [15. ロールと権限](#15-ロールと権限) を参照。
+
+### 8.4 🆕 認証系API拡張機能 (v0.6.0新機能)
+
+**v0.6.0では、エンタープライズ環境で求められる包括的な認証システムを実装しました。**
+
+#### 8.4.1 リフレッシュトークン機能
+
+**長期間ログイン状態を維持しつつ、セキュリティを確保するための機能です。**
+
+- **アクセストークン**: 短期間（15分～1時間）有効、API呼び出しに使用
+- **リフレッシュトークン**: 長期間（7日～30日）有効、アクセストークンの更新に使用
+- **自動更新**: アクセストークン期限切れ時に自動でトークンペアを更新
+
+```python
+# リフレッシュトークン例
+@router.post("/refresh", response_model=Token)
+async def refresh_access_token(
+    refresh_token: str,
+    db: AsyncSession = Depends(get_db)
+):
+    """リフレッシュトークンを使用してアクセストークンを更新"""
+    # 実装詳細は docs/authentication-api-guide.md を参照
+    pass
+```
+
+#### 8.4.2 パスワードリセット機能
+
+**パスワードを忘れたユーザーのためのセキュアなリセット機能です。**
+
+- **メール送信**: パスワードリセット用の一時トークンをメール送信
+- **トークン検証**: 一時トークンの有効性と期限を検証
+- **新パスワード設定**: 安全にパスワードを変更
+
+```python
+# パスワードリセット例
+@router.post("/password-reset/request")
+async def request_password_reset(email: str):
+    """パスワードリセットリクエスト"""
+    # メール送信とトークン生成
+    pass
+
+@router.post("/password-reset/confirm")
+async def confirm_password_reset(token: str, new_password: str):
+    """パスワードリセット実行"""
+    # トークン検証と新パスワード設定
+    pass
+```
+
+#### 8.4.3 ログイン試行制限
+
+**ブルートフォース攻撃を防ぐためのセキュリティ機能です。**
+
+- **試行回数制限**: IPアドレスまたはユーザー単位での試行回数制限
+- **一時ロック**: 規定回数失敗後の一時的なアカウントロック
+- **段階的制限**: 失敗回数に応じた待機時間の増加
+
+```python
+# ログイン試行制限例
+async def check_login_attempts(
+    ip_address: str, 
+    email: str, 
+    db: AsyncSession
+) -> bool:
+    """ログイン試行制限チェック"""
+    # IP単位とユーザー単位の制限確認
+    # 詳細は libkoiki/services/auth_security_service.py を参照
+    pass
+```
+
+### 8.5 🆕 セキュリティ監査API (v0.6.0新機能)
+
+**認証関連のセキュリティイベントを監視・記録する機能です。**
+
+#### 8.5.1 認証ログ記録
+
+- **ログイン成功/失敗**: すべてのログイン試行を記録
+- **トークン操作**: トークン発行、更新、無効化を記録
+- **セキュリティイベント**: 不審なアクセス試行を記録
+
+#### 8.5.2 監査レポート
+
+- **ログイン履歴**: ユーザー別、期間別のログイン履歴
+- **セキュリティアラート**: 不審な活動の自動検出とアラート
+- **アクセス分析**: IPアドレス、ユーザーエージェント等の分析
+
+```python
+# 監査ログ例
+await audit_service.log_authentication_event(
+    user_id=user.id,
+    event_type="login_success",
+    ip_address=request.client.host,
+    user_agent=request.headers.get("user-agent"),
+    additional_info={"method": "password"}
+)
+```
+
+#### 8.5.3 関連ドキュメント
+
+**v0.6.0では、認証系APIの詳細なドキュメントを整備しました：**
+
+- **[認証系API完全ガイド](docs/authentication-api-guide.md)**: 認証システムの詳細な実装ガイド
+- **[セキュリティ強化対応記録](docs/authentication-api-security-fixes.md)**: セキュリティ改善の記録と対応履歴  
+- **[認証系APIテストガイド](認証系APIテストガイド.md)**: 認証システムのテスト方法とベストプラクティス
 
 ---
 
@@ -1661,61 +2030,68 @@ class TodoRepository(BaseRepository[TodoModel, TodoCreateSchema, TodoUpdateSchem
         return result.scalars().all()
 ```
 
-### 10.5 app/models/todo_model.py
-ToDoのデータベースモデルを定義します。`libkoiki`の`Base`を継承します。
+### 10.5 libkoiki/models/todo.py
+ToDoのデータベースモデルは`libkoiki`フレームワーク内で定義されています。
 
 ```python
-# app/models/todo_model.py
-from sqlalchemy import Column, String, Boolean, Integer, ForeignKey
+# libkoiki/models/todo.py
+from sqlalchemy import Column, String, Text, Boolean, Integer, ForeignKey
 from sqlalchemy.orm import relationship
+from libkoiki.db.base import Base
+from libkoiki.models.user import UserModel
 
-from libkoiki.db.base import Base # libkoikiのBaseをインポート
+class TodoModel(Base):
+    __tablename__ = 'todos'
 
-class TodoModel(Base): # libkoikiのBaseを継承
-    # __tablename__ = "todos" # CustomBaseで自動設定される
+    title = Column(String(255), nullable=False, index=True)
+    description = Column(Text, nullable=True)
+    is_completed = Column(Boolean, default=False, nullable=False, server_default='false')
 
-    title = Column(String, nullable=False)
-    description = Column(String, nullable=True)
-    completed = Column(Boolean, default=False)
-    
-    # UserModelの主キーを参照する外部キー
-    owner_id = Column(Integer, ForeignKey("usermodel.id")) # "usermodel" はUserModelのテーブル名
+    # 所有者 (User) への外部キー
+    owner_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False, index=True)
 
-    # UserModel側にもリレーションシップを定義する必要がある
-    # owner = relationship("UserModel", back_populates="todos")
+    # Userモデルとのリレーション
+    owner: UserModel = relationship("UserModel", back_populates="todos")
+
+    def __repr__(self):
+        status = "Completed" if self.is_completed else "Pending"
+        return f"<Todo(id={self.id}, title='{self.title[:20]}...', status='{status}', owner_id={self.owner_id})>"
 ```
-**注意:** 双方向リレーションを使用する場合は、`libkoiki/models/user.py` の `UserModel` にも `todos = relationship("TodoModel", back_populates="owner")` のようなリレーション定義が必要です。
 
-### 10.6 app/schemas/todo_schema.py
-ToDoのPydanticスキーマを定義します。
+**双方向リレーション:** `UserModel`には既に`todos = relationship("TodoModel", back_populates="owner", cascade="all, delete-orphan")`が定義されています。
+
+### 10.6 libkoiki/schemas/todo.py
+ToDoのPydanticスキーマは`libkoiki`フレームワーク内で定義されています。
 
 ```python
-# app/schemas/todo_schema.py
+# libkoiki/schemas/todo.py
 from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 
-class TodoBaseSchema(BaseModel):
-    title: str = Field(..., min_length=1, max_length=100, description="ToDoのタイトル")
-    description: Optional[str] = Field(None, max_length=500, description="ToDoの詳細説明")
+class TodoBase(BaseModel):
+    title: str = Field(..., min_length=1, max_length=255, description="Title of the ToDo item")
+    description: Optional[str] = Field(None, description="Optional description for the ToDo item")
 
-class TodoCreateSchema(TodoBaseSchema):
-    pass # 基本的にBaseと同じだが、作成時特有のフィールドがあれば追加
+class TodoCreate(TodoBase):
+    # 作成時は is_completed は指定させない（デフォルトは False）
+    pass
 
-class TodoUpdateSchema(BaseModel): # 更新時は全フィールドオプショナルが一般的
-    title: Optional[str] = Field(None, min_length=1, max_length=100)
-    description: Optional[str] = Field(None, max_length=500)
-    completed: Optional[bool] = None
+class TodoUpdate(BaseModel):
+    # 更新時はすべてのフィールドを任意にする
+    title: Optional[str] = Field(None, min_length=1, max_length=255, description="New title for the ToDo item")
+    description: Optional[str] = Field(None, description="New description for the ToDo item")
+    is_completed: Optional[bool] = Field(None, description="Completion status of the ToDo item")
 
-class TodoResponseSchema(TodoBaseSchema):
-    id: int
-    completed: bool
-    owner_id: int # どのユーザーのToDoかを示す
-    created_at: datetime
-    updated_at: datetime
+class TodoResponse(TodoBase):
+    id: int = Field(..., description="Unique ID of the ToDo item")
+    is_completed: bool = Field(..., description="Completion status")
+    owner_id: int = Field(..., description="ID of the user who owns this ToDo")
+    created_at: datetime = Field(..., description="Timestamp when the ToDo was created")
+    updated_at: datetime = Field(..., description="Timestamp when the ToDo was last updated")
 
     class Config:
-        orm_mode = True # SQLAlchemyモデルインスタンスからの変換を許可
+        from_attributes = True # SQLAlchemyモデルインスタンスから変換できるようにする
 ```
 
 ### 10.7 app/api/dependencies.py (アプリケーション固有の依存性)
@@ -2919,9 +3295,13 @@ on:
 CIパイプラインの主要な機能の一つが自動テストとコードカバレッジの計測です：
 
 ```yaml
-- name: Run tests with coverage
+- name: Run tests with coverage (Poetry 2.x)
   run: |
-    poetry run pytest --cov=app --cov=libkoiki --cov-report=term-missing --cov-report=html tests/
+    # Poetry 2.x: Use dependency groups for testing
+    poetry run pytest --cov=app --cov=libkoiki --cov-report=term-missing --cov-report=html \
+      tests/unit/app/
+    # Poetry 2.x: Additional environment check
+    poetry show --tree --only=main
 
 - name: Upload HTML coverage report (optional)
   if: ${{ env.ACT != 'true' }}
@@ -2933,11 +3313,17 @@ CIパイプラインの主要な機能の一つが自動テストとコードカ
 
 このステップにより：
 
-1. **テストの自動実行**: `app`および`libkoiki`ディレクトリのコードに対するテストを実行
-2. **カバレッジレポートの生成**: テストのカバレッジ情報をターミナル出力とHTML形式で生成
+1. **アプリケーション層のテスト実行**: `tests/unit/app/`配下のアプリケーション開発チーム向けの単体テストのみを実行
+2. **カバレッジレポートの生成**: `app`および`libkoiki`ディレクトリのコードに対するカバレッジ情報をターミナル出力とHTML形式で生成
 3. **レポートのアーティファクト保存**: HTML形式のカバレッジレポートをワークフロー成果物として保存し、後から確認可能
+4. **Poetry 2.x最適化**: 依存関係の確認を含むPoetry 2.x機能を活用
 
-カバレッジレポートは、コードベースのどの部分がテストされているか、またはテストされていないかを視覚的に示し、開発チームがテストを改善するための指針となります。
+**テスト範囲の設計思想:**
+- CIでは`tests/unit/app/`のみを対象とし、アプリケーション開発チームのコードに焦点を当てる
+- フレームワーク（`libkoiki`）のテストは開発時やローカル環境で実行される想定
+- これにより、CIの実行時間を短縮し、アプリケーション開発チームに関連するテスト結果を迅速に提供
+
+カバレッジレポートは、アプリケーションコードのどの部分がテストされているか、またはテストされていないかを視覚的に示し、開発チームがテストを改善するための指針となります。
 
 ### 17.4 CI環境の設定
 
@@ -2975,9 +3361,11 @@ env:
 
 ## 18. まとめ
 
-KOIKI-FW v0.5.0は、堅牢なエンタープライズWebアプリケーション開発のための包括的なフレームワークとして進化しました。モジュール構造の明確な分離により、`libkoiki`をコアライブラリとして、`app`をアプリケーション固有の実装として分けることで、高い保守性と再利用性を実現しています。
+KOIKI-FW v0.6.0は、認証系APIの充実とセキュリティ監査機能の強化により、エンタープライズWebアプリケーション開発のための包括的なフレームワークとしてさらに進化しました。モジュール構造の明確な分離により、`libkoiki`をコアライブラリとして、`app`をアプリケーション固有の実装として分けることで、高い保守性と再利用性を実現しています。
 
-v0.5.0では、重要なセキュリティ脆弱性の修正と包括的な依存関係の最新化により、エンタープライズ環境での運用安全性が大幅に向上しました。また、v0.3.1で導入された継続的インテグレーション（CI）により、開発プロセスの自動化と品質保証が強化されています。これにより、開発者はコードの品質に自信を持ちながら、より速いペースで機能を提供できるようになりました。
+v0.6.0では、**認証系APIの大幅な拡張**を実施し、JWT認証、リフレッシュトークン、パスワードリセット、ログイン試行制限など、エンタープライズ環境で求められる包括的な認証システムを標準提供しています。また、セキュリティ監査APIにより、認証関連のセキュリティイベントを監視・記録し、不審な活動の検出とアラート機能を実現しました。
+
+さらに、v0.5.0で実施された重要なセキュリティ脆弱性の修正と包括的な依存関係の最新化を継承し、v0.3.1で導入された継続的インテグレーション（CI）による開発プロセスの自動化と品質保証も引き続き強化されています。これにより、開発者はセキュリティと品質を確保しながら、より高度な認証機能を持つアプリケーションを迅速に構築できるようになりました。
 
 このフレームワークは、シンプルなCRUDアプリケーションから複雑なエンタープライズシステムまで、様々な規模と複雑さのプロジェクトに適用できます。特に、実務で求められることの多い機能 - 認証・認可、非同期処理、トランザクション管理、ロギング、モニタリング - を標準で提供することで、開発者が本質的なビジネスロジックに集中できる環境を整えています。
 
@@ -3009,6 +3397,7 @@ DDD（ドメイン駆動設計）を本格的に志向する場合、
 
 | バージョン | 日付       | 主な変更内容                                                                                 |
 |------------|------------|--------------------------------------------------------------------------------------------|
+| 0.6.0      | 2025-07-16 | - 認証系APIの充実とセキュリティ監査API強化<br>- ロールベースアクセス制御 (RBAC) の実装<br>- 認証APIテストの包括的実装<br>- ドキュメント強化 (認証系API完全ガイド、セキュリティ強化対応記録、APIテストガイド) |
 | 0.5.0      | 2025-06-21 | - 重要セキュリティ脆弱性の修正 (fastapi, python-jose, starlette)<br>- 包括的依存関係モダナイゼーション<br>- Python 3.13 対応<br>- エンタープライズ向け依存性管理戦略の導入 |
 | 0.3.1      | 2024-06-XX | - CIパイプライン導入・設計ドキュメント刷新<br>- 認証・依存性の最新実装反映                 |
 | 0.3.0      | 2024-05-XX | - `libkoiki/` と `app/` の明確な分離<br>- サービス/リポジトリ/モデル/スキーマ分割          |
@@ -3021,14 +3410,17 @@ DDD（ドメイン駆動設計）を本格的に志向する場合、
 
 ### ドキュメントと実装の整合性の重要性
 
-KOIKI-FW v0.5.0 では、  
+KOIKI-FW v0.6.0 では、  
+- **認証系APIの包括的実装（JWT、リフレッシュトークン、パスワードリセット、ログイン試行制限）**  
+- **セキュリティ監査APIの強化（認証ログ記録、監査レポート、セキュリティアラート）**  
 - **実装パスの明確化（例：`libkoiki/core/security.py` への統一）**  
 - **依存性注入や設定取得の統一**  
 - **CI/CD設計の明文化**  
 - **サンプルコードの最新版へのアップデート**  
+- **認証系ドキュメントの充実（完全ガイド、セキュリティ強化記録、テストガイド）**  
 
 を徹底し、「設計書と実装に齟齬がないこと」を重視しています。  
-設計ドキュメントが常に実装と同期し、現場の開発者が迷わず参照できる状態を維持することで、開発効率と品質の双方が向上します。
+設計ドキュメントが常に実装と同期し、現場の開発者が迷わず参照できる状態を維持することで、開発効率と品質の双方が向上します。v0.6.0では特に、エンタープライズ環境で求められる認証・セキュリティ機能を標準提供することで、開発者がセキュアなアプリケーションを迅速に構築できる環境を整えました。
 
 ---
 
@@ -3065,7 +3457,7 @@ KOIKI-FW v0.5.0 では、
 ### FAQ
 
 **Q: サンプルや設計ドキュメントの内容と実際の実装で食い違いがある場合は？**  
-A: 本ドキュメント v0.5.0 では、パス・設定・依存性・CI/CDの実装差異を徹底的に精査し、記述の誤りを修正しました。また、重要なセキュリティ脆弱性の修正と包括的な依存関係の最新化についても反映しています。  
+A: 本ドキュメント v0.6.0 では、v0.5.0 で実施したパス・設定・依存性・CI/CDの実装差異の精査と記述修正を継承し、さらに認証系APIの充実とセキュリティ監査APIの強化について詳細に反映しています。また、新たに追加された認証機能（JWT、リフレッシュトークン、パスワードリセット、ログイン試行制限）とセキュリティ監査機能の実装についても包括的にドキュメント化しました。  
 もし今後も差異を発見した場合は、Issueでご報告ください。
 
 **Q: サンプルコードと実際のリポジトリ構成が異なる場合の対応は？**  

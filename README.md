@@ -1,107 +1,148 @@
-# KOIKI-FW ドキュメントサイト
+# FastAPI エンタープライズアプリケーション基盤 (KOIKI-FW v0.6.0)
 
-KOIKI-FW（FastAPIベースのエンタープライズ向けWebアプリケーション基盤フレームワーク）v0.5.0 の公式ドキュメントサイトです。
+これは、Python (FastAPI) を用いたエンタープライズ向けWebアプリケーション構築のための、堅牢な基盤フレームワーク「KOIKI-FW」の v0.6.0 をベースにしたプロジェクトテンプレートです。
 
-## 📖 概要
+詳細は `docs/design_kkfw_0.6.0.md` ドキュメントを参照してください。
 
-このプロジェクトは、[MkDocs](https://www.mkdocs.org/) と [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) を使用して、KOIKI-FWの技術仕様書や導入ガイドを美しく整理し、GitHub Pagesで公開しています。
+## 特徴
 
-### ドキュメント内容
+*   **モダンな技術スタック**: FastAPI, SQLAlchemy (Async), Pydantic, Redis, Celery, structlog, Prometheus, slowapi 等。
+*   **関心事の分離**: API層、サービス層、リポジトリ層の明確な分離。
+*   **非同期処理**: 高パフォーマンスな非同期処理。
+*   **型安全性**: Pydantic と型ヒントによる開発効率と安全性の向上。
+*   **テスト容易性**: 依存性注入による容易なテスト実装。
+*   **🆕 v0.6.0 強化されたセキュリティ**: JWT認証, リフレッシュトークン, パスワードリセット, ログイン試行制限, RBAC, レートリミット等。
+*   **🆕 v0.6.0 認証系API**: modular認証システム（基本認証、パスワード管理、トークン管理）。
+*   **監視・ロギング**: 構造化ログ, 監査ログ, Prometheus連携。
+*   **継続的インテグレーション**: GitHub Actionsによる自動テスト、コード品質チェックの導入。
 
-- **KOIKI-FW v0.5.0 機能設計・構成ガイド**: フレームワークの詳細な技術仕様
-- **導入・セットアップガイド**: Docker Composeを使った環境構築
-- **セキュリティ監査**: セキュリティ脆弱性の対策と修正内容
-- **エンタープライズ依存性管理戦略**: 本格運用のための依存関係管理
+## セットアップと実行 (Docker Compose)
 
-## 🚀 クイックスタート
-
-### 必要な環境
-
-- Python 3.11.7
-- Poetry（依存関係管理）
-
-### ローカル環境でのドキュメント確認
+### 初回環境構築
 
 ```bash
-# 依存関係のインストール
-poetry install
+# 環境変数ファイルの準備
+cp .env.example .env
+# 必要に応じて.envファイルを編集
 
-# 開発サーバーの起動
-poetry run mkdocs serve
+# コンテナのビルドと起動
+docker-compose up --build -d
 ```
 
-ブラウザで `http://127.0.0.1:8000` にアクセスしてドキュメントを確認できます。
+上記コマンドにより、以下が自動的に実行されます：
+- データベース接続の確認（最大30回リトライ）
+- alembic/versionsディレクトリの確認と作成
+- 初期マイグレーション実行
 
-### GitHub Pagesへのデプロイ
+### アプリケーションログの確認
 
 ```bash
-# 静的サイトのビルド
-poetry run mkdocs build
-
-# GitHub Pagesへのデプロイ
-poetry run mkdocs gh-deploy
+# アプリケーション起動ログの確認
+docker-compose logs -f app
 ```
 
-## 📁 プロジェクト構成
+### アプリケーションへのアクセス
 
-```
-koiki-docs/
-├── docs/                          # ドキュメントソース
-│   ├── index.md                   # トップページ
-│   ├── design_kkfw_0.5.0.md      # 機能設計・構成ガイド
-│   ├── README-deploy.md           # 配備ガイド
-│   ├── SECURITY_AUDIT_COMMANDS.md # セキュリティ監査
-│   └── ENTERPRISE_DEPENDENCY_STRATEGY.md # 依存性管理戦略
-├── site/                          # ビルド済み静的サイト
-├── mkdocs.yml                     # MkDocs設定ファイル
-├── pyproject.toml                 # Python依存関係設定
-└── .python-version                # Python バージョン指定
-```
+*   API ドキュメント (Swagger UI): [http://localhost:8000/docs](http://localhost:8000/docs)
+*   API ドキュメント (ReDoc): [http://localhost:8000/redoc](http://localhost:8000/redoc)
+*   ルートエンドポイント: [http://localhost:8000/](http://localhost:8000/)
+## テストの実行
 
-## 🔧 設定
+### セキュリティAPIテスト
 
-### MkDocs設定（mkdocs.yml）
+KOIKI-FWの権限管理システムとセキュリティAPIをテストする場合：
 
-```yaml
-site_name: KOIKI-FW v0.5.0
-theme:
-  name: material
+#### 🚀 推奨実行方法（プロジェクトルートから）
+```bash
+# 環境起動 + テスト実行（ワンコマンド）
+./run_security_test.sh test
 
-nav:
-  - 概要: index.md
-  - KOIKI-FW 機能設計・構成ガイド: design_kkfw_0.5.0.md
+# 初回実行（セットアップ付き）
+./run_security_test.sh setup
+
+# ヘルプ表示
+./run_security_test.sh help
 ```
 
-### 依存関係
+#### 📋 従来の方法（opsディレクトリから）
+```bash
+# 環境起動
+docker-compose up -d
 
-- **MkDocs**: 静的サイトジェネレータ（^1.6.1）
-- **MkDocs Material**: モダンなUIテーマ（^9.6.14）
+# セキュリティテスト実行
+cd ops
+bash scripts/security_test_manager.sh test
+```
 
-## 📝 ドキュメント編集
+📚 **詳細情報:**
+- クイックガイド: `QUICK_TEST_GUIDE.md`
+- 詳細なテスト手順: `ops/README.md`
 
-1. `docs/` ディレクトリ内のMarkdownファイルを編集
-2. `poetry run mkdocs serve` でプレビュー確認
-3. 変更をGitにコミット・プッシュ
-4. GitHub Actionsまたは手動で `mkdocs gh-deploy` を実行
+### ローカルでのテスト実行
 
-## 🎯 KOIKI-FWの特徴
+```bash
+# Poetryを使用したテスト実行
+poetry run pytest
 
-KOIKI-FW v0.5.0は以下の特徴を持つエンタープライズ向けフレームワークです：
+# カバレッジレポート付きでテスト実行
+poetry run pytest --cov=app --cov=libkoiki --cov-report=term-missing tests/
+```
 
-- **モダン技術スタック**: FastAPI, SQLAlchemy (Async), Pydantic, Redis, Celery
-- **関心事の分離**: API層、サービス層、リポジトリ層の明確な分離
-- **非同期処理**: 高パフォーマンスな非同期処理対応
-- **型安全性**: Pydantic と型ヒントによる開発効率と安全性
-- **セキュリティ**: JWT認証, RBAC, レートリミット等の基本機能
-- **監視・ロギング**: 構造化ログ, 監査ログ, Prometheus連携
-- **CI/CD**: GitHub Actionsによる自動テスト・品質チェック
+### 継続的インテグレーション (CI)
 
-## 📞 サポート
+GitHub Actionsによる自動テストパイプラインが設定されており、以下のブランチへのプッシュ時に自動実行されます：
+- master
+- develop
+- dev/*
+- feature/*
+- bugfix/*
 
-- **作成者**: Shuichi Kataoka
-- **メール**: shu01k9@gmail.com
-- **ライセンス**: エンタープライズ向けフレームワーク
+プルリクエスト時にも自動的にテストが実行され、コードの品質が検証されます。
 
----
+## ディレクトリ構造
 
-> このドキュメントサイトは、エンタープライズ向けWebアプリケーション開発の実践的なガイドとして継続的に更新されています。
+```
+プロジェクトルート/
+├── app/                     # アプリケーション固有のコード (拡張用)
+│   ├── api/                 # アプリケーション固有のDIなど
+│   ├── models/              # アプリケーション固有のDBモデル (拡張用)
+│   ├── repositories/        # アプリケーション固有のリポジトリ (拡張用)
+│   ├── schemas/             # アプリケーション固有のPydanticスキーマ (拡張用)
+│   ├── services/            # アプリケーション固有のサービス (拡張用)
+│   └── main.py              # アプリケーションのエントリポイント
+├── libkoiki/                # フレームワークコアライブラリ (主要機能実装済み)
+│   ├── api/                 # API共通コンポーネント
+│   ├── core/                # コアユーティリティ (設定・認証・ロギングなど)
+│   ├── db/                  # データベース関連
+│   ├── models/              # 共通DBモデル (User, Role, Permission, Todo等)
+│   ├── repositories/        # 共通リポジトリ
+│   ├── schemas/             # 共通Pydanticスキーマ
+│   ├── services/            # 共通サービス
+│   └── tasks/               # Celeryタスク関連
+├── alembic/                 # DBマイグレーションスクリプト
+├── tests/                   # テストコード (unit, integration)
+├── .env.example             # 環境変数サンプル
+├── .github/                 # GitHub Actions設定
+├── docker-compose.yml       # Docker構成
+├── Dockerfile               # コンテナイメージ定義
+└── README.md                # プロジェクト説明
+```
+
+**注意**: v0.6.0 では、主要機能（認証、Todo、ユーザー管理）は `libkoiki/` 内に実装されており、`app/` は将来的な拡張用の基盤を提供しています。
+
+詳細な構成と機能説明は `docs/design_kkfw_0.6.0.md` を参照してください。
+
+## 🔒 Fork・利用に関するご案内
+
+このリポジトリは~~パブリック公開されていますが~~、以下の方以外による Fork・再利用はご遠慮ください。
+
+- Fork にあたり指定された、GitHub Enterprise Organization に所属する関係者
+- Fork の前に、必ずリポジトリ管理者（@zaziedlm）にご連絡ください
+
+無断でのForkや再利用が確認された場合、GitHubへの削除申請を行うことがあります。ご理解とご協力をお願いします。
+
+## ライセンス
+
+MIT License
+
+https://opensource.org/license/mit
