@@ -1,0 +1,3625 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>KOIKI-FW 認証系API完全ガイド - KOIKI-FW v0.6.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#koiki-fw-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="KOIKI-FW v0.6.0" class="md-header__button md-logo" aria-label="KOIKI-FW v0.6.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KOIKI-FW v0.6.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              KOIKI-FW 認証系API完全ガイド
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="KOIKI-FW v0.6.0" class="md-nav__button md-logo" aria-label="KOIKI-FW v0.6.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KOIKI-FW v0.6.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概要
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_kkfw_0.6.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KOIKI-FW 機能設計・構成ガイド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../README-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    アプリデプロイ手順
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY_AUDIT_COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    セキュリティ監査コマンド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E8%AA%8D%E8%A8%BC%E7%B3%BBAPI%E3%83%86%E3%82%B9%E3%83%88%E3%82%AC%E3%82%A4%E3%83%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    認証系APIテストガイド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      目次
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      アーキテクチャ概要
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="アーキテクチャ概要">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      レイヤー構成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      主要コンポーネント
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="主要コンポーネント">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. API エンドポイント
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. サービス層
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. リポジトリ層
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. データモデル
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      認証フロー
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="認証フロー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本認証フロー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      リフレッシュトークンフロー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      パスワードリセットフロー
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      API エンドポイント詳細
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API エンドポイント詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auth_basicpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本認証エンドポイント (auth_basic.py)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本認証エンドポイント (auth_basic.py)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-authlogin" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/login
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-authregister" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/register
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-authme" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /auth/me
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-authlogout" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/logout
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auth_passwordpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      パスワード管理エンドポイント (auth_password.py)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="パスワード管理エンドポイント (auth_password.py)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-authpassword-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/password-change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-authpassword-resetrequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/password-reset/request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-authpassword-resetconfirm" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/password-reset/confirm
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auth_tokenpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      トークン管理エンドポイント (auth_token.py)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="トークン管理エンドポイント (auth_token.py)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-authrefresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/refresh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-authrevoke-all-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /auth/revoke-all-tokens
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      セキュリティ機能
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="セキュリティ機能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      多層防御システム
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多層防御システム">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. API レベル
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 認証レベル
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. アプリケーションレベル
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. データレベル
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      ログイン試行制限詳細
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ログイン試行制限詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      制限ポリシー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      段階的遅延アルゴリズム
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      監査ログ項目
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      パスワードセキュリティ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="パスワードセキュリティ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      複雑性要件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      ハッシュ化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      トークンセキュリティ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="トークンセキュリティ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      アクセストークン
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      リフレッシュトークン
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      データベース設計
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="データベース設計">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#er" class="md-nav__link">
+    <span class="md-ellipsis">
+      ER図
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      テーブル詳細
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーブル詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#users" class="md-nav__link">
+    <span class="md-ellipsis">
+      users テーブル
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refresh_tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      refresh_tokens テーブル
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password_reset_tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      password_reset_tokens テーブル
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login_attempts" class="md-nav__link">
+    <span class="md-ellipsis">
+      login_attempts テーブル
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      データ保持ポリシー
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="データ保持ポリシー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      自動クリーンアップ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      実装例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      設定とカスタマイズ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="設定とカスタマイズ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#libkoikicoreconfigpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本設定 (libkoiki/core/config.py)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      環境別設定
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="環境別設定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発環境
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      本番環境
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      カスタマイズポイント
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="カスタマイズポイント">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ログイン試行制限のカスタマイズ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. パスワード複雑性要件のカスタマイズ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. トークン有効期限の動的設定
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用例
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      フロントエンド実装例
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="フロントエンド実装例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#react-typescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      React + TypeScript
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vuejs-composition-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vue.js + Composition API
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      バックエンド実装例
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="バックエンド実装例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      カスタム認証ミドルウェア
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      カスタム権限チェック
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      モバイルアプリ実装例
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="モバイルアプリ実装例">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flutter-dart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flutter (Dart)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      トラブルシューティング
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="トラブルシューティング">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      よくある問題と解決方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="よくある問題と解決方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 認証エラー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. アカウントロックアウト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. トークン期限切れ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-cors" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. CORS エラー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. データベース接続エラー
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      ログ分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ログ分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      重要なログポイント
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      ログ監視クエリ例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      パフォーマンス最適化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="パフォーマンス最適化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. データベースクエリ最適化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. キャッシュ戦略
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 接続プール最適化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      リフレッシュトークン機能の無効化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="リフレッシュトークン機能の無効化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_46" class="md-nav__link">
+    <span class="md-ellipsis">
+      無効化のメリット・デメリット
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="無効化のメリット・デメリット">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_47" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ メリット
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_48" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚠️ デメリット
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_49" class="md-nav__link">
+    <span class="md-ellipsis">
+      影響範囲
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="影響範囲">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      必須変更ファイル (3つ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      削除可能ファイル (6つ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      部分変更ファイル (3つ)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_50" class="md-nav__link">
+    <span class="md-ellipsis">
+      変更手順
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="変更手順">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ログインエンドポイントの簡略化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. スキーマの変更
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 認証サービスの簡略化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 認証ルーターの更新
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. データベースマイグレーションの削除
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 不要なファイルの削除
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. インポートの整理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_51" class="md-nav__link">
+    <span class="md-ellipsis">
+      設定の調整
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="設定の調整">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jwt" class="md-nav__link">
+    <span class="md-ellipsis">
+      JWT設定の変更
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_52" class="md-nav__link">
+    <span class="md-ellipsis">
+      動作確認テスト
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="動作確認テスト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. インポートテスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. エンドポイントテスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. スキーマテスト
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_53" class="md-nav__link">
+    <span class="md-ellipsis">
+      復元手順
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_54" class="md-nav__link">
+    <span class="md-ellipsis">
+      推奨事項
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="推奨事項">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_55" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発段階
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_56" class="md-nav__link">
+    <span class="md-ellipsis">
+      本番環境
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_57" class="md-nav__link">
+    <span class="md-ellipsis">
+      結論
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_58" class="md-nav__link">
+    <span class="md-ellipsis">
+      ベストプラクティス
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ベストプラクティス">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_59" class="md-nav__link">
+    <span class="md-ellipsis">
+      セキュリティベストプラクティス
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="セキュリティベストプラクティス">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 本番環境での必須設定
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. シークレット管理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 監査とモニタリング
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_60" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発効率化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="開発効率化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 開発環境でのテストユーザー作成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. API テスト自動化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-openapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. OpenAPI仕様書の活用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_61" class="md-nav__link">
+    <span class="md-ellipsis">
+      運用ベストプラクティス
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="運用ベストプラクティス">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. ヘルスチェック
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. メトリクス収集
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. バックアップ戦略
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_62" class="md-nav__link">
+    <span class="md-ellipsis">
+      まとめ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="まとめ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_63" class="md-nav__link">
+    <span class="md-ellipsis">
+      実装済み機能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_64" class="md-nav__link">
+    <span class="md-ellipsis">
+      セキュリティ機能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_65" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発者体験
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_66" class="md-nav__link">
+    <span class="md-ellipsis">
+      セキュリティ強化対応記録
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="セキュリティ強化対応記録">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#202578-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      2025年7月8日 - 認証APIセキュリティ強化対応
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="koiki-fw-api">KOIKI-FW 認証系API完全ガイド</h1>
+<h2 id="_1">概要</h2>
+<p>KOIKI-FW v0.6.0における認証系APIの包括的なガイドドキュメントです。本フレームワークは、企業級アプリケーションに求められる堅牢で柔軟な認証システムを提供します。JWT（JSON Web Token）をベースとし、リフレッシュトークン、パスワードリセット、ログイン試行制限など、現代的なセキュリティ要件を満たす機能を実装しています。</p>
+<h2 id="_2">目次</h2>
+<ol>
+<li><a href="#アーキテクチャ概要">アーキテクチャ概要</a></li>
+<li><a href="#認証フロー">認証フロー</a></li>
+<li><a href="#api-エンドポイント詳細">API エンドポイント詳細</a></li>
+<li><a href="#セキュリティ機能">セキュリティ機能</a></li>
+<li><a href="#データベース設計">データベース設計</a></li>
+<li><a href="#設定とカスタマイズ">設定とカスタマイズ</a></li>
+<li><a href="#使用例">使用例</a></li>
+<li><a href="#トラブルシューティング">トラブルシューティング</a></li>
+<li><a href="#ベストプラクティス">ベストプラクティス</a></li>
+</ol>
+<h2 id="_3">アーキテクチャ概要</h2>
+<h3 id="_4">レイヤー構成</h3>
+<p>KOIKI-FWの認証システムは、以下の4つのレイヤーで構成されています：</p>
+<pre><code>┌─────────────────────────────────────────┐
+│ API Layer (Endpoints)                   │  ← HTTP リクエスト/レスポンス
+├─────────────────────────────────────────┤
+│ Service Layer (Business Logic)          │  ← 認証ロジック、セキュリティ制御
+├─────────────────────────────────────────┤
+│ Repository Layer (Data Access)          │  ← データアクセス、永続化
+├─────────────────────────────────────────┤
+│ Model Layer (Database Schema)           │  ← データモデル、テーブル定義
+└─────────────────────────────────────────┘
+</code></pre>
+<h3 id="_5">主要コンポーネント</h3>
+<h4 id="1-api"><strong>1. API エンドポイント</strong></h4>
+<ul>
+<li><code>auth_basic.py</code>: 基本認証（ログイン、登録、ログアウト、ユーザー情報取得）</li>
+<li><code>auth_password.py</code>: パスワード管理（変更、リセット）</li>
+<li><code>auth_token.py</code>: トークン管理（リフレッシュ、無効化）</li>
+</ul>
+<h4 id="2"><strong>2. サービス層</strong></h4>
+<ul>
+<li><code>AuthService</code>: 認証・トークン管理</li>
+<li><code>PasswordResetService</code>: パスワードリセット機能</li>
+<li><code>LoginSecurityService</code>: ログイン試行制限・セキュリティ</li>
+<li><code>UserService</code>: ユーザー管理</li>
+</ul>
+<h4 id="3"><strong>3. リポジトリ層</strong></h4>
+<ul>
+<li><code>UserRepository</code>: ユーザーデータアクセス</li>
+<li><code>RefreshTokenRepository</code>: リフレッシュトークン管理</li>
+<li><code>PasswordResetRepository</code>: パスワードリセットトークン管理</li>
+<li><code>LoginAttemptRepository</code>: ログイン試行履歴管理</li>
+</ul>
+<h4 id="4"><strong>4. データモデル</strong></h4>
+<ul>
+<li><code>UserModel</code>: ユーザー情報</li>
+<li><code>RefreshTokenModel</code>: リフレッシュトークン</li>
+<li><code>PasswordResetModel</code>: パスワードリセットトークン</li>
+<li><code>LoginAttemptModel</code>: ログイン試行履歴</li>
+</ul>
+<h2 id="_6">認証フロー</h2>
+<h3 id="_7">基本認証フロー</h3>
+<pre><code class="language-mermaid">graph TD
+    A[ユーザー] --&gt;|1. ログイン要求| B[API Gateway]
+    B --&gt;|2. セキュリティチェック| C[LoginSecurityService]
+    C --&gt;|3. 認証| D[UserService]
+    D --&gt;|4. トークン生成| E[AuthService]
+    E --&gt;|5. アクセストークン + リフレッシュトークン| A
+
+    A --&gt;|6. API要求 + アクセストークン| F[Protected Endpoint]
+    F --&gt;|7. トークン検証| G[Security Middleware]
+    G --&gt;|8. レスポンス| A
+</code></pre>
+<h3 id="_8">リフレッシュトークンフロー</h3>
+<pre><code class="language-mermaid">graph TD
+    A[クライアント] --&gt;|1. アクセストークン期限切れ| B[API応答 401]
+    A --&gt;|2. リフレッシュ要求| C[/auth/refresh]
+    C --&gt;|3. トークン検証| D[AuthService]
+    D --&gt;|4. 新トークン発行| E[TokenWithRefresh]
+    E --&gt;|5. 新しいアクセストークン + リフレッシュトークン| A
+</code></pre>
+<h3 id="_9">パスワードリセットフロー</h3>
+<pre><code class="language-mermaid">graph TD
+    A[ユーザー] --&gt;|1. リセット要求| B[/auth/password-reset/request]
+    B --&gt;|2. トークン生成| C[PasswordResetService]
+    C --&gt;|3. メール送信（予定）| D[Email Service]
+    D --&gt;|4. リセットリンク| A
+    A --&gt;|5. リセット実行| E[/auth/password-reset/confirm]
+    E --&gt;|6. パスワード更新| F[UserService]
+</code></pre>
+<h2 id="api">API エンドポイント詳細</h2>
+<h3 id="auth_basicpy">基本認証エンドポイント (<code>auth_basic.py</code>)</h3>
+<h4 id="post-authlogin"><strong>POST /auth/login</strong></h4>
+<p>OAuth2互換のログインエンドポイント。メールアドレスとパスワードで認証し、JWTアクセストークンとリフレッシュトークンを発行します。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-http">POST /auth/login
+Content-Type: application/x-www-form-urlencoded
+
+username=user@example.com&amp;password=securepassword123
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;,
+  &quot;refresh_token&quot;: &quot;def50200b8a1c3d4e5f6...&quot;,
+  &quot;token_type&quot;: &quot;bearer&quot;,
+  &quot;expires_in&quot;: 3600
+}
+</code></pre>
+<p><strong>セキュリティ機能</strong>
+- レート制限: 10回/分
+- ログイン試行制限: 5回失敗で15分間ロックアウト
+- IP単位制限: 10回失敗で15分間ブロック
+- 段階的遅延: 失敗回数に応じた指数関数的遅延
+- 全ログイン試行の記録と監査</p>
+<p><strong>エラーレスポンス</strong></p>
+<pre><code class="language-json">// 認証失敗
+{
+  &quot;detail&quot;: &quot;Incorrect email or password&quot;,
+  &quot;status_code&quot;: 401
+}
+
+// アカウントロックアウト
+{
+  &quot;detail&quot;: &quot;Account temporarily locked due to 5 failed attempts&quot;,
+  &quot;status_code&quot;: 429,
+  &quot;headers&quot;: {
+    &quot;Retry-After&quot;: &quot;900&quot;
+  }
+}
+</code></pre>
+<h4 id="post-authregister"><strong>POST /auth/register</strong></h4>
+<p>新規ユーザー登録エンドポイント。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-json">{
+  &quot;email&quot;: &quot;newuser@example.com&quot;,
+  &quot;password&quot;: &quot;securepassword123&quot;,
+  &quot;full_name&quot;: &quot;New User&quot;
+}
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;User registered successfully&quot;,
+  &quot;user&quot;: {
+    &quot;id&quot;: 123,
+    &quot;email&quot;: &quot;newuser@example.com&quot;,
+    &quot;full_name&quot;: &quot;New User&quot;,
+    &quot;is_active&quot;: true,
+    &quot;created_at&quot;: &quot;2025-07-07T12:00:00Z&quot;
+  }
+}
+</code></pre>
+<p><strong>バリデーション</strong>
+- メールアドレス: 有効な形式、一意性
+- パスワード: 8文字以上、複雑性要件
+- レート制限: 5回/分</p>
+<h4 id="get-authme"><strong>GET /auth/me</strong></h4>
+<p>現在認証されているユーザーの情報を取得。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-http">GET /auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 123,
+  &quot;email&quot;: &quot;user@example.com&quot;,
+  &quot;full_name&quot;: &quot;User Name&quot;,
+  &quot;is_active&quot;: true,
+  &quot;is_superuser&quot;: false,
+  &quot;created_at&quot;: &quot;2025-07-07T12:00:00Z&quot;,
+  &quot;updated_at&quot;: &quot;2025-07-07T12:00:00Z&quot;
+}
+</code></pre>
+<h4 id="post-authlogout"><strong>POST /auth/logout</strong></h4>
+<p>ログアウト処理。JWTはステートレスなため、主にログ記録とクライアント側処理の統一化に使用。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-http">POST /auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;Successfully logged out&quot;
+}
+</code></pre>
+<h3 id="auth_passwordpy">パスワード管理エンドポイント (<code>auth_password.py</code>)</h3>
+<h4 id="post-authpassword-change"><strong>POST /auth/password-change</strong></h4>
+<p>認証済みユーザーのパスワード変更。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-json">{
+  &quot;current_password&quot;: &quot;oldpassword123&quot;,
+  &quot;new_password&quot;: &quot;newpassword456&quot;
+}
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;Password changed successfully&quot;
+}
+</code></pre>
+<p><strong>セキュリティ</strong>
+- 現在のパスワード検証必須
+- 新パスワードの複雑性要件チェック
+- レート制限: 5回/分</p>
+<h4 id="post-authpassword-resetrequest"><strong>POST /auth/password-reset/request</strong></h4>
+<p>パスワードリセット要求。メールアドレスが登録されている場合、リセットトークンを生成。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-json">{
+  &quot;email&quot;: &quot;user@example.com&quot;
+}
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;Password reset email sent if account exists&quot;
+}
+</code></pre>
+<p><strong>セキュリティ特徴</strong>
+- メールアドレス存在有無に関わらず同じレスポンス（情報漏洩防止）
+- トークン有効期限: 1時間
+- レート制限: 3回/分
+- IP・デバイス情報の記録</p>
+<p><strong>開発環境での注意</strong>
+現在はメール送信機能は未実装のため、生成されたリセットトークンはログに出力されます。本番環境では必ずメール送信機能と連携してください。</p>
+<h4 id="post-authpassword-resetconfirm"><strong>POST /auth/password-reset/confirm</strong></h4>
+<p>パスワードリセットの実行。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-json">{
+  &quot;token&quot;: &quot;abc123def456...&quot;,
+  &quot;new_password&quot;: &quot;newpassword789&quot;
+}
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;Password reset completed successfully&quot;,
+  &quot;data&quot;: {
+    &quot;user_email&quot;: &quot;user@example.com&quot;
+  }
+}
+</code></pre>
+<p><strong>セキュリティ機能</strong>
+- トークンの一回限り使用
+- 有効期限チェック（1時間）
+- パスワード更新後に全リフレッシュトークンを無効化
+- レート制限: 5回/分</p>
+<h3 id="auth_tokenpy">トークン管理エンドポイント (<code>auth_token.py</code>)</h3>
+<h4 id="post-authrefresh"><strong>POST /auth/refresh</strong></h4>
+<p>リフレッシュトークンを使用してアクセストークンを更新。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-json">{
+  &quot;refresh_token&quot;: &quot;def50200b8a1c3d4e5f6...&quot;
+}
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;access_token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&quot;,
+  &quot;refresh_token&quot;: &quot;ghi78900c1b2a3d4e5f6...&quot;,
+  &quot;token_type&quot;: &quot;bearer&quot;,
+  &quot;expires_in&quot;: 3600
+}
+</code></pre>
+<p><strong>セキュリティ機能</strong>
+- トークンローテーション: 新しいリフレッシュトークンを発行
+- デバイス情報の検証
+- 有効期限チェック（7日間）
+- レート制限: 10回/分</p>
+<h4 id="post-authrevoke-all-tokens"><strong>POST /auth/revoke-all-tokens</strong></h4>
+<p>現在のユーザーの全リフレッシュトークンを無効化（全デバイスからログアウト）。</p>
+<p><strong>リクエスト</strong></p>
+<pre><code class="language-http">POST /auth/revoke-all-tokens
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+</code></pre>
+<p><strong>レスポンス</strong></p>
+<pre><code class="language-json">{
+  &quot;message&quot;: &quot;Successfully revoked 3 refresh tokens&quot;,
+  &quot;data&quot;: {
+    &quot;revoked_count&quot;: 3
+  }
+}
+</code></pre>
+<h2 id="_10">セキュリティ機能</h2>
+<h3 id="_11">多層防御システム</h3>
+<p>KOIKI-FWの認証システムは、複数のセキュリティレイヤーで保護されています：</p>
+<h4 id="1-api_1"><strong>1. API レベル</strong></h4>
+<ul>
+<li><strong>レート制限</strong>: slowapi による固定窓アルゴリズム</li>
+<li><strong>CORS設定</strong>: 設定可能なオリジン制限</li>
+<li><strong>セキュリティヘッダー</strong>: 設定により追加可能</li>
+</ul>
+<h4 id="2_1"><strong>2. 認証レベル</strong></h4>
+<ul>
+<li><strong>JWT署名</strong>: HMAC SHA-256アルゴリズム</li>
+<li><strong>トークンローテーション</strong>: セキュアなセッション管理</li>
+<li><strong>短い有効期限</strong>: アクセストークン60分（開発）、15分（本番推奨）</li>
+</ul>
+<h4 id="3_1"><strong>3. アプリケーションレベル</strong></h4>
+<ul>
+<li><strong>ログイン試行制限</strong>: カスタム実装による細密制御</li>
+<li><strong>段階的遅延</strong>: ブルートフォース攻撃対策</li>
+<li><strong>監査ログ</strong>: 全認証イベントの記録</li>
+</ul>
+<h4 id="4_1"><strong>4. データレベル</strong></h4>
+<ul>
+<li><strong>パスワードハッシュ化</strong>: bcrypt自動ソルト生成</li>
+<li><strong>トークンハッシュ化</strong>: SHA-256による安全な保存</li>
+<li><strong>暗号化</strong>: 機密データの暗号化保存</li>
+</ul>
+<h3 id="_12">ログイン試行制限詳細</h3>
+<h4 id="_13"><strong>制限ポリシー</strong></h4>
+<table>
+<thead>
+<tr>
+<th>制限タイプ</th>
+<th>閾値</th>
+<th>ロックアウト期間</th>
+<th>対象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>メールアドレス単位</td>
+<td>5回失敗</td>
+<td>15分</td>
+<td>特定アカウント</td>
+</tr>
+<tr>
+<td>IP単位</td>
+<td>10回失敗</td>
+<td>15分</td>
+<td>送信元IP</td>
+</tr>
+<tr>
+<td>段階的遅延</td>
+<td>失敗毎</td>
+<td>指数関数的</td>
+<td>即座に適用</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_14"><strong>段階的遅延アルゴリズム</strong></h4>
+<pre><code class="language-python">delay = min(2 ** (失敗回数 - 1), 30)  # 最大30秒
+</code></pre>
+<p>失敗回数と遅延時間の関係：
+- 1回目: 0秒
+- 2回目: 2秒
+- 3回目: 4秒
+- 4回目: 8秒
+- 5回目: 16秒
+- 6回目以降: 30秒（上限）</p>
+<h4 id="_15"><strong>監査ログ項目</strong></h4>
+<p>全てのログイン試行について以下の情報を記録：</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 123,
+  &quot;email&quot;: &quot;user@example.com&quot;,
+  &quot;user_id&quot;: 456,
+  &quot;ip_address&quot;: &quot;192.168.1.100&quot;,
+  &quot;user_agent&quot;: &quot;Mozilla/5.0...&quot;,
+  &quot;is_successful&quot;: true,
+  &quot;failure_reason&quot;: null,
+  &quot;attempted_at&quot;: &quot;2025-07-07T12:00:00Z&quot;
+}
+</code></pre>
+<h3 id="_16">パスワードセキュリティ</h3>
+<h4 id="_17"><strong>複雑性要件</strong></h4>
+<ul>
+<li>最小長: 8文字</li>
+<li>大文字・小文字・数字・記号の組み合わせ</li>
+<li>空白文字禁止</li>
+<li>辞書攻撃対策（一般的なパスワードの拒否）</li>
+</ul>
+<h4 id="_18"><strong>ハッシュ化</strong></h4>
+<pre><code class="language-python"># bcryptによる自動ソルト生成
+password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+</code></pre>
+<h3 id="_19">トークンセキュリティ</h3>
+<h4 id="_20"><strong>アクセストークン</strong></h4>
+<ul>
+<li>アルゴリズム: HS256 (HMAC SHA-256)</li>
+<li>有効期限: 60分（開発）/ 15分（本番推奨）</li>
+<li>ペイロード: ユーザーID、有効期限、発行時刻</li>
+</ul>
+<h4 id="_21"><strong>リフレッシュトークン</strong></h4>
+<ul>
+<li>暗号学的に安全な乱数生成</li>
+<li>SHA-256ハッシュ化してデータベース保存</li>
+<li>有効期限: 7日間</li>
+<li>デバイス情報との紐付け</li>
+</ul>
+<h2 id="_22">データベース設計</h2>
+<h3 id="er">ER図</h3>
+<pre><code class="language-mermaid">erDiagram
+    users ||--o{ refresh_tokens : has
+    users ||--o{ password_reset_tokens : has
+    users ||--o{ login_attempts : has
+    users ||--o{ todos : owns
+    users }|--|| user_roles : has
+    roles ||--o{ user_roles : belongs
+    roles }|--|| role_permissions : has
+    permissions ||--o{ role_permissions : belongs
+
+    users {
+        int id PK
+        string email UK
+        string hashed_password
+        string full_name
+        boolean is_active
+        boolean is_superuser
+        datetime created_at
+        datetime updated_at
+    }
+
+    refresh_tokens {
+        int id PK
+        int user_id FK
+        string token_hash UK
+        datetime expires_at
+        boolean is_revoked
+        datetime created_at
+        datetime revoked_at
+        string device_info
+    }
+
+    password_reset_tokens {
+        int id PK
+        int user_id FK
+        string token_hash UK
+        datetime expires_at
+        boolean is_used
+        datetime created_at
+        datetime used_at
+        string ip_address
+        text user_agent
+    }
+
+    login_attempts {
+        int id PK
+        string email
+        int user_id FK
+        string ip_address
+        text user_agent
+        boolean is_successful
+        string failure_reason
+        datetime attempted_at
+    }
+</code></pre>
+<h3 id="_23">テーブル詳細</h3>
+<h4 id="users"><strong>users テーブル</strong></h4>
+<p>ユーザーの基本情報を格納。</p>
+<pre><code class="language-sql">CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE,
+    is_superuser BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_active ON users(is_active);
+</code></pre>
+<h4 id="refresh_tokens"><strong>refresh_tokens テーブル</strong></h4>
+<p>リフレッシュトークンの管理。</p>
+<pre><code class="language-sql">CREATE TABLE refresh_tokens (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash VARCHAR(255) UNIQUE NOT NULL,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    is_revoked BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    revoked_at TIMESTAMP WITH TIME ZONE,
+    device_info TEXT
+);
+
+CREATE INDEX idx_refresh_tokens_user_id ON refresh_tokens(user_id);
+CREATE INDEX idx_refresh_tokens_hash ON refresh_tokens(token_hash);
+CREATE INDEX idx_refresh_tokens_expires ON refresh_tokens(expires_at);
+CREATE INDEX idx_refresh_tokens_revoked ON refresh_tokens(is_revoked);
+</code></pre>
+<h4 id="password_reset_tokens"><strong>password_reset_tokens テーブル</strong></h4>
+<p>パスワードリセットトークンの管理。</p>
+<pre><code class="language-sql">CREATE TABLE password_reset_tokens (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash VARCHAR(255) UNIQUE NOT NULL,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    is_used BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    used_at TIMESTAMP WITH TIME ZONE,
+    ip_address VARCHAR(45),  -- IPv6対応
+    user_agent TEXT
+);
+
+CREATE INDEX idx_password_reset_tokens_user_id ON password_reset_tokens(user_id);
+CREATE INDEX idx_password_reset_tokens_hash ON password_reset_tokens(token_hash);
+CREATE INDEX idx_password_reset_tokens_expires ON password_reset_tokens(expires_at);
+CREATE INDEX idx_password_reset_tokens_used ON password_reset_tokens(is_used);
+</code></pre>
+<h4 id="login_attempts"><strong>login_attempts テーブル</strong></h4>
+<p>ログイン試行履歴の記録。</p>
+<pre><code class="language-sql">CREATE TABLE login_attempts (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    ip_address VARCHAR(45) NOT NULL,  -- IPv6対応
+    user_agent TEXT,
+    is_successful BOOLEAN NOT NULL,
+    failure_reason VARCHAR(100),
+    attempted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_login_attempts_email ON login_attempts(email);
+CREATE INDEX idx_login_attempts_ip ON login_attempts(ip_address);
+CREATE INDEX idx_login_attempts_successful ON login_attempts(is_successful);
+CREATE INDEX idx_login_attempts_attempted_at ON login_attempts(attempted_at);
+</code></pre>
+<h3 id="_24">データ保持ポリシー</h3>
+<h4 id="_25"><strong>自動クリーンアップ</strong></h4>
+<ul>
+<li><strong>ログイン試行履歴</strong>: 30日後に自動削除</li>
+<li><strong>期限切れリフレッシュトークン</strong>: 定期的にクリーンアップ</li>
+<li><strong>使用済みパスワードリセットトークン</strong>: 24時間後に削除</li>
+</ul>
+<h4 id="_26"><strong>実装例</strong></h4>
+<pre><code class="language-python"># 定期実行ジョブ（例：毎日実行）
+async def cleanup_expired_data():
+    # 30日以上古いログイン試行履歴を削除
+    await login_security_service.cleanup_old_attempts(db, days=30)
+
+    # 期限切れリフレッシュトークンを削除
+    await auth_service.cleanup_expired_refresh_tokens(db)
+
+    # 使用済みパスワードリセットトークンを削除
+    await password_reset_service.cleanup_expired_tokens(db)
+</code></pre>
+<h2 id="_27">設定とカスタマイズ</h2>
+<h3 id="libkoikicoreconfigpy">基本設定 (<code>libkoiki/core/config.py</code>)</h3>
+<pre><code class="language-python">class Settings(BaseSettings):
+    # JWT設定
+    SECRET_KEY: str = &quot;development_secret_key&quot;  # 本番では環境変数から取得
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60  # アクセストークン有効期限
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7     # リフレッシュトークン有効期限
+
+    # レート制限設定
+    RATE_LIMIT_ENABLED: bool = True
+    RATE_LIMIT_DEFAULT: str = &quot;10/minute&quot;
+
+    # セキュリティ設定
+    LOGIN_MAX_ATTEMPTS_EMAIL: int = 5      # メール単位最大試行回数
+    LOGIN_MAX_ATTEMPTS_IP: int = 10        # IP単位最大試行回数
+    LOGIN_LOCKOUT_DURATION: int = 15       # ロックアウト期間（分）
+
+    # パスワード設定
+    PASSWORD_MIN_LENGTH: int = 8
+    PASSWORD_REQUIRE_UPPERCASE: bool = True
+    PASSWORD_REQUIRE_LOWERCASE: bool = True
+    PASSWORD_REQUIRE_NUMBERS: bool = True
+    PASSWORD_REQUIRE_SYMBOLS: bool = True
+
+    # データベース設定
+    DATABASE_URL: str = &quot;postgresql://user:pass@localhost/db&quot;
+
+    # Redis設定（オプション）
+    REDIS_ENABLED: bool = False
+    REDIS_HOST: str = &quot;localhost&quot;
+    REDIS_PORT: int = 6379
+</code></pre>
+<h3 id="_28">環境別設定</h3>
+<h4 id="_29"><strong>開発環境</strong></h4>
+<pre><code class="language-bash"># .env
+APP_ENV=development
+SECRET_KEY=development_secret_key
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+DEBUG=true
+LOG_LEVEL=DEBUG
+</code></pre>
+<h4 id="_30"><strong>本番環境</strong></h4>
+<pre><code class="language-bash"># .env
+APP_ENV=production
+SECRET_KEY=your_super_secure_random_key_here
+ACCESS_TOKEN_EXPIRE_MINUTES=15
+DEBUG=false
+LOG_LEVEL=INFO
+DATABASE_URL=postgresql://user:pass@prod-db:5432/app
+REDIS_ENABLED=true
+REDIS_HOST=redis-cluster.internal
+</code></pre>
+<h3 id="_31">カスタマイズポイント</h3>
+<h4 id="1"><strong>1. ログイン試行制限のカスタマイズ</strong></h4>
+<pre><code class="language-python">class CustomLoginSecurityService(LoginSecurityService):
+    def __init__(self, login_attempt_repository: LoginAttemptRepository):
+        super().__init__(login_attempt_repository)
+
+        # カスタム設定
+        self.max_attempts_per_email = 3  # より厳格に
+        self.max_attempts_per_ip = 20    # より緩和
+        self.lockout_duration_minutes = 30  # より長期
+</code></pre>
+<h4 id="2_2"><strong>2. パスワード複雑性要件のカスタマイズ</strong></h4>
+<pre><code class="language-python">from pydantic import validator
+
+class CustomPasswordChangeRequest(PasswordChangeRequest):
+    @validator('new_password')
+    def validate_password_complexity(cls, v):
+        # カスタム複雑性チェック
+        if len(v) &lt; 12:  # より長いパスワード要求
+            raise ValueError('Password must be at least 12 characters')
+
+        if not re.search(r'[A-Z]', v):
+            raise ValueError('Password must contain uppercase letter')
+
+        # 辞書攻撃対策
+        common_passwords = ['password', '123456', 'qwerty']
+        if v.lower() in common_passwords:
+            raise ValueError('Password too common')
+
+        return v
+</code></pre>
+<h4 id="3_2"><strong>3. トークン有効期限の動的設定</strong></h4>
+<pre><code class="language-python">class DynamicTokenService(AuthService):
+    async def create_token_pair(self, user: UserModel, **kwargs):
+        # ユーザーの役割に応じて有効期限を調整
+        if user.is_superuser:
+            expires_minutes = 30  # 管理者は短時間
+        else:
+            expires_minutes = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+
+        # トークン生成ロジック...
+</code></pre>
+<h2 id="_32">使用例</h2>
+<h3 id="_33">フロントエンド実装例</h3>
+<h4 id="react-typescript"><strong>React + TypeScript</strong></h4>
+<pre><code class="language-typescript">// types/auth.ts
+interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+interface TokenResponse {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+// services/authService.ts
+class AuthService {
+  private baseURL = '/api/v1/auth';
+
+  async login(credentials: LoginRequest): Promise&lt;TokenResponse&gt; {
+    const formData = new FormData();
+    formData.append('username', credentials.username);
+    formData.append('password', credentials.password);
+
+    const response = await fetch(`${this.baseURL}/login`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      if (response.status === 429) {
+        const retryAfter = response.headers.get('Retry-After');
+        throw new Error(`Too many attempts. Try again in ${retryAfter} seconds.`);
+      }
+      throw new Error('Login failed');
+    }
+
+    return response.json();
+  }
+
+  async refreshToken(refreshToken: string): Promise&lt;TokenResponse&gt; {
+    const response = await fetch(`${this.baseURL}/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Token refresh failed');
+    }
+
+    return response.json();
+  }
+
+  async resetPassword(email: string): Promise&lt;void&gt; {
+    const response = await fetch(`${this.baseURL}/password-reset/request`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Password reset request failed');
+    }
+  }
+}
+
+// hooks/useAuth.ts
+export const useAuth = () =&gt; {
+  const [tokens, setTokens] = useState&lt;TokenResponse | null&gt;(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const login = async (credentials: LoginRequest) =&gt; {
+    setIsLoading(true);
+    try {
+      const tokenResponse = await authService.login(credentials);
+      setTokens(tokenResponse);
+
+      // ローカルストレージに保存
+      localStorage.setItem('refresh_token', tokenResponse.refresh_token);
+
+      // 自動リフレッシュのスケジュール
+      scheduleTokenRefresh(tokenResponse.expires_in);
+
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const scheduleTokenRefresh = (expiresIn: number) =&gt; {
+    // トークン期限の90%で自動リフレッシュ
+    const refreshTime = (expiresIn * 0.9) * 1000;
+
+    setTimeout(async () =&gt; {
+      try {
+        const refreshToken = localStorage.getItem('refresh_token');
+        if (refreshToken) {
+          const newTokens = await authService.refreshToken(refreshToken);
+          setTokens(newTokens);
+          localStorage.setItem('refresh_token', newTokens.refresh_token);
+          scheduleTokenRefresh(newTokens.expires_in);
+        }
+      } catch (error) {
+        console.error('Token refresh failed:', error);
+        // ログイン画面にリダイレクト
+      }
+    }, refreshTime);
+  };
+
+  return { tokens, login, isLoading };
+};
+</code></pre>
+<h4 id="vuejs-composition-api"><strong>Vue.js + Composition API</strong></h4>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;div class=&quot;login-form&quot;&gt;
+    &lt;form @submit.prevent=&quot;handleLogin&quot;&gt;
+      &lt;input 
+        v-model=&quot;email&quot; 
+        type=&quot;email&quot; 
+        placeholder=&quot;Email&quot; 
+        required 
+      /&gt;
+      &lt;input 
+        v-model=&quot;password&quot; 
+        type=&quot;password&quot; 
+        placeholder=&quot;Password&quot; 
+        required 
+      /&gt;
+      &lt;button type=&quot;submit&quot; :disabled=&quot;isLoading&quot;&gt;
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      &lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;div v-if=&quot;error&quot; class=&quot;error&quot;&gt;
+      {{ error }}
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref } from 'vue';
+import { useAuth } from '@/composables/useAuth';
+
+const { login, isLoading, error } = useAuth();
+
+const email = ref('');
+const password = ref('');
+
+const handleLogin = async () =&gt; {
+  try {
+    await login({
+      username: email.value,
+      password: password.value,
+    });
+    // ログイン成功時の処理
+  } catch (err) {
+    console.error('Login failed:', err);
+  }
+};
+&lt;/script&gt;
+</code></pre>
+<h3 id="_34">バックエンド実装例</h3>
+<h4 id="_35"><strong>カスタム認証ミドルウェア</strong></h4>
+<pre><code class="language-python"># middleware/auth_middleware.py
+from fastapi import Request, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from typing import Optional
+
+class CustomAuthMiddleware:
+    def __init__(self):
+        self.security = HTTPBearer(auto_error=False)
+
+    async def __call__(self, request: Request):
+        # 公開エンドポイントのチェック
+        if self.is_public_endpoint(request.url.path):
+            return
+
+        # トークン取得
+        credentials: Optional[HTTPAuthorizationCredentials] = \
+            await self.security(request)
+
+        if not credentials:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=&quot;Authentication required&quot;
+            )
+
+        # トークン検証
+        try:
+            user = await verify_token(credentials.credentials)
+            request.state.user = user
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=&quot;Invalid token&quot;
+            )
+
+    def is_public_endpoint(self, path: str) -&gt; bool:
+        public_paths = [
+            '/auth/login',
+            '/auth/register',
+            '/auth/password-reset/request',
+            '/auth/password-reset/confirm',
+            '/docs',
+            '/openapi.json',
+        ]
+        return path in public_paths
+</code></pre>
+<h4 id="_36"><strong>カスタム権限チェック</strong></h4>
+<pre><code class="language-python"># dependencies/permissions.py
+from functools import wraps
+from fastapi import HTTPException, status, Depends
+from typing import List
+
+def require_permissions(required_permissions: List[str]):
+    &quot;&quot;&quot;指定された権限を要求するデコレータ&quot;&quot;&quot;
+
+    def decorator(func):
+        @wraps(func)
+        async def wrapper(*args, **kwargs):
+            # 現在のユーザーを取得
+            current_user = kwargs.get('current_user')
+            if not current_user:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail=&quot;Authentication required&quot;
+                )
+
+            # 権限チェック
+            user_permissions = await get_user_permissions(current_user.id)
+
+            for permission in required_permissions:
+                if permission not in user_permissions:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail=f&quot;Permission '{permission}' required&quot;
+                    )
+
+            return await func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+# 使用例
+@router.delete(&quot;/users/{user_id}&quot;)
+@require_permissions([&quot;user.delete&quot;])
+async def delete_user(
+    user_id: int,
+    current_user: ActiveUserDep,
+    db: DBSessionDep
+):
+    # 削除処理
+    pass
+</code></pre>
+<h3 id="_37">モバイルアプリ実装例</h3>
+<h4 id="flutter-dart"><strong>Flutter (Dart)</strong></h4>
+<pre><code class="language-dart">// models/auth_models.dart
+class LoginRequest {
+  final String username;
+  final String password;
+
+  LoginRequest({required this.username, required this.password});
+
+  Map&lt;String, String&gt; toFormData() {
+    return {
+      'username': username,
+      'password': password,
+    };
+  }
+}
+
+class TokenResponse {
+  final String accessToken;
+  final String refreshToken;
+  final String tokenType;
+  final int expiresIn;
+
+  TokenResponse({
+    required this.accessToken,
+    required this.refreshToken,
+    required this.tokenType,
+    required this.expiresIn,
+  });
+
+  factory TokenResponse.fromJson(Map&lt;String, dynamic&gt; json) {
+    return TokenResponse(
+      accessToken: json['access_token'],
+      refreshToken: json['refresh_token'],
+      tokenType: json['token_type'],
+      expiresIn: json['expires_in'],
+    );
+  }
+}
+
+// services/auth_service.dart
+class AuthService {
+  static const String baseURL = 'https://api.yourapp.com/api/v1/auth';
+  late final Dio _dio;
+
+  AuthService() {
+    _dio = Dio();
+    _dio.interceptors.add(AuthInterceptor());
+  }
+
+  Future&lt;TokenResponse&gt; login(LoginRequest request) async {
+    try {
+      final response = await _dio.post(
+        '$baseURL/login',
+        data: request.toFormData(),
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+        ),
+      );
+
+      return TokenResponse.fromJson(response.data);
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 429) {
+        final retryAfter = e.response?.headers['retry-after']?.first;
+        throw AuthException('Too many attempts. Try again in $retryAfter seconds.');
+      }
+      throw AuthException('Login failed: ${e.message}');
+    }
+  }
+
+  Future&lt;void&gt; requestPasswordReset(String email) async {
+    try {
+      await _dio.post(
+        '$baseURL/password-reset/request',
+        data: {'email': email},
+      );
+    } on DioError catch (e) {
+      throw AuthException('Password reset request failed: ${e.message}');
+    }
+  }
+}
+
+// providers/auth_provider.dart
+class AuthProvider extends ChangeNotifier {
+  TokenResponse? _tokens;
+  bool _isLoading = false;
+  String? _error;
+
+  TokenResponse? get tokens =&gt; _tokens;
+  bool get isLoading =&gt; _isLoading;
+  String? get error =&gt; _error;
+  bool get isAuthenticated =&gt; _tokens != null;
+
+  Future&lt;void&gt; login(String email, String password) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      final request = LoginRequest(username: email, password: password);
+      final tokenResponse = await AuthService().login(request);
+
+      _tokens = tokenResponse;
+
+      // セキュアストレージに保存
+      await _storeTokens(tokenResponse);
+
+      // 自動リフレッシュのスケジュール
+      _scheduleTokenRefresh();
+
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future&lt;void&gt; _storeTokens(TokenResponse tokens) async {
+    const storage = FlutterSecureStorage();
+    await storage.write(key: 'refresh_token', value: tokens.refreshToken);
+    await storage.write(key: 'access_token', value: tokens.accessToken);
+  }
+
+  void _scheduleTokenRefresh() {
+    if (_tokens == null) return;
+
+    // トークン期限の90%で自動リフレッシュ
+    final refreshDuration = Duration(
+      seconds: (_tokens!.expiresIn * 0.9).round(),
+    );
+
+    Timer(refreshDuration, () async {
+      try {
+        await _refreshToken();
+      } catch (e) {
+        // リフレッシュ失敗時はログアウト
+        await logout();
+      }
+    });
+  }
+
+  Future&lt;void&gt; _refreshToken() async {
+    if (_tokens?.refreshToken == null) return;
+
+    try {
+      final newTokens = await AuthService().refreshToken(_tokens!.refreshToken);
+      _tokens = newTokens;
+      await _storeTokens(newTokens);
+      _scheduleTokenRefresh();
+      notifyListeners();
+    } catch (e) {
+      throw Exception('Token refresh failed: $e');
+    }
+  }
+}
+</code></pre>
+<h2 id="_38">トラブルシューティング</h2>
+<h3 id="_39">よくある問題と解決方法</h3>
+<h4 id="1_1"><strong>1. 認証エラー</strong></h4>
+<p><strong>問題</strong>: "Incorrect email or password"</p>
+<pre><code class="language-json">{
+  &quot;detail&quot;: &quot;Incorrect email or password&quot;,
+  &quot;status_code&quot;: 401
+}
+</code></pre>
+<p><strong>原因と解決方法</strong>:
+- メールアドレスやパスワードの入力ミス → 入力内容を確認
+- アカウントが無効化されている → 管理者に確認
+- パスワードハッシュの問題 → データベースの整合性を確認</p>
+<p><strong>デバッグ手順</strong>:</p>
+<pre><code class="language-python"># ログで詳細を確認
+logger.info(&quot;Authentication attempt&quot;, 
+           email=email, 
+           user_exists=user is not None,
+           password_valid=user and verify_password(password, user.hashed_password))
+</code></pre>
+<h4 id="2_3"><strong>2. アカウントロックアウト</strong></h4>
+<p><strong>問題</strong>: "Account temporarily locked due to failed attempts"</p>
+<pre><code class="language-json">{
+  &quot;detail&quot;: &quot;Account temporarily locked due to 5 failed attempts&quot;,
+  &quot;status_code&quot;: 429,
+  &quot;headers&quot;: {&quot;Retry-After&quot;: &quot;900&quot;}
+}
+</code></pre>
+<p><strong>解決方法</strong>:
+1. <strong>待機</strong>: Retry-Afterヘッダーで指定された時間待つ
+2. <strong>手動解除</strong>: 管理者権限でロックアウトを解除
+3. <strong>設定調整</strong>: 試行制限の閾値を調整</p>
+<p><strong>管理者による手動解除</strong>:</p>
+<pre><code class="language-python"># 特定ユーザーのロックアウト解除
+async def unlock_user_account(email: str, db: AsyncSession):
+    login_security_service = LoginSecurityService(LoginAttemptRepository())
+    login_security_service.login_attempt_repository.session = db
+
+    # 失敗試行履歴を削除
+    await login_security_service.login_attempt_repository.cleanup_failed_attempts_by_email(email)
+</code></pre>
+<h4 id="3_3"><strong>3. トークン期限切れ</strong></h4>
+<p><strong>問題</strong>: "Token has expired"</p>
+<pre><code class="language-json">{
+  &quot;detail&quot;: &quot;Token has expired&quot;,
+  &quot;status_code&quot;: 401
+}
+</code></pre>
+<p><strong>解決方法</strong>:
+1. <strong>自動リフレッシュ</strong>: リフレッシュトークンで新しいアクセストークンを取得
+2. <strong>再ログイン</strong>: リフレッシュトークンも期限切れの場合</p>
+<p><strong>実装例</strong>:</p>
+<pre><code class="language-typescript">// 自動リフレッシュ付きAPIクライアント
+axios.interceptors.response.use(
+  response =&gt; response,
+  async error =&gt; {
+    if (error.response?.status === 401) {
+      try {
+        await refreshToken();
+        // 元のリクエストを再実行
+        return axios.request(error.config);
+      } catch (refreshError) {
+        // ログイン画面にリダイレクト
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+</code></pre>
+<h4 id="4-cors"><strong>4. CORS エラー</strong></h4>
+<p><strong>問題</strong>: "CORS policy: No 'Access-Control-Allow-Origin' header"</p>
+<p><strong>解決方法</strong>:</p>
+<pre><code class="language-python"># settings.pyでCORS設定を確認
+BACKEND_CORS_ORIGINS = [
+    &quot;http://localhost:3000&quot;,  # React開発サーバー
+    &quot;http://localhost:8080&quot;,  # Vue開発サーバー
+    &quot;https://yourdomain.com&quot;  # 本番フロントエンド
+]
+
+# main.pyでCORSミドルウェアを設定
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=[&quot;*&quot;],
+    allow_headers=[&quot;*&quot;],
+)
+</code></pre>
+<h4 id="5"><strong>5. データベース接続エラー</strong></h4>
+<p><strong>問題</strong>: "Database connection failed"</p>
+<p><strong>解決方法</strong>:
+1. <strong>接続文字列確認</strong>: DATABASE_URLが正しいか確認
+2. <strong>データベースサーバー状態</strong>: PostgreSQLが起動しているか確認
+3. <strong>権限確認</strong>: データベースユーザーの権限を確認
+4. <strong>マイグレーション</strong>: 最新のマイグレーションが適用されているか確認</p>
+<pre><code class="language-bash"># マイグレーション状態確認
+alembic current
+
+# 最新マイグレーション適用
+alembic upgrade head
+
+# データベース接続テスト
+python -c &quot;
+from libkoiki.db.session import get_db
+import asyncio
+async def test():
+    async for db in get_db():
+        print('Database connection successful')
+        break
+asyncio.run(test())
+&quot;
+</code></pre>
+<h3 id="_40">ログ分析</h3>
+<h4 id="_41"><strong>重要なログポイント</strong></h4>
+<pre><code class="language-python"># 認証関連のログ例
+logger.info(&quot;Login attempt&quot;, email=email, ip_address=ip, user_agent=user_agent)
+logger.warning(&quot;Login failed&quot;, email=email, reason=&quot;invalid_credentials&quot;)
+logger.info(&quot;Login successful&quot;, email=email, user_id=user.id)
+logger.warning(&quot;Account locked&quot;, email=email, attempts=5)
+logger.info(&quot;Password reset requested&quot;, email=email)
+logger.info(&quot;Password reset completed&quot;, user_id=user.id)
+logger.warning(&quot;Token refresh failed&quot;, user_id=user.id, reason=&quot;expired&quot;)
+</code></pre>
+<h4 id="_42"><strong>ログ監視クエリ例</strong></h4>
+<pre><code class="language-bash"># 失敗ログイン試行の監視
+grep &quot;Login failed&quot; /var/log/app.log | tail -100
+
+# アカウントロックアウトの監視
+grep &quot;Account locked&quot; /var/log/app.log | tail -20
+
+# 異常なIP からのアクセス
+grep &quot;Login attempt&quot; /var/log/app.log | grep -E &quot;(192\.168\.|10\.|172\.)&quot; -v | tail -50
+</code></pre>
+<h3 id="_43">パフォーマンス最適化</h3>
+<h4 id="1_2"><strong>1. データベースクエリ最適化</strong></h4>
+<pre><code class="language-python"># N+1クエリ問題の解決
+async def get_user_with_permissions(user_id: int, db: AsyncSession):
+    query = select(UserModel).options(
+        selectinload(UserModel.roles).selectinload(RoleModel.permissions)
+    ).where(UserModel.id == user_id)
+
+    result = await db.execute(query)
+    return result.scalars().first()
+
+# インデックスの活用
+# 適切なインデックスが設定されていることを確認
+CREATE INDEX CONCURRENTLY idx_login_attempts_email_time 
+ON login_attempts(email, attempted_at);
+</code></pre>
+<h4 id="2_4"><strong>2. キャッシュ戦略</strong></h4>
+<pre><code class="language-python"># Redisを使用したユーザー情報キャッシュ
+from redis.asyncio import Redis
+
+class CachedUserService:
+    def __init__(self, user_service: UserService, redis: Redis):
+        self.user_service = user_service
+        self.redis = redis
+        self.cache_ttl = 300  # 5分
+
+    async def get_user(self, user_id: int) -&gt; Optional[UserModel]:
+        # キャッシュから取得試行
+        cache_key = f&quot;user:{user_id}&quot;
+        cached = await self.redis.get(cache_key)
+
+        if cached:
+            return UserModel.model_validate_json(cached)
+
+        # データベースから取得
+        user = await self.user_service.get_user(user_id)
+        if user:
+            # キャッシュに保存
+            await self.redis.setex(
+                cache_key, 
+                self.cache_ttl, 
+                user.model_dump_json()
+            )
+
+        return user
+</code></pre>
+<h4 id="3_4"><strong>3. 接続プール最適化</strong></h4>
+<pre><code class="language-python"># データベース接続プール設定
+SQLALCHEMY_DATABASE_URI = &quot;postgresql+asyncpg://user:pass@host/db&quot;
+engine = create_async_engine(
+    SQLALCHEMY_DATABASE_URI,
+    pool_size=20,          # 同時接続数
+    max_overflow=30,       # プールオーバーフロー
+    pool_pre_ping=True,    # 接続の健全性チェック
+    pool_recycle=3600,     # 接続の再利用時間
+    echo=False             # 本番ではFalse
+)
+</code></pre>
+<h2 id="_44">リフレッシュトークン機能の無効化</h2>
+<h3 id="_45">概要</h3>
+<p>KOIKI-FW v0.6.0では、リフレッシュトークン機能を含む包括的な認証システムが実装されています。
+しかし、開発段階やシンプルな認証を望む場合、この機能を無効化してJWTアクセストークンのみの認証システムに変更することが可能です。</p>
+<h3 id="_46">無効化のメリット・デメリット</h3>
+<h4 id="_47">✅ <strong>メリット</strong></h4>
+<ul>
+<li><strong>シンプルさ</strong>: コード量が大幅に削減され、理解・保守が容易</li>
+<li><strong>パフォーマンス</strong>: データベースアクセスが削減される</li>
+<li><strong>セキュリティ</strong>: 攻撃対象範囲が縮小される</li>
+<li><strong>開発効率</strong>: 複雑な状態管理が不要</li>
+</ul>
+<h4 id="_48">⚠️ <strong>デメリット</strong></h4>
+<ul>
+<li><strong>セッション管理</strong>: ログアウト時のトークン無効化ができない</li>
+<li><strong>長期利用</strong>: アクセストークンの有効期限を延長する必要がある</li>
+<li><strong>利便性</strong>: 自動ログイン機能がない</li>
+<li><strong>セキュリティ</strong>: トークンが盗まれた場合の対処が困難</li>
+</ul>
+<h3 id="_49">影響範囲</h3>
+<h4 id="3_5"><strong>必須変更ファイル (3つ)</strong></h4>
+<ol>
+<li><code>libkoiki/api/v1/endpoints/auth_basic.py</code> - ログインエンドポイントの変更</li>
+<li><code>libkoiki/schemas/token.py</code> - レスポンススキーマの変更</li>
+<li><code>libkoiki/services/auth_service.py</code> - トークン生成ロジックの変更</li>
+</ol>
+<h4 id="6"><strong>削除可能ファイル (6つ)</strong></h4>
+<ol>
+<li><code>libkoiki/api/v1/endpoints/auth_token.py</code> - リフレッシュエンドポイント</li>
+<li><code>libkoiki/repositories/refresh_token_repository.py</code> - リフレッシュトークンリポジトリ</li>
+<li><code>libkoiki/models/refresh_token.py</code> - リフレッシュトークンモデル</li>
+<li><code>libkoiki/schemas/refresh_token.py</code> - リフレッシュトークンスキーマ</li>
+<li><code>alembic/versions/2025070702_add_refresh_tokens_table.py</code> - データベースマイグレーション</li>
+<li><code>libkoiki/api/dependencies.py</code> - 一部の依存関係削除</li>
+</ol>
+<h4 id="3_6"><strong>部分変更ファイル (3つ)</strong></h4>
+<ol>
+<li><code>libkoiki/api/v1/endpoints/auth.py</code> - ルーター設定の変更</li>
+<li><code>libkoiki/models/__init__.py</code> - モデルインポートの削除</li>
+<li><code>libkoiki/core/security.py</code> - 一部機能の削除</li>
+</ol>
+<h3 id="_50">変更手順</h3>
+<h4 id="1_3"><strong>1. ログインエンドポイントの簡略化</strong></h4>
+<p><strong><code>libkoiki/api/v1/endpoints/auth_basic.py</code></strong></p>
+<p>変更前:</p>
+<pre><code class="language-python">@router.post(&quot;/login&quot;, response_model=TokenWithRefresh)
+async def login_for_access_token(
+    # ... 省略
+) -&gt; TokenWithRefresh:
+    # ... 省略
+    access_token, refresh_token, expires_in = await auth_service.create_token_pair(
+        user=user, db=db, device_info=device_info
+    )
+
+    return TokenWithRefresh(
+        access_token=access_token, 
+        refresh_token=refresh_token,
+        token_type=&quot;bearer&quot;,
+        expires_in=expires_in
+    )
+</code></pre>
+<p>変更後:</p>
+<pre><code class="language-python">@router.post(&quot;/login&quot;, response_model=Token)
+async def login_for_access_token(
+    # ... 省略
+) -&gt; Token:
+    # ... 省略
+    access_token = await auth_service.create_access_token(user=user)
+
+    return Token(
+        access_token=access_token,
+        token_type=&quot;bearer&quot;
+    )
+</code></pre>
+<h4 id="2_5"><strong>2. スキーマの変更</strong></h4>
+<p><strong><code>libkoiki/schemas/token.py</code></strong></p>
+<p>変更前:</p>
+<pre><code class="language-python">from libkoiki.schemas.token import TokenWithRefresh
+</code></pre>
+<p>変更後:</p>
+<pre><code class="language-python">from libkoiki.schemas.token import Token
+</code></pre>
+<h4 id="3_7"><strong>3. 認証サービスの簡略化</strong></h4>
+<p><strong><code>libkoiki/services/auth_service.py</code></strong></p>
+<p>変更前:</p>
+<pre><code class="language-python">async def create_token_pair(self, user: UserModel, db: AsyncSession, device_info: Optional[str] = None) -&gt; Tuple[str, str, int]:
+    # 複雑なリフレッシュトークン生成ロジック
+</code></pre>
+<p>変更後:</p>
+<pre><code class="language-python">async def create_access_token(self, user: UserModel) -&gt; str:
+    # シンプルなアクセストークン生成のみ
+    return create_access_token(
+        data={&quot;sub&quot;: str(user.id)},
+        expires_delta=timedelta(hours=24)  # 長期間有効
+    )
+</code></pre>
+<h4 id="4_2"><strong>4. 認証ルーターの更新</strong></h4>
+<p><strong><code>libkoiki/api/v1/endpoints/auth.py</code></strong></p>
+<p>変更前:</p>
+<pre><code class="language-python">from . import auth_basic, auth_password, auth_token
+
+router.include_router(auth_basic.router, tags=[&quot;Authentication - Basic&quot;])
+router.include_router(auth_password.router, tags=[&quot;Authentication - Password&quot;])
+router.include_router(auth_token.router, tags=[&quot;Authentication - Token&quot;])
+</code></pre>
+<p>変更後:</p>
+<pre><code class="language-python">from . import auth_basic, auth_password
+
+router.include_router(auth_basic.router, tags=[&quot;Authentication - Basic&quot;])
+router.include_router(auth_password.router, tags=[&quot;Authentication - Password&quot;])
+# auth_token.router は削除
+</code></pre>
+<h4 id="5_1"><strong>5. データベースマイグレーションの削除</strong></h4>
+<p>手順:
+1. <code>alembic/versions/2025070702_add_refresh_tokens_table.py</code> を削除
+2. 既存のデータベースがある場合は、手動でテーブルを削除:
+   <code>sql
+   DROP TABLE IF EXISTS refresh_tokens;</code></p>
+<h4 id="6_1"><strong>6. 不要なファイルの削除</strong></h4>
+<p>以下のファイルを削除:</p>
+<pre><code class="language-bash">rm libkoiki/api/v1/endpoints/auth_token.py
+rm libkoiki/repositories/refresh_token_repository.py
+rm libkoiki/models/refresh_token.py
+rm libkoiki/schemas/refresh_token.py
+rm alembic/versions/2025070702_add_refresh_tokens_table.py
+</code></pre>
+<h4 id="7"><strong>7. インポートの整理</strong></h4>
+<p><strong><code>libkoiki/models/__init__.py</code></strong></p>
+<p>変更前:</p>
+<pre><code class="language-python">from .refresh_token import RefreshTokenModel
+</code></pre>
+<p>変更後:</p>
+<pre><code class="language-python"># RefreshTokenModel のインポートを削除
+</code></pre>
+<h3 id="_51">設定の調整</h3>
+<h4 id="jwt"><strong>JWT設定の変更</strong></h4>
+<p><strong><code>libkoiki/core/config.py</code></strong></p>
+<p>アクセストークンの有効期限を延長:</p>
+<pre><code class="language-python"># 変更前
+ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+
+# 変更後（長期間有効）
+ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24時間
+</code></pre>
+<h3 id="_52">動作確認テスト</h3>
+<h4 id="1_4"><strong>1. インポートテスト</strong></h4>
+<pre><code class="language-bash">python -c &quot;
+from libkoiki.api.v1.endpoints.auth import router
+from libkoiki.schemas.token import Token
+print('✅ Import successful')
+&quot;
+</code></pre>
+<h4 id="2_6"><strong>2. エンドポイントテスト</strong></h4>
+<pre><code class="language-bash">python -c &quot;
+from libkoiki.api.v1.endpoints.auth import router
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+
+app = FastAPI()
+app.include_router(router, prefix='/auth')
+client = TestClient(app)
+
+# エンドポイント数の確認
+openapi_spec = app.openapi()
+auth_endpoints = [path for path in openapi_spec.get('paths', {}).keys() if path.startswith('/auth/')]
+print(f'認証エンドポイント数: {len(auth_endpoints)}')
+for endpoint in sorted(auth_endpoints):
+    print(f'  {endpoint}')
+&quot;
+</code></pre>
+<h4 id="3_8"><strong>3. スキーマテスト</strong></h4>
+<pre><code class="language-bash">python -c &quot;
+from libkoiki.schemas.token import Token
+
+token = Token(access_token='test_token', token_type='bearer')
+print('✅ Token schema works')
+print(f'Token: {token.model_dump()}')
+&quot;
+</code></pre>
+<h3 id="_53">復元手順</h3>
+<p>リフレッシュトークン機能を後から復元する場合は、以下の手順で可能:</p>
+<ol>
+<li>削除したファイルをGitから復元</li>
+<li>データベースマイグレーションを実行</li>
+<li>インポートとルーター設定を復元</li>
+<li>設定ファイルを元に戻す</li>
+</ol>
+<h3 id="_54">推奨事項</h3>
+<h4 id="_55"><strong>開発段階</strong></h4>
+<ul>
+<li>シンプルなJWT認証のみを使用</li>
+<li>アクセストークンの有効期限を24時間に設定</li>
+<li>必要に応じて後から追加</li>
+</ul>
+<h4 id="_56"><strong>本番環境</strong></h4>
+<ul>
+<li>リフレッシュトークン機能を有効化</li>
+<li>セキュリティを重視した設定</li>
+<li>適切な有効期限の設定</li>
+</ul>
+<h3 id="_57">結論</h3>
+<p>リフレッシュトークン機能の無効化は、開発段階や単純な認証システムを求める場合に有効です。
+コードの簡略化により理解・保守が容易になり、パフォーマンスも向上します。
+ただし、セキュリティ面での制約があるため、本番環境では慎重に検討してください。</p>
+<hr />
+<h2 id="_58">ベストプラクティス</h2>
+<h3 id="_59">セキュリティベストプラクティス</h3>
+<h4 id="1_5"><strong>1. 本番環境での必須設定</strong></h4>
+<pre><code class="language-python"># 本番環境設定例
+class ProductionSettings(Settings):
+    # 強力なランダムキー（32バイト以上）
+    SECRET_KEY: str = Field(..., env=&quot;SECRET_KEY&quot;)
+
+    # 短いアクセストークン有効期限
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+
+    # デバッグ無効
+    DEBUG: bool = False
+
+    # HTTPS強制
+    FORCE_HTTPS: bool = True
+
+    # セキュリティヘッダー
+    SECURITY_HEADERS: bool = True
+
+    # 本番データベース
+    DATABASE_URL: str = Field(..., env=&quot;DATABASE_URL&quot;)
+
+    # ログレベル
+    LOG_LEVEL: str = &quot;WARNING&quot;
+</code></pre>
+<h4 id="2_7"><strong>2. シークレット管理</strong></h4>
+<pre><code class="language-bash"># 環境変数での秘密情報管理
+export SECRET_KEY=$(openssl rand -hex 32)
+export DATABASE_URL=&quot;postgresql://user:$(cat /var/secrets/db_password)@db-host:5432/app&quot;
+export REDIS_PASSWORD=$(cat /var/secrets/redis_password)
+
+# Docker Secretsの使用
+version: '3.8'
+services:
+  app:
+    image: your-app:latest
+    secrets:
+      - db_password
+      - jwt_secret
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/app
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt
+  jwt_secret:
+    file: ./secrets/jwt_secret.txt
+</code></pre>
+<h4 id="3_9"><strong>3. 監査とモニタリング</strong></h4>
+<pre><code class="language-python"># セキュリティイベントの監査ログ
+class SecurityAuditLogger:
+    def __init__(self):
+        self.audit_logger = structlog.get_logger(&quot;security.audit&quot;)
+
+    async def log_login_attempt(self, email: str, ip: str, success: bool, **kwargs):
+        self.audit_logger.info(
+            &quot;login_attempt&quot;,
+            email=email,
+            ip_address=ip,
+            success=success,
+            timestamp=datetime.utcnow().isoformat(),
+            **kwargs
+        )
+
+    async def log_password_reset(self, email: str, ip: str, **kwargs):
+        self.audit_logger.info(
+            &quot;password_reset_requested&quot;,
+            email=email,
+            ip_address=ip,
+            timestamp=datetime.utcnow().isoformat(),
+            **kwargs
+        )
+
+    async def log_privilege_escalation(self, user_id: int, action: str, **kwargs):
+        self.audit_logger.warning(
+            &quot;privilege_escalation_attempt&quot;,
+            user_id=user_id,
+            action=action,
+            timestamp=datetime.utcnow().isoformat(),
+            **kwargs
+        )
+</code></pre>
+<h3 id="_60">開発効率化</h3>
+<h4 id="1_6"><strong>1. 開発環境でのテストユーザー作成</strong></h4>
+<pre><code class="language-python"># scripts/create_test_users.py
+async def create_test_users():
+    &quot;&quot;&quot;開発環境用のテストユーザーを作成&quot;&quot;&quot;
+    users = [
+        {
+            &quot;email&quot;: &quot;admin@test.com&quot;,
+            &quot;password&quot;: &quot;admin123&quot;,
+            &quot;full_name&quot;: &quot;Admin User&quot;,
+            &quot;is_superuser&quot;: True
+        },
+        {
+            &quot;email&quot;: &quot;user@test.com&quot;, 
+            &quot;password&quot;: &quot;user123&quot;,
+            &quot;full_name&quot;: &quot;Regular User&quot;,
+            &quot;is_superuser&quot;: False
+        }
+    ]
+
+    for user_data in users:
+        user = await user_service.create_user(
+            UserCreate(**user_data), 
+            db
+        )
+        logger.info(f&quot;Created test user: {user.email}&quot;)
+
+# 実行
+if __name__ == &quot;__main__&quot;:
+    asyncio.run(create_test_users())
+</code></pre>
+<h4 id="2-api"><strong>2. API テスト自動化</strong></h4>
+<pre><code class="language-python"># tests/test_auth_api.py
+import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
+
+class TestAuthAPI:
+    def test_user_registration(self):
+        &quot;&quot;&quot;ユーザー登録テスト&quot;&quot;&quot;
+        response = client.post(&quot;/api/v1/auth/register&quot;, json={
+            &quot;email&quot;: &quot;test@example.com&quot;,
+            &quot;password&quot;: &quot;testpass123&quot;,
+            &quot;full_name&quot;: &quot;Test User&quot;
+        })
+        assert response.status_code == 201
+        assert response.json()[&quot;message&quot;] == &quot;User registered successfully&quot;
+
+    def test_user_login(self):
+        &quot;&quot;&quot;ログインテスト&quot;&quot;&quot;
+        # 事前にユーザー作成
+        self.test_user_registration()
+
+        response = client.post(&quot;/api/v1/auth/login&quot;, data={
+            &quot;username&quot;: &quot;test@example.com&quot;,
+            &quot;password&quot;: &quot;testpass123&quot;
+        })
+        assert response.status_code == 200
+        data = response.json()
+        assert &quot;access_token&quot; in data
+        assert &quot;refresh_token&quot; in data
+        assert data[&quot;token_type&quot;] == &quot;bearer&quot;
+
+    def test_login_rate_limiting(self):
+        &quot;&quot;&quot;ログイン試行制限テスト&quot;&quot;&quot;
+        # 5回失敗試行
+        for i in range(5):
+            response = client.post(&quot;/api/v1/auth/login&quot;, data={
+                &quot;username&quot;: &quot;test@example.com&quot;,
+                &quot;password&quot;: &quot;wrongpassword&quot;
+            })
+            assert response.status_code == 401
+
+        # 6回目でロックアウト
+        response = client.post(&quot;/api/v1/auth/login&quot;, data={
+            &quot;username&quot;: &quot;test@example.com&quot;,
+            &quot;password&quot;: &quot;wrongpassword&quot;
+        })
+        assert response.status_code == 429
+        assert &quot;retry-after&quot; in response.headers
+
+    def test_password_reset_flow(self):
+        &quot;&quot;&quot;パスワードリセットフローテスト&quot;&quot;&quot;
+        # リセット要求
+        response = client.post(&quot;/api/v1/auth/password-reset/request&quot;, json={
+            &quot;email&quot;: &quot;test@example.com&quot;
+        })
+        assert response.status_code == 200
+
+        # 実際の環境ではメールからトークンを取得
+        # テスト環境ではデータベースから直接取得
+        # reset_token = get_latest_reset_token(&quot;test@example.com&quot;)
+
+        # リセット実行
+        # response = client.post(&quot;/api/v1/auth/password-reset/confirm&quot;, json={
+        #     &quot;token&quot;: reset_token,
+        #     &quot;new_password&quot;: &quot;newpassword123&quot;
+        # })
+        # assert response.status_code == 200
+</code></pre>
+<h4 id="3-openapi"><strong>3. OpenAPI仕様書の活用</strong></h4>
+<pre><code class="language-python"># main.pyでOpenAPI設定をカスタマイズ
+app = FastAPI(
+    title=&quot;KOIKI Framework API&quot;,
+    description=&quot;Enterprise-grade authentication API&quot;,
+    version=&quot;1.0.0&quot;,
+    openapi_tags=[
+        {
+            &quot;name&quot;: &quot;Authentication - Basic&quot;,
+            &quot;description&quot;: &quot;Login, registration, logout, user information&quot;
+        },
+        {
+            &quot;name&quot;: &quot;Authentication - Password&quot;, 
+            &quot;description&quot;: &quot;Password management operations&quot;
+        },
+        {
+            &quot;name&quot;: &quot;Authentication - Token&quot;,
+            &quot;description&quot;: &quot;Token management operations&quot;
+        }
+    ]
+)
+
+# カスタムOpenAPIスキーマ
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    openapi_schema = get_openapi(
+        title=&quot;KOIKI Framework API&quot;,
+        version=&quot;1.0.0&quot;,
+        description=&quot;Complete authentication system with security features&quot;,
+        routes=app.routes,
+    )
+
+    # セキュリティスキーマの追加
+    openapi_schema[&quot;components&quot;][&quot;securitySchemes&quot;] = {
+        &quot;BearerAuth&quot;: {
+            &quot;type&quot;: &quot;http&quot;,
+            &quot;scheme&quot;: &quot;bearer&quot;,
+            &quot;bearerFormat&quot;: &quot;JWT&quot;
+        }
+    }
+
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
+</code></pre>
+<h3 id="_61">運用ベストプラクティス</h3>
+<h4 id="1_7"><strong>1. ヘルスチェック</strong></h4>
+<pre><code class="language-python"># health/auth_health.py
+@router.get(&quot;/health/auth&quot;)
+async def auth_health_check(db: DBSessionDep):
+    &quot;&quot;&quot;認証システムのヘルスチェック&quot;&quot;&quot;
+    health_status = {
+        &quot;status&quot;: &quot;healthy&quot;,
+        &quot;timestamp&quot;: datetime.utcnow().isoformat(),
+        &quot;checks&quot;: {}
+    }
+
+    try:
+        # データベース接続確認
+        await db.execute(text(&quot;SELECT 1&quot;))
+        health_status[&quot;checks&quot;][&quot;database&quot;] = &quot;ok&quot;
+    except Exception as e:
+        health_status[&quot;checks&quot;][&quot;database&quot;] = f&quot;error: {str(e)}&quot;
+        health_status[&quot;status&quot;] = &quot;unhealthy&quot;
+
+    try:
+        # JWT秘密鍵確認
+        if settings.SECRET_KEY == &quot;development_secret_key&quot;:
+            health_status[&quot;checks&quot;][&quot;jwt_secret&quot;] = &quot;warning: using development key&quot;
+        else:
+            health_status[&quot;checks&quot;][&quot;jwt_secret&quot;] = &quot;ok&quot;
+    except Exception as e:
+        health_status[&quot;checks&quot;][&quot;jwt_secret&quot;] = f&quot;error: {str(e)}&quot;
+        health_status[&quot;status&quot;] = &quot;unhealthy&quot;
+
+    # Redis接続確認（有効な場合）
+    if settings.REDIS_ENABLED:
+        try:
+            redis_client = request.app.state.redis
+            await redis_client.ping()
+            health_status[&quot;checks&quot;][&quot;redis&quot;] = &quot;ok&quot;
+        except Exception as e:
+            health_status[&quot;checks&quot;][&quot;redis&quot;] = f&quot;error: {str(e)}&quot;
+            health_status[&quot;status&quot;] = &quot;degraded&quot;
+
+    return health_status
+</code></pre>
+<h4 id="2_8"><strong>2. メトリクス収集</strong></h4>
+<pre><code class="language-python"># monitoring/auth_metrics.py
+from prometheus_client import Counter, Histogram, Gauge
+
+# メトリクス定義
+login_attempts = Counter(
+    'auth_login_attempts_total',
+    'Total login attempts',
+    ['status', 'method']
+)
+
+login_duration = Histogram(
+    'auth_login_duration_seconds',
+    'Login request duration'
+)
+
+active_tokens = Gauge(
+    'auth_active_tokens_total',
+    'Number of active tokens'
+)
+
+failed_attempts_by_ip = Counter(
+    'auth_failed_attempts_by_ip_total',
+    'Failed login attempts by IP',
+    ['ip_range']
+)
+
+# メトリクス記録例
+async def record_login_metrics(success: bool, duration: float, ip: str):
+    status = &quot;success&quot; if success else &quot;failure&quot;
+    login_attempts.labels(status=status, method=&quot;password&quot;).inc()
+    login_duration.observe(duration)
+
+    if not success:
+        ip_range = get_ip_range(ip)  # IPレンジの分類
+        failed_attempts_by_ip.labels(ip_range=ip_range).inc()
+</code></pre>
+<h4 id="3_10"><strong>3. バックアップ戦略</strong></h4>
+<pre><code class="language-bash">#!/bin/bash
+# scripts/backup_auth_data.sh
+
+# 認証関連テーブルのバックアップ
+pg_dump -h $DB_HOST -U $DB_USER -d $DB_NAME \
+  --table=users \
+  --table=refresh_tokens \
+  --table=password_reset_tokens \
+  --table=login_attempts \
+  --table=roles \
+  --table=permissions \
+  --table=user_roles \
+  --table=role_permissions \
+  &gt; auth_backup_$(date +%Y%m%d_%H%M%S).sql
+
+# S3へのアップロード
+aws s3 cp auth_backup_*.sql s3://your-backup-bucket/auth/
+
+# 古いバックアップの削除（30日以上）
+find . -name &quot;auth_backup_*.sql&quot; -mtime +30 -delete
+</code></pre>
+<hr />
+<h2 id="_62">まとめ</h2>
+<p>KOIKI-FWの認証系APIは、現代的なWebアプリケーションに必要な全ての機能を提供します：</p>
+<h3 id="_63"><strong>実装済み機能</strong></h3>
+<ul>
+<li>✅ JWT ベースの認証</li>
+<li>✅ リフレッシュトークン管理</li>
+<li>✅ パスワードリセット機能</li>
+<li>✅ ログイン試行制限</li>
+<li>✅ 段階的遅延によるブルートフォース対策</li>
+<li>✅ 包括的な監査ログ</li>
+<li>✅ 役割ベースアクセス制御 (RBAC)</li>
+</ul>
+<h3 id="_64"><strong>セキュリティ機能</strong></h3>
+<ul>
+<li>🛡️ 多層防御アーキテクチャ</li>
+<li>🛡️ レート制限とアカウントロックアウト</li>
+<li>🛡️ セキュアなパスワードハッシュ化</li>
+<li>🛡️ トークンローテーション</li>
+<li>🛡️ 詳細な監査ログ</li>
+</ul>
+<h3 id="_65"><strong>開発者体験</strong></h3>
+<ul>
+<li>🚀 FastAPIによる自動OpenAPI仕様生成</li>
+<li>🚀 型安全なPydanticスキーマ</li>
+<li>🚀 依存性注入による高いテスタビリティ</li>
+<li>🚀 構造化ログによる運用性</li>
+</ul>
+<p>本ガイドに従って実装することで、企業級のセキュリティ要件を満たす認証システムを構築できます。</p>
+<h2 id="_66">セキュリティ強化対応記録</h2>
+<h3 id="202578-api">2025年7月8日 - 認証APIセキュリティ強化対応</h3>
+<p>認証系APIの包括的なセキュリティ強化を実施しました。詳細は <a href="../authentication-api-security-fixes/">認証APIセキュリティ強化対応記録</a> を参照してください。</p>
+<p><strong>主要な改善内容</strong>:
+- 🔥 <strong>非同期処理の最適化</strong>: <code>time.sleep()</code> → <code>asyncio.sleep()</code> による性能向上
+- 🕒 <strong>タイムゾーン統一</strong>: UTC時間の一貫した使用によるデータ整合性確保
+- ⚡ <strong>データベース処理最適化</strong>: バッチ削除による大幅な性能向上
+- 🔒 <strong>タイミング攻撃対策</strong>: 一定応答時間による情報漏洩防止
+- 📊 <strong>セキュリティログ強化</strong>: 構造化ログによる包括的な監査証跡
+- 📈 <strong>監視機能追加</strong>: リアルタイムメトリクス収集と分析
+- ⚙️ <strong>設定外部化</strong>: 環境変数による動的設定管理</p>
+<p><strong>新機能</strong>:
+- <code>/security/metrics</code> - セキュリティメトリクス確認（管理者限定）
+- <code>/security/health</code> - システムヘルスチェック（認証不要）
+- 環境変数での詳細設定（<code>SECURITY_*</code> プレフィックス）</p>
+<p>これらの改善により、認証システムのセキュリティ、パフォーマンス、運用性が大幅に向上し、本番環境での安全な運用が可能になりました。</p>
+<hr />
+<p><em>最終更新: 2025-07-08</em><br />
+<em>対象バージョン: KOIKI-FW v0.6.0</em><br />
+<em>セキュリティ強化: v0.5.1 対応済み</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1497 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../SECURITY_AUDIT_COMMANDS/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>認証系APIテストガイド - KOIKI-FW v0.6.0</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="KOIKI-FW v0.6.0" class="md-header__button md-logo" aria-label="KOIKI-FW v0.6.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KOIKI-FW v0.6.0
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              認証系APIテストガイド
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="KOIKI-FW v0.6.0" class="md-nav__button md-logo" aria-label="KOIKI-FW v0.6.0" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KOIKI-FW v0.6.0
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    概要
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design_kkfw_0.6.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    KOIKI-FW 機能設計・構成ガイド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../README-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    アプリデプロイ手順
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY_AUDIT_COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    セキュリティ監査コマンド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    認証系APIテストガイド
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    認証系APIテストガイド
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      テスト実行環境
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト実行環境">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      前提条件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本的なテスト実行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      データベース統合テスト
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      テスト構成
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 ディレクトリ構造
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏷️ テストマーカー
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      現在の実行状況
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="現在の実行状況">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#10-passed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 動作確認済みテスト（10 passed）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚧 修正が必要なテスト
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      テストの書き方ガイド
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テストの書き方ガイド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. シンプルなユニットテスト（推奨）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. データベース統合テスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. フィクスチャの設定
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      カバレッジ測定
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      トラブルシューティング
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="トラブルシューティング">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      よくある問題と解決策
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="よくある問題と解決策">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transactional" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. @transactionalデコレータとモックの競合
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 統合テストのデータ競合
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pytest-asyncio" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. pytest-asyncio の警告
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発時の推奨手順
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="開発時の推奨手順">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      新しいテストを追加する場合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      備考：テスト実装で調整したポイント
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="備考：テスト実装で調整したポイント">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transactional_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. @transactionalデコレータ対応
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pytest-asyncio" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. pytest-asyncio フィクスチャ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. データベースセッション管理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      アプリケーション開発時のテスト手順
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="アプリケーション開発時のテスト手順">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. アプリケーションサービスのテスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. アプリケーションAPIのテスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 推奨開発フロー
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      概要
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      テスト実行環境
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト実行環境">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      前提条件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本的なテスト実行
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      データベース統合テスト
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      テスト構成
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 ディレクトリ構造
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏷️ テストマーカー
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      現在の実行状況
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="現在の実行状況">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#10-passed" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ 動作確認済みテスト（10 passed）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚧 修正が必要なテスト
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      テストの書き方ガイド
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テストの書き方ガイド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. シンプルなユニットテスト（推奨）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. データベース統合テスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. フィクスチャの設定
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      カバレッジ測定
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      トラブルシューティング
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="トラブルシューティング">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      よくある問題と解決策
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="よくある問題と解決策">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transactional" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. @transactionalデコレータとモックの競合
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 統合テストのデータ競合
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pytest-asyncio" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. pytest-asyncio の警告
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      開発時の推奨手順
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="開発時の推奨手順">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      新しいテストを追加する場合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      備考：テスト実装で調整したポイント
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="備考：テスト実装で調整したポイント">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-transactional_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. @transactionalデコレータ対応
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pytest-asyncio" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. pytest-asyncio フィクスチャ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. データベースセッション管理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      アプリケーション開発時のテスト手順
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="アプリケーション開発時のテスト手順">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. アプリケーションサービスのテスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. アプリケーションAPIのテスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 推奨開発フロー
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="api">認証系APIテストガイド</h1>
+<p><strong>更新日</strong>: 2025-07-17<br />
+<strong>対象フレームワーク</strong>: KOIKI-FW v0.6.0<br />
+<strong>テストフレームワーク</strong>: pytest + FastAPI TestClient + pytest-asyncio  </p>
+<h2 id="_1">概要</h2>
+<p>このガイドでは、KOIKI-FWにおける認証系APIのテスト実行方法と、テストの書き方について説明します。本フレームワークでは、<strong>ユニットテスト</strong>と<strong>統合テスト</strong>の2層構造で、効率的で保守性の高いテスト環境を提供しています。</p>
+<h2 id="_2">テスト実行環境</h2>
+<h3 id="_3">前提条件</h3>
+<pre><code class="language-bash"># 必要なサービスの起動
+docker-compose up -d db
+
+# 依存関係のインストール（テスト用）
+poetry install --with test
+</code></pre>
+<h3 id="_4">基本的なテスト実行</h3>
+<pre><code class="language-bash"># ✅ 推奨：動作確認済みテストの実行
+poetry run pytest tests/unit/test_simple_auth.py tests/unit/test_hello.py tests/unit/libkoiki/services/test_user_service_simple.py tests/integration/app/api/test_todos_api.py -v
+
+# ✅ 基本的なユニットテスト
+poetry run pytest tests/unit/test_simple_auth.py -v
+
+# ✅ 認証サービスのシンプルテスト
+poetry run pytest tests/unit/libkoiki/services/test_user_service_simple.py -v
+
+# ✅ 統合テスト（データベース必要）
+poetry run pytest tests/integration/app/api/test_todos_api.py -v
+</code></pre>
+<h3 id="_5">データベース統合テスト</h3>
+<pre><code class="language-bash"># PostgreSQLを起動
+docker-compose up -d db
+
+# 個別の統合テスト実行
+poetry run pytest tests/integration/services/test_user_service_db.py::TestUserServiceDatabase::test_create_user_success -v
+
+# 統合テストの実行（データベースクリーンアップ後）
+docker-compose exec db psql -U koiki_user -d koiki_todo_db -c &quot;DELETE FROM refresh_tokens; DELETE FROM login_attempts; DELETE FROM users;&quot;
+poetry run pytest tests/integration/services/test_user_service_db.py::TestUserServiceDatabase::test_create_user_success -v
+</code></pre>
+<h2 id="_6">テスト構成</h2>
+<h3 id="_7">📁 ディレクトリ構造</h3>
+<pre><code>tests/
+├── conftest.py                                          # 共通テスト設定
+├── integration/
+│   ├── app/api/
+│   │   └── test_todos_api.py                           # API統合テスト
+│   └── services/
+│       ├── test_user_service_db.py                     # ユーザーサービス DB統合テスト
+│       ├── test_auth_service_db.py                     # 認証サービス DB統合テスト
+│       └── test_login_security_service_db.py           # ログインセキュリティ DB統合テスト
+└── unit/
+    ├── test_simple_auth.py                             # シンプルな認証テスト
+    ├── test_hello.py                                   # 基本テスト
+    └── libkoiki/services/
+        ├── test_user_service_simple.py                 # ユーザーサービス シンプルテスト ✅
+        ├── test_user_service.py                        # ユーザーサービス 複合テスト（修正中）
+        ├── test_auth_service_comprehensive.py          # 認証サービス 包括テスト（修正中）
+        └── test_login_security_service.py              # ログインセキュリティテスト（修正中）
+</code></pre>
+<h3 id="_8">🏷️ テストマーカー</h3>
+<table>
+<thead>
+<tr>
+<th>マーカー</th>
+<th>説明</th>
+<th>DB必要</th>
+<th>実行速度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@pytest.mark.unit</code></td>
+<td>ユニットテスト（ロジックテスト）</td>
+<td>❌</td>
+<td>高速</td>
+</tr>
+<tr>
+<td><code>@pytest.mark.integration</code></td>
+<td>統合テスト（DB使用）</td>
+<td>✅</td>
+<td>中速</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_9">現在の実行状況</h2>
+<h3 id="10-passed">✅ 動作確認済みテスト（10 passed）</h3>
+<pre><code class="language-bash"># 推奨実行コマンド
+poetry run pytest tests/unit/test_simple_auth.py tests/unit/test_hello.py tests/unit/libkoiki/services/test_user_service_simple.py tests/integration/app/api/test_todos_api.py -v
+
+# 結果: 10 passed, 12 warnings
+</code></pre>
+<p><strong>内訳</strong>:
+- 基本認証テスト: 3件
+- Hello worldテスト: 1件<br />
+- ユーザーサービス シンプルテスト: 5件
+- TODOs API統合テスト: 1件</p>
+<h3 id="_10">🚧 修正が必要なテスト</h3>
+<p><strong>@transactionalデコレータ関連の複雑なテスト</strong>:</p>
+<pre><code class="language-bash"># 現在エラーが発生
+poetry run pytest tests/unit/libkoiki/services/test_user_service.py -v
+poetry run pytest tests/unit/libkoiki/services/test_auth_service_comprehensive.py -v
+poetry run pytest tests/integration/app/api/test_auth_api.py -v
+</code></pre>
+<p><strong>データベース統合テスト</strong>:</p>
+<pre><code class="language-bash"># 個別実行は成功、複数実行時にデータ競合
+poetry run pytest tests/integration/services/ -v
+</code></pre>
+<h2 id="_11">テストの書き方ガイド</h2>
+<h3 id="1">1. シンプルなユニットテスト（推奨）</h3>
+<p><strong>特徴</strong>:
+- @transactionalデコレータをバイパス
+- ビジネスロジックを直接テスト
+- 高速で安定</p>
+<p><strong>例</strong>: <code>tests/unit/libkoiki/services/test_user_service_simple.py</code></p>
+<pre><code class="language-python">&quot;&quot;&quot;ユーザーサービス シンプルユニットテスト&quot;&quot;&quot;
+import pytest
+from unittest.mock import AsyncMock, MagicMock, patch
+from libkoiki.services.user_service import UserService
+from libkoiki.models.user import UserModel
+from libkoiki.schemas.user import UserCreate
+
+class TestUserServiceSimple:
+    &quot;&quot;&quot;ユーザーサービス シンプルユニットテスト&quot;&quot;&quot;
+
+    @patch('libkoiki.services.user_service.get_password_hash')
+    @patch('libkoiki.services.user_service.check_password_complexity')
+    @patch('libkoiki.services.user_service.increment_user_registration')
+    @pytest.mark.asyncio
+    async def test_create_user_logic_success(
+        self,
+        mock_increment_user_registration,
+        mock_check_password,
+        mock_get_password_hash,
+        mock_user_repo,
+        mock_event_publisher,
+        user_create_data,
+        mock_user,
+        mock_db_session
+    ):
+        &quot;&quot;&quot;ユーザー作成ロジック成功テスト&quot;&quot;&quot;
+        # 直接サービスを作成
+        from libkoiki.services.user_service import UserService
+
+        # モックの設定
+        mock_check_password.return_value = True
+        mock_get_password_hash.return_value = &quot;hashed_password&quot;
+        mock_user_repo.get_by_email = AsyncMock(return_value=None)
+        mock_user_repo.create = AsyncMock(return_value=mock_user)
+
+        # サービスインスタンスを作成
+        user_service = UserService(mock_user_repo, mock_event_publisher)
+
+        # ビジネスロジックを段階的にテスト
+        # 1. セッション設定
+        user_service.repository.set_session(mock_db_session)
+
+        # 2. 重複チェック
+        existing_user = await user_service.repository.get_by_email(user_create_data.email)
+        assert existing_user is None
+
+        # 3. パスワード検証
+        password_valid = mock_check_password(user_create_data.password)
+        assert password_valid is True
+
+        # 4. パスワードハッシュ化
+        hashed_password = mock_get_password_hash(user_create_data.password)
+        assert hashed_password == &quot;hashed_password&quot;
+
+        # 5. ユーザー作成
+        user_data = user_create_data.model_dump(exclude={&quot;password&quot;})
+        user_data[&quot;hashed_password&quot;] = hashed_password
+        new_user = UserModel(**user_data)
+        created_user = await user_service.repository.create(new_user)
+
+        # 6. 結果検証
+        assert created_user == mock_user
+        assert created_user.email == &quot;test@example.com&quot;
+</code></pre>
+<h3 id="2">2. データベース統合テスト</h3>
+<p><strong>特徴</strong>:
+- 実際のデータベースを使用
+- @transactionalデコレータと協調
+- リアルな動作確認</p>
+<p><strong>例</strong>: <code>tests/integration/services/test_user_service_db.py</code></p>
+<pre><code class="language-python">&quot;&quot;&quot;ユーザーサービス データベース統合テスト&quot;&quot;&quot;
+import pytest
+from unittest.mock import patch
+from libkoiki.schemas.user import UserCreate
+
+@pytest.mark.integration
+class TestUserServiceDatabase:
+    &quot;&quot;&quot;ユーザーサービス データベース統合テスト&quot;&quot;&quot;
+
+    @patch('libkoiki.services.user_service.check_password_complexity')
+    @pytest.mark.asyncio
+    async def test_create_user_success(
+        self,
+        mock_check_password,
+        test_services,
+        test_db_session
+    ):
+        &quot;&quot;&quot;ユーザー作成成功テスト（実際のDB使用）&quot;&quot;&quot;
+        # モックの設定
+        mock_check_password.return_value = True
+
+        # テストデータ
+        user_data = UserCreate(
+            email=&quot;integration_test@example.com&quot;,
+            password=&quot;TestPass123@&quot;,
+            full_name=&quot;Integration Test User&quot;
+        )
+
+        # テスト実行
+        user_service = test_services[&quot;user_service&quot;]
+        created_user = await user_service.create_user(user_data, test_db_session)
+
+        # 結果検証
+        assert created_user is not None
+        assert created_user.email == &quot;integration_test@example.com&quot;
+        assert created_user.full_name == &quot;Integration Test User&quot;
+</code></pre>
+<h3 id="3">3. フィクスチャの設定</h3>
+<p><strong>conftest.py</strong>の重要な設定:</p>
+<pre><code class="language-python">@pytest_asyncio.fixture
+async def test_db_session(test_engine) -&gt; AsyncGenerator[AsyncSession, None]:
+    &quot;&quot;&quot;テスト用データベースセッション - @transactionalデコレータと協調&quot;&quot;&quot;
+    async_session_factory = sessionmaker(
+        test_engine, class_=AsyncSession, expire_on_commit=False
+    )
+
+    async with async_session_factory() as session:
+        yield session
+        # @transactionalデコレータがトランザクションを管理
+
+@pytest_asyncio.fixture
+async def test_services(test_repositories):
+    &quot;&quot;&quot;テスト用サービス&quot;&quot;&quot;
+    # サービスのインスタンス作成
+    user_service = UserService(
+        repository=test_repositories[&quot;user_repo&quot;],
+        event_publisher=None  # テストではイベントパブリッシャーを無効化
+    )
+
+    return {
+        &quot;user_service&quot;: user_service,
+        &quot;auth_service&quot;: auth_service,
+        &quot;login_security_service&quot;: login_security_service,
+    }
+</code></pre>
+<h2 id="_12">カバレッジ測定</h2>
+<pre><code class="language-bash"># カバレッジ付きテスト実行
+poetry run pytest --cov=app --cov=libkoiki --cov-report=term-missing tests/unit/test_simple_auth.py tests/unit/test_hello.py tests/unit/libkoiki/services/test_user_service_simple.py tests/integration/app/api/test_todos_api.py
+
+# HTMLレポート生成
+poetry run pytest --cov=app --cov=libkoiki --cov-report=html tests/unit/test_simple_auth.py tests/unit/test_hello.py tests/unit/libkoiki/services/test_user_service_simple.py tests/integration/app/api/test_todos_api.py
+
+# カバレッジレポート確認
+open htmlcov/index.html
+</code></pre>
+<h2 id="_13">トラブルシューティング</h2>
+<h3 id="_14">よくある問題と解決策</h3>
+<h4 id="1-transactional">1. @transactionalデコレータとモックの競合</h4>
+<p><strong>問題</strong>: <code>TypeError: Function 'create_user' decorated with @transactional must accept an AsyncSession as an argument</code></p>
+<p><strong>解決策</strong>: シンプルなユニットテストを使用</p>
+<pre><code class="language-python"># ❌ 複雑なモック設定
+await user_service.create_user(user_data, mock_db_session)
+
+# ✅ ロジックを段階的にテスト
+user_service.repository.set_session(mock_db_session)
+existing_user = await user_service.repository.get_by_email(user_data.email)
+</code></pre>
+<h4 id="2_1">2. 統合テストのデータ競合</h4>
+<p><strong>問題</strong>: 複数のテストが同時実行時にデータベースの状態が競合</p>
+<p><strong>解決策</strong>: データベースのクリーンアップ</p>
+<pre><code class="language-bash"># テスト前にデータをクリーンアップ
+docker-compose exec db psql -U koiki_user -d koiki_todo_db -c &quot;DELETE FROM refresh_tokens; DELETE FROM login_attempts; DELETE FROM users;&quot;
+
+# 個別テストの実行
+poetry run pytest tests/integration/services/test_user_service_db.py::TestUserServiceDatabase::test_create_user_success -v
+</code></pre>
+<h4 id="3-pytest-asyncio">3. pytest-asyncio の警告</h4>
+<p><strong>問題</strong>: <code>RuntimeWarning: coroutine 'AsyncMockMixin._execute_mock_call' was never awaited</code></p>
+<p><strong>解決策</strong>: 適切なフィクスチャ設定</p>
+<pre><code class="language-python">@pytest_asyncio.fixture
+async def test_repositories(test_db_session):
+    # pytest_asyncio.fixtureを使用
+</code></pre>
+<h2 id="_15">開発時の推奨手順</h2>
+<h3 id="_16">新しいテストを追加する場合</h3>
+<ol>
+<li>
+<p><strong>ユニットテストから開始</strong>:
+   <code>bash
+   # tests/unit/app/services/test_new_service_simple.py を作成
+   poetry run pytest tests/unit/app/services/test_new_service_simple.py -v</code></p>
+</li>
+<li>
+<p><strong>統合テストを追加</strong>:
+   <code>bash
+   # tests/integration/app/services/test_new_service_db.py を作成
+   poetry run pytest tests/integration/app/services/test_new_service_db.py::TestNewServiceDatabase::test_basic_function -v</code></p>
+</li>
+<li>
+<p><strong>動作確認</strong>:
+   <code>bash
+   # 既存の動作確認済みテストと一緒に実行
+   poetry run pytest tests/unit/test_simple_auth.py tests/unit/app/services/test_new_service_simple.py -v</code></p>
+</li>
+</ol>
+<h2 id="_17">備考：テスト実装で調整したポイント</h2>
+<h3 id="1-transactional_1">1. @transactionalデコレータ対応</h3>
+<p><strong>課題</strong>: @transactionalデコレータがAsyncSessionの型チェックを行うため、モックと競合</p>
+<p><strong>解決策</strong>: 
+- シンプルなユニットテストでビジネスロジックを段階的にテスト
+- 統合テストでは実際のデータベースセッションを使用</p>
+<h3 id="2-pytest-asyncio">2. pytest-asyncio フィクスチャ</h3>
+<p><strong>課題</strong>: 非同期フィクスチャが正しく動作しない</p>
+<p><strong>解決策</strong>:</p>
+<pre><code class="language-python"># ❌ 通常のフィクスチャ
+@pytest.fixture
+async def test_services(test_repositories):
+
+# ✅ pytest-asyncio フィクスチャ
+@pytest_asyncio.fixture
+async def test_services(test_repositories):
+</code></pre>
+<h3 id="3_1">3. データベースセッション管理</h3>
+<p><strong>課題</strong>: @transactionalデコレータがトランザクションを管理するため、テスト側でのトランザクション制御が衝突</p>
+<p><strong>解決策</strong>:</p>
+<pre><code class="language-python"># デコレータにトランザクション管理を委譲
+async with async_session_factory() as session:
+    yield session
+    # @transactionalデコレータがトランザクションを管理
+</code></pre>
+<h2 id="_18">アプリケーション開発時のテスト手順</h2>
+<h3 id="1_1">1. アプリケーションサービスのテスト</h3>
+<pre><code class="language-python"># app/services/my_service.py をテストする場合
+# tests/unit/app/services/test_my_service_simple.py
+
+class TestMyServiceSimple:
+    &quot;&quot;&quot;マイサービス シンプルユニットテスト&quot;&quot;&quot;
+
+    @patch('app.services.my_service.external_api_call')
+    @pytest.mark.asyncio
+    async def test_my_business_logic(self, mock_api_call):
+        &quot;&quot;&quot;ビジネスロジックテスト&quot;&quot;&quot;
+        # サービスを直接作成
+        from app.services.my_service import MyService
+
+        # モックの設定
+        mock_api_call.return_value = {&quot;result&quot;: &quot;success&quot;}
+
+        # サービスインスタンス作成
+        service = MyService(mock_repository)
+
+        # ロジックを段階的にテスト
+        # 1. 入力検証
+        # 2. 外部API呼び出し
+        # 3. データ変換
+        # 4. 結果検証
+</code></pre>
+<h3 id="2-api">2. アプリケーションAPIのテスト</h3>
+<pre><code class="language-python"># app/api/v1/endpoints/my_endpoint.py をテストする場合
+# tests/integration/app/api/test_my_endpoint.py
+
+@pytest.mark.integration
+class TestMyEndpoint:
+    &quot;&quot;&quot;マイエンドポイント統合テスト&quot;&quot;&quot;
+
+    @pytest.mark.asyncio
+    async def test_my_endpoint_success(self, test_client):
+        &quot;&quot;&quot;エンドポイント成功テスト&quot;&quot;&quot;
+        response = test_client.post(&quot;/api/v1/my-endpoint&quot;, json={
+            &quot;data&quot;: &quot;test_data&quot;
+        })
+
+        assert response.status_code == 200
+        assert response.json()[&quot;result&quot;] == &quot;success&quot;
+</code></pre>
+<h3 id="3_2">3. 推奨開発フロー</h3>
+<ol>
+<li><strong>ユニットテストを先に作成</strong>（TDD的アプローチ）</li>
+<li><strong>ビジネスロジックを段階的にテスト</strong></li>
+<li><strong>統合テストで全体の動作確認</strong></li>
+<li><strong>既存の動作確認済みテストと一緒に実行</strong></li>
+</ol>
+<pre><code class="language-bash"># 開発フロー例
+poetry run pytest tests/unit/app/services/test_my_service_simple.py -v
+poetry run pytest tests/integration/app/api/test_my_endpoint.py -v
+poetry run pytest tests/unit/test_simple_auth.py tests/unit/app/services/test_my_service_simple.py -v
+</code></pre>
+<p>この手順により、@transactionalデコレータやその他のフレームワーク機能に依存せず、純粋なビジネスロジックをテストできる、保守性の高いテストコードを作成できます。</p>
+<hr />
+<p><strong>🎉 Happy Testing with KOIKI-FW v0.6.0!</strong></p>
+<p><strong>重要</strong>: 既に実装済みの高機能認証APIのテスト作成により、プロダクションレディなテストカバレッジを実現できます。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -10,7 +10,7 @@
       
       
       
-        <link rel="next" href="design_kkfw_0.5.0/">
+        <link rel="next" href="design_kkfw_0.6.0/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -18,7 +18,7 @@
     
     
       
-        <title>KOIKI-FW v0.5.0</title>
+        <title>KOIKI-FW v0.6.0</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#fastapi-koiki-fw-v050" class="md-skip">
+        <a href="#fastapi-koiki-fw-v060" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +76,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="KOIKI-FW v0.5.0" class="md-header__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+    <a href="." title="KOIKI-FW v0.6.0" class="md-header__button md-logo" aria-label="KOIKI-FW v0.6.0" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -90,7 +90,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            KOIKI-FW v0.5.0
+            KOIKI-FW v0.6.0
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -174,13 +174,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="KOIKI-FW v0.5.0" class="md-nav__button md-logo" aria-label="KOIKI-FW v0.5.0" data-md-component="logo">
+    <a href="." title="KOIKI-FW v0.6.0" class="md-nav__button md-logo" aria-label="KOIKI-FW v0.6.0" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    KOIKI-FW v0.5.0
+    KOIKI-FW v0.6.0
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -303,7 +303,40 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      セキュリティAPIテスト
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="セキュリティAPIテスト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 推奨実行方法（プロジェクトルートから）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 従来の方法（opsディレクトリから）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       ローカルでのテスト実行
     </span>
@@ -326,7 +359,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       ディレクトリ構造
     </span>
@@ -335,7 +368,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 Fork・利用に関するご案内
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       ライセンス
     </span>
@@ -358,12 +400,78 @@
   
   
     <li class="md-nav__item">
-      <a href="design_kkfw_0.5.0/" class="md-nav__link">
+      <a href="design_kkfw_0.6.0/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     KOIKI-FW 機能設計・構成ガイド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="README-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    アプリデプロイ手順
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SECURITY_AUDIT_COMMANDS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    セキュリティ監査コマンド
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="%E8%AA%8D%E8%A8%BC%E7%B3%BBAPI%E3%83%86%E3%82%B9%E3%83%88%E3%82%AC%E3%82%A4%E3%83%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    認証系APIテストガイド
     
   </span>
   
@@ -461,7 +569,40 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      セキュリティAPIテスト
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="セキュリティAPIテスト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 推奨実行方法（プロジェクトルートから）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 従来の方法（opsディレクトリから）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       ローカルでのテスト実行
     </span>
@@ -484,7 +625,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       ディレクトリ構造
     </span>
@@ -493,7 +634,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 Fork・利用に関するご案内
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       ライセンス
     </span>
@@ -517,9 +667,9 @@
 
 
 
-<h1 id="fastapi-koiki-fw-v050">FastAPI エンタープライズアプリケーション基盤 (KOIKI-FW v0.5.0)</h1>
-<p>これは、Python (FastAPI) を用いたエンタープライズ向けWebアプリケーション構築のための、堅牢な基盤フレームワーク「KOIKI-FW」の v0.5.0 をベースにしたプロジェクトテンプレートです。</p>
-<p>詳細は <code>docs/design_kkfw_0.5.0.md</code> ドキュメントを参照してください。</p>
+<h1 id="fastapi-koiki-fw-v060">FastAPI エンタープライズアプリケーション基盤 (KOIKI-FW v0.6.0)</h1>
+<p>これは、Python (FastAPI) を用いたエンタープライズ向けWebアプリケーション構築のための、堅牢な基盤フレームワーク「KOIKI-FW」の v0.6.0 をベースにしたプロジェクトテンプレートです。</p>
+<p>詳細は <code>docs/design_kkfw_0.6.0.md</code> ドキュメントを参照してください。</p>
 <h2 id="_1">特徴</h2>
 <ul>
 <li><strong>モダンな技術スタック</strong>: FastAPI, SQLAlchemy (Async), Pydantic, Redis, Celery, structlog, Prometheus, slowapi 等。</li>
@@ -527,7 +677,8 @@
 <li><strong>非同期処理</strong>: 高パフォーマンスな非同期処理。</li>
 <li><strong>型安全性</strong>: Pydantic と型ヒントによる開発効率と安全性の向上。</li>
 <li><strong>テスト容易性</strong>: 依存性注入による容易なテスト実装。</li>
-<li><strong>セキュリティ</strong>: JWT認証, RBAC, レートリミット, セキュリティヘッダ等の基本機能。</li>
+<li><strong>🆕 v0.6.0 強化されたセキュリティ</strong>: JWT認証, リフレッシュトークン, パスワードリセット, ログイン試行制限, RBAC, レートリミット等。</li>
+<li><strong>🆕 v0.6.0 認証系API</strong>: modular認証システム（基本認証、パスワード管理、トークン管理）。</li>
 <li><strong>監視・ロギング</strong>: 構造化ログ, 監査ログ, Prometheus連携。</li>
 <li><strong>継続的インテグレーション</strong>: GitHub Actionsによる自動テスト、コード品質チェックの導入。</li>
 </ul>
@@ -555,7 +706,30 @@ docker-compose logs -f app
 <li>ルートエンドポイント: <a href="http://localhost:8000/">http://localhost:8000/</a></li>
 </ul>
 <h2 id="_5">テストの実行</h2>
-<h3 id="_6">ローカルでのテスト実行</h3>
+<h3 id="api">セキュリティAPIテスト</h3>
+<p>KOIKI-FWの権限管理システムとセキュリティAPIをテストする場合：</p>
+<h4 id="_6">🚀 推奨実行方法（プロジェクトルートから）</h4>
+<pre><code class="language-bash"># 環境起動 + テスト実行（ワンコマンド）
+./run_security_test.sh test
+
+# 初回実行（セットアップ付き）
+./run_security_test.sh setup
+
+# ヘルプ表示
+./run_security_test.sh help
+</code></pre>
+<h4 id="ops">📋 従来の方法（opsディレクトリから）</h4>
+<pre><code class="language-bash"># 環境起動
+docker-compose up -d
+
+# セキュリティテスト実行
+cd ops
+bash scripts/security_test_manager.sh test
+</code></pre>
+<p>📚 <strong>詳細情報:</strong>
+- クイックガイド: <code>QUICK_TEST_GUIDE.md</code>
+- 詳細なテスト手順: <code>ops/README.md</code></p>
+<h3 id="_7">ローカルでのテスト実行</h3>
 <pre><code class="language-bash"># Poetryを使用したテスト実行
 poetry run pytest
 
@@ -570,21 +744,20 @@ poetry run pytest --cov=app --cov=libkoiki --cov-report=term-missing tests/
 - feature/</em>
 - bugfix/*</p>
 <p>プルリクエスト時にも自動的にテストが実行され、コードの品質が検証されます。</p>
-<h2 id="_7">ディレクトリ構造</h2>
+<h2 id="_8">ディレクトリ構造</h2>
 <pre><code>プロジェクトルート/
-├── app/                     # アプリケーション固有のコード
+├── app/                     # アプリケーション固有のコード (拡張用)
 │   ├── api/                 # アプリケーション固有のDIなど
-│   ├── models/              # アプリケーション固有のDBモデル
-│   ├── repositories/        # アプリケーション固有のリポジトリ
-│   ├── routers/             # アプリケーション固有のAPIルーター
-│   ├── schemas/             # アプリケーション固有のPydanticスキーマ
-│   ├── services/            # アプリケーション固有のサービス
+│   ├── models/              # アプリケーション固有のDBモデル (拡張用)
+│   ├── repositories/        # アプリケーション固有のリポジトリ (拡張用)
+│   ├── schemas/             # アプリケーション固有のPydanticスキーマ (拡張用)
+│   ├── services/            # アプリケーション固有のサービス (拡張用)
 │   └── main.py              # アプリケーションのエントリポイント
-├── libkoiki/                # フレームワークコアライブラリ
+├── libkoiki/                # フレームワークコアライブラリ (主要機能実装済み)
 │   ├── api/                 # API共通コンポーネント
 │   ├── core/                # コアユーティリティ (設定・認証・ロギングなど)
 │   ├── db/                  # データベース関連
-│   ├── models/              # 共通DBモデル (User, Role, Permissionなど)
+│   ├── models/              # 共通DBモデル (User, Role, Permission, Todo等)
 │   ├── repositories/        # 共通リポジトリ
 │   ├── schemas/             # 共通Pydanticスキーマ
 │   ├── services/            # 共通サービス
@@ -597,8 +770,16 @@ poetry run pytest --cov=app --cov=libkoiki --cov-report=term-missing tests/
 ├── Dockerfile               # コンテナイメージ定義
 └── README.md                # プロジェクト説明
 </code></pre>
-<p>詳細な構成と機能説明は <code>docs/design_kkfw_0.5.0.md</code> を参照してください。</p>
-<h2 id="_8">ライセンス</h2>
+<p><strong>注意</strong>: v0.6.0 では、主要機能（認証、Todo、ユーザー管理）は <code>libkoiki/</code> 内に実装されており、<code>app/</code> は将来的な拡張用の基盤を提供しています。</p>
+<p>詳細な構成と機能説明は <code>docs/design_kkfw_0.6.0.md</code> を参照してください。</p>
+<h2 id="fork">🔒 Fork・利用に関するご案内</h2>
+<p>このリポジトリは~~パブリック公開されていますが~~、以下の方以外による Fork・再利用はご遠慮ください。</p>
+<ul>
+<li>Fork にあたり指定された、GitHub Enterprise Organization に所属する関係者</li>
+<li>Fork の前に、必ずリポジトリ管理者（@zaziedlm）にご連絡ください</li>
+</ul>
+<p>無断でのForkや再利用が確認された場合、GitHubへの削除申請を行うことがあります。ご理解とご協力をお願いします。</p>
+<h2 id="_9">ライセンス</h2>
 <p>MIT License</p>
 <p>https://opensource.org/license/mit</p>
 
