@@ -8,4 +8,7 @@ nav:
   - アプリデプロイ手順: README-deploy.md
   - セキュリティ監査コマンド: SECURITY_AUDIT_COMMANDS.md
   - 認証系APIテストガイド: 認証系APIテストガイド.md
+  - KOIKI-FW 開発者向け:
+      - 認証系API完全ガイド: authentication-api-guide.md
+      - セキュリティ強化対応記録: authentication-api-security-fixes.md
 
